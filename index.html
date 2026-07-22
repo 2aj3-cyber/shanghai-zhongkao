@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>上海中考升学路径全分析 · 2026版 · 基于市教育考试院官方指南</title>
 <script>
-(function(){try{var t=localStorage.getItem('zk-theme')||'system';var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;var th=t==='system'?(d?'dark':'light'):t;document.documentElement.setAttribute('data-theme',th);}catch(e){}})();
+(function(){try{var t=localStorage.getItem('zk-theme')||'light';var th=t==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',th);}catch(e){}})();
 </script>
 <style>:root{
   --bg:#f0f4f8;
@@ -78,20 +78,133 @@
   --c15803d:#15803d;
 }
 [data-theme="dark"]{
+  /* 页面底色与主文字 */
   --bg:#0b1220;
   --text:#e6edf5;
+
+  /* 白色/浅灰表面 → 暗色 */
   --c-ffffff-bg:#1e293b;
-  --c-e2e8f0:#334155;
-  --c-cbd5e1:#475569;
-  --c-dbeafe:#1e3a5f;
-  --c-475569:#94a3b8;
-  --c-64748b:#94a3b8;
-  --c-1e293b:#cbd5e1;
-  --c-0f4c81:#60a5fa;
-  --c-1a6fb5:#38bdf8;
-  --c-3b82f6:#60a5fa;
-  --c-1e40af:#93c5fd;
+  --c-ffffff-fg:#ffffff;
+  --ce2e8f0:#334155;
+  --ccbd5e1:#475569;
+  --cf8fafc:#1e293b;
+  --cf0f7ff:#1e3a5f;
+  --cf1f5f9:#334155;
+  --cfafbfd:#0f172a;
+  --cf7fbff:#0f172a;
+  --ce6edf5:#1e3a5f;
+
+  /* 深色文字 → 浅色 */
+  --c334155:#e2e8f0;
+  --c475569:#94a3b8;
+  --c64748b:#94a3b8;
+  --c94a3b8:#94a3b8;
+  --c1e293b:#cbd5e1;
+
+  /* 品牌蓝 — 深色模式用低饱和藏青，避免扎眼 */
+  --c0f4c81:#1e40af;
+  --c1a6fb5:#2563eb;
+  --c3b82f6:#60a5fa;
+  --c1e40af:#93c5fd;
+  --c1d4ed8:#93c5fd;
+  --c1e3a5f:#1e3a8a;
+  --cbfdbfe:#1e3a8a;
+
+  /* 绿色系 */
+  --cf0fdf4:#064e3b;
+  --cdcfce7:#065f46;
+  --c16a34a:#86efac;
+  --c22c55e:#4ade80;
+  --c15803d:#86efac;
+
+  /* 黄色/琥珀 */
+  --cfefce8:#713f12;
+  --cfef9c3:#854d0e;
+  --cca8a04:#fde047;
+  --cfacc15:#fde047;
+  --cf59e0b:#fbbf24;
+  --cfde68a:#fde047;
+  --cb45309:#fdba74;
+  --cfef3c7:#854d0e;
+
+  /* 蓝色系 */
+  --ceff6ff:#1e3a8a;
+  --cdbeafe:#1e40af;
+  --ce0f2fe:#0c4a6e;
+  --ce0e7ff:#1e3a8a;
+  --ceef2ff:#1e3a8a;
+  --cede9fe:#1e3a8a;
+  --ceaf4ff:#bfdbfe;
+
+  /* 红色系 */
+  --cfef2f2:#7f1d1d;
+  --cfee2e2:#991b1b;
+  --cdc2626:#fca5a5;
+  --cef4444:#f87171;
+  --c92400e:#fca5a5;
+
+  /* 紫色/靛蓝 */
+  --cf3e8ff:#581c87;
+  --cddd6fe:#7c3aed;
+  --c7c3aed:#d8b4fe;
+  --c6d28d9:#d8b4fe;
+  --c3730a3:#c4b5fd;
+  --cc7d2fe:#4f46e5;
+  --c4f46e5:#a5b4fc;
+  --cf5f3ff:#2e1065;
+
+  /* 粉色 */
+  --cfce7f3:#831843;
+  --cbe185d:#f9a8d4;
+
+  /* 青色系 */
+  --cecfeff:#083344;
+  --ca5f3fc:#06b6d4;
+  --c0e7490:#67e8f9;
+
+  /* 橙色系 */
+  --cfff7ed:#7c2d12;
+  --cfed7aa:#9a3412;
+  --c9a3412:#fdba74;
+
+  /* 其它 */
+  --cf97316:#fdba74;
+  --cfbbf24:#fbbf24;
 }
+
+/* 深色模式：进一步压低 header / 主题切换按钮亮度 */
+[data-theme="dark"] .header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%) !important; }
+[data-theme="dark"] .theme-switch { background: rgba(0,0,0,.28); }
+[data-theme="dark"] .theme-btn { color: var(--c-ffffff-fg); }
+[data-theme="dark"] .theme-btn:hover { background: rgba(255,255,255,.12); }
+[data-theme="dark"] .theme-btn.active { background: rgba(255,255,255,.92); color: #0f172a; }
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea { background:var(--c-ffffff-bg); color:var(--text); }
+
+/* 修正：HTML/JS 里残留硬编码的浅色内联背景，在深色模式下强制压暗 */
+[data-theme="dark"] [style*="background:#f8fafc"],
+[data-theme="dark"] [style*="background:#fafbfd"],
+[data-theme="dark"] [style*="background:#f0f7ff"],
+[data-theme="dark"] [style*="background:#f1f5f9"],
+[data-theme="dark"] [style*="background:#f7fbff"],
+[data-theme="dark"] [style*="background:#eff6ff"],
+[data-theme="dark"] [style*="background:#e2e8f0"],
+[data-theme="dark"] [style*="background:#e6edf5"],
+[data-theme="dark"] [style*="background:#ecfeff"],
+[data-theme="dark"] [style*="background:#e0f2fe"],
+[data-theme="dark"] [style*="background:#e0e7ff"],
+[data-theme="dark"] [style*="background:#eef2ff"] { background:#1e293b !important; }
+[data-theme="dark"] [style*="background:#f0fdf4"] { background:#064e3b !important; }
+[data-theme="dark"] [style*="background:#fefce8"],
+[data-theme="dark"] [style*="background:#fef9c3"],
+[data-theme="dark"] [style*="background:#fffbe7"],
+[data-theme="dark"] [style*="background:#fef3c7"] { background:#713f12 !important; }
+[data-theme="dark"] [style*="background:#fef2f2"] { background:#7f1d1d !important; }
+[data-theme="dark"] [style*="background:#f5f3ff"] { background:#581c87 !important; }
+[data-theme="dark"] [style*="background:#fff7ed"] { background:#7c2d12 !important; }
+[data-theme="dark"] .search-result-item:hover { background:#1e3a5f !important; }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif; background: var(--bg); color: var(--text); font-size: 16px; }
@@ -497,7 +610,6 @@
   <div class="theme-switch">
     <button class="theme-btn" data-t="light" onclick="setTheme('light')" title="浅色">☀️ 浅色</button>
     <button class="theme-btn" data-t="dark" onclick="setTheme('dark')" title="深色">🌙 深色</button>
-    <button class="theme-btn" data-t="system" onclick="setTheme('system')" title="跟随系统">🖥️ 系统</button>
   </div>
   <!-- creator badge moved to bottom-right float -->
 </div>
@@ -3524,22 +3636,20 @@ function renderCmp(){
 }
 
 </script>
-  <div class="float-badge">本工具由 <b>AJ23❤FIONA</b> 原创策划</div>
+  <div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划</div>
 <script>
 (function(){
   var KEY='zk-theme';
   var root=document.documentElement;
-  function systemTheme(){ return (window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'; }
   function apply(t){
-    var th = t==='system' ? systemTheme() : t;
+    var th = t==='dark' ? 'dark' : 'light';
     root.setAttribute('data-theme', th);
     var btns=document.querySelectorAll('.theme-btn');
     for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active', btns[i].getAttribute('data-t')===t); }
   }
   window.setTheme=function(t){ try{localStorage.setItem(KEY,t);}catch(e){} apply(t); };
-  var saved; try{ saved=localStorage.getItem(KEY)||'system'; }catch(e){ saved='system'; }
+  var saved; try{ saved=localStorage.getItem(KEY)||'light'; }catch(e){ saved='light'; }
   apply(saved);
-  if(window.matchMedia){ try{ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(){ try{ if((localStorage.getItem(KEY)||'system')==='system') apply('system'); }catch(e){} }); }catch(e){} }
 })();
 </script>
 </body>
