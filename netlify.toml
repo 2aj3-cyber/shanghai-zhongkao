@@ -1,0 +1,5 @@
+[build]
+  # 单文件静态站点，无需构建
+  command = ""
+  # index.html 在仓库根目录
+  publish = "."
