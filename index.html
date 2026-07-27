@@ -3741,6 +3741,14 @@ function switchTabGlobal(name) {
 // 页面加载时建立搜索索引 + 初始化移动端 Tabs 滚动状态
 document.addEventListener('DOMContentLoaded', function() {
   buildSearchIndex();
+  // 本地打卡计数（零外联，仅本设备可见，不向任何服务器上报）
+  try {
+    let n = parseInt(localStorage.getItem('zk-checkins') || '0', 10);
+    n = (isNaN(n) || n < 0) ? 1 : n + 1;
+    localStorage.setItem('zk-checkins', String(n));
+    const cb = document.getElementById('checkinBadge');
+    if (cb) cb.textContent = '📍 你已打卡 ' + n + ' 次';
+  } catch (e) {}
   // 初始化 tabs 渐变遮罩状态
   const tabsEl = document.querySelector('.tabs');
   if (tabsEl) {
@@ -4077,7 +4085,7 @@ function renderCmp(){
 }
 
 </script>
-  <div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划<span class="ver-stamp">构建于 2026-06-20</span></div>
+  <div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划<span class="ver-stamp">构建于 2026-06-20</span><span class="ver-stamp" id="checkinBadge">📍 打卡中…</span></div>
 <script>
 (function(){
   var KEY='zk-theme';
