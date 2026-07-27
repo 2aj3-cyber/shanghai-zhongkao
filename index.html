@@ -78,106 +78,118 @@
   --c15803d:#15803d;
 }
 [data-theme="dark"]{
-  /* 页面底色与主文字 */
-  --bg:#0b1220;
-  --text:#e6edf5;
+  /* ===== 页面底色：深海军蓝近黑，大气且不纯黑 ===== */
+  --bg:#0A0E1A;
+  --text:#E2E8F0;
 
-  /* 白色/浅灰表面 → 暗色 */
-  --c-ffffff-bg:#1e293b;
-  --c-ffffff-fg:#ffffff;
-  --ce2e8f0:#334155;
-  --ccbd5e1:#475569;
-  --cf8fafc:#1e293b;
-  --cf0f7ff:#1e3a5f;
-  --cf1f5f9:#334155;
-  --cfafbfd:#0f172a;
-  --cf7fbff:#0f172a;
-  --ce6edf5:#1e3a5f;
+  /* ===== 中性表面：靠明度表达层级（越浮越亮），非阴影 ===== */
+  --c-ffffff-bg:#121A2E;   /* 卡片/面板表面 */
+  --c-ffffff-fg:#E2E8F0;   /* 柔白替代纯白，护眼 */
+  --ce2e8f0:#1E2A3A;       /* 分隔线/边框 */
+  --ccbd5e1:#334155;       /* 中灰边框 */
+  --cf8fafc:#121A2E;
+  --cf0f7ff:#16223A;       /* 激活标签页底 */
+  --cf1f5f9:#1E2A3A;
+  --cfafbfd:#0A0E1A;
+  --cf7fbff:#0A0E1A;
+  --ce6edf5:#16223A;
+  --ceff6ff:#16223A;
+  --ce0e7ff:#16223A;
+  --ceef2ff:#16223A;
 
-  /* 深色文字 → 浅色 */
-  --c334155:#e2e8f0;
-  --c475569:#94a3b8;
-  --c64748b:#94a3b8;
-  --c94a3b8:#94a3b8;
-  --c1e293b:#cbd5e1;
+  /* ===== 深灰文字 → 浅灰，层次自然 ===== */
+  --c334155:#CBD5E1;
+  --c475569:#94A3B8;
+  --c64748b:#94A3B8;
+  --c94a3b8:#94A3B8;
+  --c1e293b:#CBD5E1;
 
-  /* 品牌蓝 — 深色模式用低饱和藏青，避免扎眼 */
-  --c0f4c81:#1e40af;
-  --c1a6fb5:#2563eb;
-  --c3b82f6:#60a5fa;
-  --c1e40af:#93c5fd;
-  --c1d4ed8:#93c5fd;
-  --c1e3a5f:#1e3a8a;
-  --cbfdbfe:#1e3a8a;
+  /* ===== 品牌蓝：深海军蓝做渐变填充，亮天蓝仅作小面积点缀 ===== */
+  --c0f4c81:#1E3A8A;   /* 渐变起点：沉稳深蓝 */
+  --c1a6fb5:#93C5FD;   /* 渐变终点 / 小面积高亮（柔天蓝，不刺眼） */
+  --c3b82f6:#3B82F6;
+  --c1e40af:#1E3A8A;
+  --c1d4ed8:#93C5FD;   /* 深蓝徽章上的文字用浅色 */
+  --c1e3a5f:#0E2A52;
+  --cbfdbfe:#1E3A8A;
 
-  /* 绿色系 */
-  --cf0fdf4:#064e3b;
-  --cdcfce7:#065f46;
-  --c16a34a:#86efac;
-  --c22c55e:#4ade80;
-  --c15803d:#86efac;
+  /* ===== 绿色系：柔翠绿 ===== */
+  --cf0fdf4:#064E3B;
+  --cdcfce7:#065F46;
+  --c16a34a:#34D399;
+  --c22c55e:#34D399;
+  --c15803d:#34D399;
 
-  /* 黄色/琥珀 */
-  --cfefce8:#713f12;
-  --cfef9c3:#854d0e;
-  --cca8a04:#fde047;
-  --cfacc15:#fde047;
-  --cf59e0b:#fbbf24;
-  --cfde68a:#fde047;
-  --cb45309:#fdba74;
-  --cfef3c7:#854d0e;
+  /* ===== 黄/琥珀：暖金，降亮 ===== */
+  --cfefce8:#713F12;
+  --cfef9c3:#854D0E;
+  --cca8a04:#FBBF24;
+  --cfacc15:#FBBF24;
+  --cf59e0b:#F59E0B;
+  --cfde68a:#FBBF24;
+  --cb45309:#FDBA74;
+  --cfef3c7:#854D0E;
+  --cfffbe7:#854D0E;
+  --cfbbf24:#FBBF24;
 
-  /* 蓝色系 */
-  --ceff6ff:#1e3a8a;
-  --cdbeafe:#1e40af;
-  --ce0f2fe:#0c4a6e;
-  --ce0e7ff:#1e3a8a;
-  --ceef2ff:#1e3a8a;
-  --cede9fe:#1e3a8a;
-  --ceaf4ff:#bfdbfe;
+  /* ===== 蓝系表面 ===== */
+  --cdbeafe:#1E3A8A;
+  --ceaf4ff:#E0F2FE;   /* update-badge 毛玻璃上的文字，用浅色 */
+  --ce0f2fe:#0C4A6E;
 
-  /* 红色系 */
-  --cfef2f2:#7f1d1d;
-  --cfee2e2:#991b1b;
-  --cdc2626:#fca5a5;
-  --cef4444:#f87171;
-  --c92400e:#fca5a5;
+  /* ===== 红色系：柔红 ===== */
+  --cfef2f2:#7F1D1D;
+  --cfee2e2:#991B1B;
+  --cdc2626:#F87171;
+  --cef4444:#F87171;
+  --c92400e:#F87171;
 
-  /* 紫色/靛蓝 */
-  --cf3e8ff:#581c87;
-  --cddd6fe:#7c3aed;
-  --c7c3aed:#d8b4fe;
-  --c6d28d9:#d8b4fe;
-  --c3730a3:#c4b5fd;
-  --cc7d2fe:#4f46e5;
-  --c4f46e5:#a5b4fc;
-  --cf5f3ff:#2e1065;
+  /* ===== 紫/靛蓝 ===== */
+  --cf3e8ff:#4C1D95;
+  --cddd6fe:#8B5CF6;
+  --c7c3aed:#C4B5FD;
+  --c6d28d9:#A78BFA;
+  --c3730a3:#C4B5FD;
+  --cc7d2fe:#4F46E5;
+  --c4f46e5:#A5B4FC;
+  --cf5f3ff:#2E1B4B;
+  --cede9fe:#2E1B4B;
 
-  /* 粉色 */
+  /* ===== 粉色 ===== */
   --cfce7f3:#831843;
-  --cbe185d:#f9a8d4;
+  --cbe185d:#F9A8D4;
 
-  /* 青色系 */
+  /* ===== 青色系 ===== */
   --cecfeff:#083344;
-  --ca5f3fc:#06b6d4;
-  --c0e7490:#67e8f9;
+  --ca5f3fc:#22D3EE;
+  --c0e7490:#67E8F9;
 
-  /* 橙色系 */
-  --cfff7ed:#7c2d12;
-  --cfed7aa:#9a3412;
-  --c9a3412:#fdba74;
-
-  /* 其它 */
-  --cf97316:#fdba74;
-  --cfbbf24:#fbbf24;
+  /* ===== 橙色系 ===== */
+  --cfff7ed:#7C2D12;
+  --cfed7aa:#9A3412;
+  --c9a3412:#FDBA74;
+  --cf97316:#FB923C;
 }
 
 /* 深色模式：进一步压低 header / 主题切换按钮亮度 */
-[data-theme="dark"] .header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%) !important; }
+[data-theme="dark"] .header { background: linear-gradient(135deg, #0B1426 0%, #16243F 55%, #0B1426 100%) !important; border-bottom: 1px solid rgba(96,165,250,.30); }
+[data-theme="dark"] body { background: radial-gradient(1200px 620px at 50% -12%, rgba(37,99,235,.16), transparent 62%), var(--bg); }
 [data-theme="dark"] .theme-switch { background: rgba(0,0,0,.28); }
 [data-theme="dark"] .theme-btn { color: var(--c-ffffff-fg); }
 [data-theme="dark"] .theme-btn:hover { background: rgba(255,255,255,.12); }
-[data-theme="dark"] .theme-btn.active { background: rgba(255,255,255,.92); color: #0f172a; }
+[data-theme="dark"] .theme-btn.active { background: rgba(255,255,255,.92); color: #0A0E1A; }
+
+/* 深色下，原本用深蓝(--c0f4c81/--c1e40af)当文字色的标题/加粗字改为浅色品牌蓝，确保可读 */
+[data-theme="dark"] .score-tool h2,
+[data-theme="dark"] .school-db h2,
+[data-theme="dark"] .major-db h2,
+[data-theme="dark"] .intl-db h2,
+[data-theme="dark"] .step-body h3,
+[data-theme="dark"] .stat-card .num,
+[data-theme="dark"] .global-search-label,
+[data-theme="dark"] .modal-header h2,
+[data-theme="dark"] .notes h3,
+[data-theme="dark"] .rcard .school-list b { color: var(--c1a6fb5) !important; }
 
 [data-theme="dark"] input,
 [data-theme="dark"] select,
@@ -195,7 +207,7 @@
 [data-theme="dark"] [style*="background:#ecfeff"],
 [data-theme="dark"] [style*="background:#e0f2fe"],
 [data-theme="dark"] [style*="background:#e0e7ff"],
-[data-theme="dark"] [style*="background:#eef2ff"] { background:#1e293b !important; }
+[data-theme="dark"] [style*="background:#eef2ff"] { background:#121A2E !important; }
 [data-theme="dark"] [style*="background:#f0fdf4"] { background:#064e3b !important; }
 [data-theme="dark"] [style*="background:#fefce8"],
 [data-theme="dark"] [style*="background:#fef9c3"],
@@ -222,8 +234,38 @@
   @media (max-width: 640px){ .theme-switch { position:static; display:inline-flex; margin-top:14px; } }
 
   /* ── Tabs ── */
-  .tabs { display: flex; gap: 0; background: var(--c-ffffff-bg); border-bottom: 2px solid var(--ce2e8f0); position: sticky; top: 0; z-index: 100; overflow-x: auto; }
-  .tab { padding: 14px 24px; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--c64748b); border-bottom: 3px solid transparent; white-space: nowrap; transition: .2s; }
+  .tabs { display: flex; gap: 0; background: var(--c-ffffff-bg); border-bottom: 2px solid var(--ce2e8f0); position: sticky; top: 0; z-index: 100; overflow-x: auto;
+    /* 隐藏滚动条但保持可横滑 */
+    scrollbar-width: none; -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  /* 左右渐变遮罩：提示用户可横滑 */
+  .tabs::before, .tabs::after {
+    content: '';
+    position: sticky;
+    top: 0;
+    width: 28px;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+    flex-shrink: 0;
+    transition: opacity .3s;
+  }
+  .tabs::before {
+    background: linear-gradient(90deg, var(--c-ffffff-bg), transparent);
+    margin-right: -28px;
+  }
+  .tabs::after {
+    background: linear-gradient(-90deg, var(--c-ffffff-bg), transparent);
+    margin-left: -28px;
+  }
+  /* 滚到两端时隐藏对应遮罩 */
+  .tabs.at-start::before { opacity: 0; }
+  .tabs.at-end::after { opacity: 0; }
+
+  .tab { padding: 14px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--c64748b); border-bottom: 3px solid transparent; white-space: nowrap; transition: .2s; flex-shrink: 0; }
   .tab:hover { color: var(--c1a6fb5); background: var(--cf8fafc); }
   .tab.active { color: var(--c1a6fb5); border-bottom-color: var(--c1a6fb5); font-weight: 700; background: var(--cf0f7ff); }
 
@@ -237,7 +279,7 @@
   .score-tool { background: var(--c-ffffff-bg); border-radius: 16px; padding: 28px; box-shadow: 0 2px 12px rgba(0,0,0,.08); margin-bottom: 24px; }
   .score-tool h2 { font-size: 18px; color: var(--c0f4c81); margin-bottom: 16px; }
   .score-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
-  .score-input { width: 160px; padding: 10px 16px; font-size: 26px; font-weight: 700; border: 2px solid var(--ccbd5e1); border-radius: 12px; color: var(--c0f4c81); text-align: center; outline: none; transition: .2s; }
+  .score-input { width: 160px; padding: 10px 16px; font-size: 26px; font-weight: 700; border: 2px solid var(--ccbd5e1); border-radius: 12px; color: var(--text); text-align: center; outline: none; transition: .2s; }
   .score-input:focus { border-color: var(--c1a6fb5); box-shadow: 0 0 0 3px rgba(26,111,181,.15); }
   .score-meta { font-size: 14px; color: var(--c94a3b8); }
   .btn-analyze { background: linear-gradient(135deg, var(--c0f4c81), var(--c1a6fb5)); color: var(--c-ffffff-fg); border: none; padding: 10px 28px; font-size: 15px; font-weight: 600; border-radius: 10px; cursor: pointer; transition: .2s; }
@@ -330,10 +372,25 @@
     .header { padding: 16px; }
     .main { padding: 12px; }
     .tabs { font-size: 13px; }
-    .tab { padding: 10px 14px; }
+    .tab { padding: 11px 14px; font-size: 13.5px; }
     .score-row { flex-direction: column; align-items: flex-start; }
     .result-cards { grid-template-columns: 1fr; }
     .filter-row { flex-direction: column; align-items: stretch; }
+
+    /* Header badge 精简 */
+    .update-badge {
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.15);
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+    }
+    /* theme-switch 紧凑化 */
+    .theme-switch { gap: 2px; padding: 3px; border-radius: 10px; }
+    .theme-btn { font-size: 12px; padding: 5px 9px; border-radius: 7px; }
   }
 
   /* scrollbar */
@@ -373,6 +430,14 @@
 
   /* ── Affiliation highlight ── */
   .affil-tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 13px; background: var(--cfef3c7); color: var(--c92400e); font-weight: 600; margin-left: 6px; }
+  .yr-badge { display:inline-block; padding:1px 7px; border-radius:8px; font-size:11px; font-weight:700; margin-left:5px; vertical-align:middle; }
+  .yr26 { background:rgba(22,163,74,.15); color:#16a34a; border:1px solid rgba(22,163,74,.35); }
+  .yr25 { background:rgba(100,116,139,.15); color:#64748b; border:1px solid rgba(100,116,139,.35); }
+  .diff-badge { display:inline-block; padding:1px 8px; border-radius:8px; font-size:12px; font-weight:800; margin-left:7px; vertical-align:middle; letter-spacing:.3px; }
+  .diff-up { background:rgba(22,163,74,.18); color:#15803d; border:1px solid rgba(22,163,74,.45); }
+  .diff-down { background:rgba(220,38,38,.15); color:#b91c1c; border:1px solid rgba(220,38,38,.45); }
+  .diff-flat { background:rgba(100,116,139,.12); color:#64748b; border:1px solid rgba(100,116,139,.3); }
+  .ver-stamp { display:block; font-size:10px; color:#94a3b8; font-weight:400; margin-top:3px; opacity:.85; }
 
   /* ── Global Search ── */
   .global-search-bar { background: var(--c-ffffff-bg); padding: 14px 40px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--ce2e8f0); position: relative; }
@@ -466,31 +531,59 @@
   .policy-note { font-size:12px; color:var(--c64748b); margin-top:6px; line-height:1.6; }
 
   /* ═══════ 升级：标签导航高亮渐变 ═══════ */
-  .tabs::-webkit-scrollbar { height:0; }
   .tab.active { background: linear-gradient(180deg,var(--cf0f7ff),var(--ce0f2fe)); box-shadow: inset 0 -3px 0 var(--c1a6fb5); }
 
   /* ═══════ 升级：响应式 ═══════ */
   @media (max-width: 768px) {
-    .header { padding: 18px 16px 14px; }
-    .header h1 { font-size: 20px; }
-    .tabs { padding: 0 8px; }
-    .tab { padding: 12px 16px; font-size: 14px; }
-    .main { padding: 16px 14px 60px; }
-    .score-input { width: 130px; font-size: 22px; }
+    .header { padding: 16px 14px 12px; }
+    .header h1 { font-size: 19px; letter-spacing: .3px; }
+    .header p { font-size: 11.5px; }
+    .tabs { padding: 0; }
+    .tab { padding: 10px 14px; font-size: 13px; }
+    .main { padding: 14px 12px 60px; }
+    .score-input { width: 100%; font-size: 24px; max-width: 200px; }
     .atable, .school-table { font-size: 13px; }
-    .atable th, .school-table th, .atable td, .school-table td { padding: 9px 10px; }
+    .atable th, .school-table th, .atable td, .school-table td { padding: 8px 9px; }
     .modal-card { width: 94%; max-height: 86vh; }
-    .modal-header, .modal-body, .modal-footer { padding: 16px 18px; }
-    .float-badge { font-size: 10px; padding: 5px 12px; bottom: 10px; right: 10px; }
+    .modal-header, .modal-body, .modal-footer { padding: 14px 16px; }
+    .float-badge { font-size: 9px; padding: 4px 10px; bottom: 8px; right: 8px; max-width: calc(100% - 16px); text-align: center; }
     .filter-row { gap: 8px; }
-    .filter-select, .filter-input { font-size: 14px; padding: 9px 12px; }
+    .filter-select, .filter-input { font-size: 14px; padding: 10px 12px; width: 100% !important; box-sizing: border-box; }
+
+    /* 全局搜索栏紧凑化 */
+    .global-search-bar { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
+    .global-search-label { font-size: 12.5px; flex-shrink: 0; }
+    .global-search-input { max-width: none; font-size: 14px; padding: 8px 12px; }
+    .global-search-shortcut { font-size: 11px; display: none; } /* 小屏隐藏统计 */
+
+    /* stat-card 紧凑 */
+    .stat-card { padding: 12px 14px; min-width: 130px; }
+    .stat-card .num { font-size: 22px; }
+    .stat-card .label { font-size: 12px; }
+
+    /* step-guide 紧凑 */
+    .step { gap: 12px; margin-bottom: 18px; }
+    .step-num { width: 32px; height: 32px; font-size: 14px; }
+    .step-body h3 { font-size: 15px; }
+    .step-body p, .step-body ul { font-size: 13px; }
+
+    /* quick-nav 紧凑 */
+    .qn-btn { padding: 7px 14px; font-size: 13px; }
+
+    /* score-tool 紧凑 */
+    .score-tool { padding: 18px; }
+    .score-tool h2 { font-size: 16px; }
   }
   @media (max-width: 480px) {
-    .header h1 { font-size: 18px; }
-    .tab { padding: 11px 13px; font-size: 13px; }
+    .header h1 { font-size: 17px; }
+    .header p { font-size: 11px; }
+    .tab { padding: 9px 11px; font-size: 12.5px; }
     .score-row { flex-direction: column; align-items: stretch; gap: 10px; }
-    .score-input { width: 100%; }
+    .score-input { width: 100%; max-width: none; font-size: 26px; }
+    .btn-analyze { width: 100%; text-align: center; }
     .filter-row { flex-direction: column; align-items: stretch; }
+    .update-badge { font-size: 11px; line-height: 1.5; }
+    .float-badge { display: none; } /* 超小屏隐藏浮标 */
   }
 
   /* ═══════ 升级：打印优化 ═══════ */
@@ -599,6 +692,222 @@
   .tl-status { font-size:12px; font-weight:700; padding:2px 10px; border-radius:12px; display:inline-block; margin-top:6px; }
   .tl-status.done { background:var(--cdcfce7); color:var(--c16a34a); }
   .tl-status.soon { background:var(--cfef3c7); color:var(--cb45309); }
+
+  /* ===== 深色模式：内联硬编码文字色重映射（修复"深字配深底看不清"） ===== */
+  [data-theme="dark"] [style*="color:#0f4c81"] { color:#93C5FD !important; }
+  [data-theme="dark"] [style*="color:#1e293b"] { color:#E2E8F0 !important; }
+  [data-theme="dark"] [style*="color:#1e40af"] { color:#93C5FD !important; }
+  [data-theme="dark"] [style*="color:#7c3aed"] { color:#C4B5FD !important; }
+  [data-theme="dark"] [style*="color:#0369a1"] { color:#7DD3FC !important; }
+  [data-theme="dark"] [style*="color:#475569"] { color:#94A3B8 !important; }
+  [data-theme="dark"] [style*="color:#64748b"] { color:#94A3B8 !important; }
+  [data-theme="dark"] [style*="color:#b45309"] { color:#FBBF24 !important; }
+  [data-theme="dark"] [style*="color:#92400e"] { color:#FCD34D !important; }
+  [data-theme="dark"] [style*="color:#9a3412"]:not(.cmp-chip) { color:#FDBA74 !important; }
+  [data-theme="dark"] [style*="color:#1d4ed8"] { color:#93C5FD !important; }
+  [data-theme="dark"] [style*="color:#ca8a04"] { color:#FBBF24 !important; }
+  /* 浅底 chip 在深色下改为深底浅字，避免"浅字配浅底" */
+  [data-theme="dark"] .cmp-chip { background:#16223A !important; border-color:#23314A !important; color:#E2E8F0 !important; }
+
+  /* ===== 移动端：数据表自动转卡片（仅对注入过 data-label 的表生效） ===== */
+  @media (max-width: 768px) {
+    /* 触屏字号与容器留白微调 */
+    body { font-size: 15px; }
+    .container { padding: 12px 10px; }
+
+    /* 卡片化：thead 强制隐藏（!important + 高特异性防覆盖） */
+    table:has(tbody td[data-label]) > thead,
+    table:has(tbody td[data-label]) thead {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      line-height: 0 !important;
+      font-size: 0 !important;
+    }
+    /* 防御：thead 内所有 tr/th/td 也强制隐藏 */
+    table:has(tbody td[data-label]) thead tr,
+    table:has(tbody td[data-label]) thead th,
+    table:has(tbody td[data-label]) thead td {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+    }
+
+    /* ═══════ 卡片化核心（用真实 .cl 元素，不用 ::before 伪元素） ═══════ */
+    /* 打断 table 布局上下文 */
+    table:has(tbody td[data-label]) {
+      display: block;
+      width: 100%;
+      border: none;
+      background: transparent;
+    }
+    table:has(tbody td[data-label]) tr {
+      display: block;
+      margin-bottom: 14px;
+      border: 1px solid var(--ce2e8f0);
+      border-radius: 14px;
+      background: var(--c-ffffff-bg);
+      box-shadow: 0 2px 8px rgba(15,23,42,.07);
+      overflow: hidden;
+    }
+    table:has(tbody td[data-label]) tr.clickable-row:active { transform: scale(.98); }
+    /* 每个单元格 = 一行信息 */
+    table:has(tbody td[data-label]) td {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(148,163,184,.15);
+      font-size: 14px;
+      line-height: 1.5;
+      box-sizing: border-box;
+    }
+    table:has(tbody td[data-label]) td:last-child { border-bottom: none; }
+
+    /* ── .cl 标签元素（真实 DOM，不是伪元素） ── */
+    table:has(tbody td[data-label]) td > .cl {
+      flex-shrink: 0;
+      font-weight: 600;
+      color: var(--text-soft, #64748b);
+      font-size: 13px;
+      min-width: 0;
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ── value 侧：填充剩余空间 ── */
+    table:has(tbody td[data-label]) td > :not(.cl) {
+      flex: 1;
+      min-width: 0;
+    }
+    /* 文字内容允许自然溢出可见（卡片本身 overflow:hidden 会裁剪外层） */
+    table:has(tbody td[data-label]) td > :not(.cl):not([class*="badge"]):not([class*="yr-"]):not([class*="affil"]) {
+      overflow: visible;
+      text-overflow: clip;
+    }
+    /* badge/徽标/隶属标签 不被压缩 */
+    table:has(tbody td[data-label]) td > span[class*="badge"],
+    table:has(tbody td[data-label]) td > span[class*="yr-"],
+    table:has(tbody td[data-label]) td > span[class*="affil"] {
+      flex: none;
+    }
+
+    /* ── 名称列：卡片标题行（无 .cl 标签，由 JS 加 .name-col） ── */
+    table:has(tbody td[data-label]) td.name-col {
+      background: linear-gradient(135deg, var(--cf0f4f8, #f0f4f8), var(--ce0f2fe, #e0f2fe));
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--c1a6fb5);
+      flex-wrap: wrap;
+      gap: 6px;
+      border-bottom: 2px solid var(--c1a6fb5, #1a6fb5);
+    }
+    table:has(tbody td[data-label]) td.name-col > b {
+      font-weight: 700;
+      color: var(--c1a6fb5, #1a6fb5);
+      -webkit-text-fill-color: var(--c1a6fb5, #1a6fb5);
+      word-break: break-word;
+    }
+    table:has(tbody td[data-label]) td.name-col > .affil-tag {
+      font-size: 11px;
+      padding: 1px 8px;
+      border-radius: 10px;
+      background: var(--cfef3c7, #fef3c7);
+      color: var(--c92400e, #92400e);
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    /* 分组标题行（colspan 占满整行，如「体制内 · 普通高中」）：居中突出 */
+    table:has(tbody td[data-label]) td[colspan] {
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      color: var(--c0f4c81, #0f4c81);
+      background: #f0f7ff;
+    }
+    /* 详情箭头：学校名右侧提示可点击 */
+    .detail-hint {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ce0f2fe, #e0f2fe);
+      color: var(--c1a6fb5, #1a6fb5);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-left: auto;
+      cursor: pointer;
+      transition: transform .15s, background .15s;
+    }
+    tr.clickable-row:active .detail-hint,
+    .detail-hint:hover {
+      transform: scale(1.15);
+      background: var(--c1a6fb5, #1a6fb5);
+      color: #fff;
+    }
+
+    /* ── 分数线列：隐藏 .cl 标签（数值本身已自解释），允许换行 ── */
+    table:has(tbody td[data-label]) td[data-label*="分数线"] {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+    table:has(tbody td[data-label]) td[data-label*="分数线"] > .cl {
+      display: none;
+    }
+
+    /* ── 专业/名称列：长文本可换行 ── */
+    table:has(tbody td[data-label]) td[data-label*="专业"] > *,
+    table:has(tbody td[data-label]) td[data-label*="专业"] > .cl {
+      word-break: break-word;
+      white-space: normal;
+    }
+
+    /* ═══ 智能择校面板：移动端纵向堆叠 ═══ */
+    .smart-intro { padding: 16px 18px; margin-bottom: 16px; }
+    .smart-intro h2 { font-size: 17px; }
+    .smart-intro > p { font-size: 13px; }
+    .sub-pill { padding: 7px 12px; font-size: 12.5px; flex: 1; text-align: center; min-width: 0; }
+    .smart-subnav { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .sim-box, .top-box, .cmp-box { padding: 16px 18px; margin-bottom: 16px; border-radius: 14px; }
+    .sim-box h3, .top-box h3, .cmp-box h3 { font-size: 15.5px; margin-bottom: 12px; }
+    .smart-row { flex-direction: column; align-items: stretch; gap: 10px; }
+    .smart-field { width: 100%; }
+    .smart-field label { font-size: 12.5px; }
+    /* 覆盖内联 min-width，强制全宽 */
+    .smart-select, .smart-input {
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      padding: 11px 14px;
+      font-size: 15px;
+    }
+    .smart-input { width: 100% !important; font-size: 24px; text-align: center; }
+    .btn-smart { width: 100%; padding: 12px; font-size: 15.5px; text-align: center; box-sizing: border-box; }
+    .smart-hint { font-size: 12.5px; line-height: 1.6; margin-top: 8px; }
+    /* 对比器搜索 */
+    #cmpSearchInput { width: 100% !important; min-width: 0 !important; max-width: none !important; }
+    /* Top榜 checkbox 行 */
+    .top-box label[style*="flex"] { justify-content: flex-start; font-size: 13px; margin-top: 4px; }
+    /* 时间线紧凑 */
+    .tl-item { padding-left: 28px; }
+    .tl-title { font-size: 14px; }
+    .tl-desc { font-size: 12.5px; line-height: 1.5; }
+  }
 </style>
 </head>
 <body>
@@ -606,7 +915,7 @@
 <div class="header">
   <h1>🎓 上海中考升学路径全分析</h1>
   <p>2026版 · 满分750分 · 基于市教育考试院《2026年中招指南》</p>
-  <div class="update-badge">🔄 数据更新于 <b>2026-07-20</b> · 中本&amp;中高职✅已更新 · 高中线⏳待7/23</div>
+  <div class="update-badge">🔄 数据更新于 <b>2026-07-23</b> · 中本&amp;中高职✅已更新 · 高中统招线✅已采<b>128所</b>(16区聚合)·剩余62所⏳待补</div>
   <div class="theme-switch">
     <button class="theme-btn" data-t="light" onclick="setTheme('light')" title="浅色">☀️ 浅色</button>
     <button class="theme-btn" data-t="dark" onclick="setTheme('dark')" title="深色">🌙 深色</button>
@@ -696,7 +1005,7 @@
         <li><b>分数参考基准</b>：建议以一模/二模成绩为基准，通常中考比模考简单10-20分</li>
         <li><b>2026年官方控分线（2026-07-14公布）</b>：自主招生615 | 普高统一招生501 | 中本贯通501 | 五年一贯制/中高职400 | 普通中专300</li>
         <li><b>2026年志愿填报关键时间</b>：自主招生网上填报 6月23-26日 | 志愿书面确认 6月27-28日</li>
-        <li><b>实际录取分 &gt; 控分线</b>：热门高中/专业实际录取分远高于控分线，请参考下方高中分数线库。<b style="color:#16a34a;">✅ 中本贯通2026年实际录取分已更新（86个专业，529~691.5分）。</b>高中/中高职各校实际线预计7月下旬公布，届时同步更新。</li>
+        <li><b>实际录取分 &gt; 控分线</b>：热门高中/专业实际录取分远高于控分线，请参考下方高中分数线库。<b style="color:#16a34a;">✅ 中本贯通2026年实际录取分已更新（86个专业，529~691.5分）。</b>高中统招线2026实际线已采集 128 所（覆盖16区1-15志愿，含上海本地宝聚合核对），剩余 62 所主要为开放大学附中系列（无统一统招线）及个别跨区分校，暂标 2025；中高职各校实际线已更新。</li>
         <li><b>国际路线</b>：需额外考虑英语能力、家庭经济条件（年费15-30万+），21所国际课程班不参加统一招生</li>
         <li><b>名额分配</b>：四校+市重点65%以上招生计划通过"名额分配到区/到校"执行，是进名校的主要途径</li>
       </ul>
@@ -706,7 +1015,7 @@
   <!-- ===== TAB 2: 全路径对比表 ===== -->
   <div id="tab-table" class="tab-content">
     <div class="atable-wrap" style="overflow-x:auto;">
-    <table class="atable">
+      <table class="atable" id="pathCompareTable">
       <thead>
         <tr>
           <th>路径分类</th>
@@ -904,7 +1213,7 @@
   <!-- ===== TAB 3: 高中分数线库 ===== -->
   <div id="tab-highschool" class="tab-content">
     <div class="school-db">
-      <h2>🏫 上海各区高中录取分数线库 <span style="font-size:14px;color:#94a3b8;font-weight:400;">（2025年实际录取分 · 最新可得）</span></h2>
+      <h2>🏫 上海各区高中录取分数线库 <span style="font-size:14px;color:#94a3b8;font-weight:400;">（2026实际线已更新·128所，其余62所示2025线）</span></h2>
       <div class="filter-row">
         <select class="filter-select" id="districtFilter" onchange="filterSchools()">
           <option value="all">全部区域</option>
@@ -936,6 +1245,12 @@
         </select>
         <input class="filter-input" type="number" id="minScore" placeholder="最低分数" oninput="filterSchools()">
         <input class="filter-input" type="number" id="maxScore" placeholder="最高分数" oninput="filterSchools()">
+        <select class="filter-select" id="sortSelect" onchange="filterSchools()">
+          <option value="default">默认顺序</option>
+          <option value="score26desc">按2026线（高→低）</option>
+          <option value="diffUp">按涨跌（涨最多）</option>
+          <option value="diffDown">按涨跌（跌最多）</option>
+        </select>
         <span style="font-size:13px;color:#94a3b8;">筛选结果：<b id="schoolCount">0</b> 所</span>
       </div>
       <div style="overflow-x:auto;">
@@ -947,14 +1262,14 @@
               <th>类型</th>
               <th>体系</th>
               <th>计划</th>
-              <th>2025录取分</th>
+              <th>分数线（2026 / 2025 / 涨跌）</th>
               <th>趋势</th>
             </tr>
           </thead>
           <tbody id="schoolTableBody"></tbody>
         </table>
       </div>
-      <div style="margin-top:14px;font-size:13px;color:#94a3b8;">💡 数据来源：各区招考机构官网，2025年7月17日公布（2025年实际录取分，最新可得）。<b style="color:#dc2626;">2026年实际录取线预计7月下旬随录取进度公布，本工具将同步更新。</b>部分学校为跨区招生，标注在"区域"栏。</div>
+      <div style="margin-top:14px;font-size:13px;color:#94a3b8;">💡 数据来源：各区招考机构官网。2025年实际录取分为历史基准；<b style="color:#16a34a;">2026年实际线已采集 128 所（16区统招1-15志愿线，含上海本地宝聚合核对），剩余 62 所主要为开放大学附中系列（无统一统招线）及个别跨区分校校名错位，暂以2025线标注。</b>部分学校为跨区招生，标注在"区域"栏。</div>
     </div>
   </div>
 
@@ -964,8 +1279,8 @@
       <h2>🔗 上海中本贯通专业录取分数线库 <span style="font-size:14px;color:#94a3b8;font-weight:400;">（2026年实际录取分 · 已更新）</span></h2>
       <div class="stats-bar">
         <div class="stat-card"><div class="num" id="zbStatTotal">0</div><div class="label">招生专业数</div></div>
-        <div class="stat-card"><div class="num" id="zbStatMaxScore" style="color:#dc2626;">-</div><div class="label">最高录取分</div></div>
-        <div class="stat-card"><div class="num" id="zbStatMinScore" style="color:#b45309;">-</div><div class="label">最低录取分</div></div>
+        <div class="stat-card"><div class="num" id="zbStatMaxScore" style="color:#dc2626;">-</div><div class="label">分最高的专业</div></div>
+        <div class="stat-card"><div class="num" id="zbStatMinScore" style="color:#b45309;">-</div><div class="label">分最低的专业</div></div>
         <div class="stat-card"><div class="num" id="zbStatOver600">-</div><div class="label">超600分专业</div></div>
       </div>
       <div class="filter-row">
@@ -1323,7 +1638,7 @@
         <li><b>6月27-28日</b>：志愿书面确认（学生本人+监护人签字，不可更改！）</li>
         <li><b>7月上旬</b>：成绩公布；各批次录取分数线公布；征求志愿</li>
         <li><b>7月中下旬</b>：录取通知书发放；民办国际高中补录取</li>
-        <li style="color:#dc2626;font-weight:600;">⏱️ 录取进行中：统一招生1-15志愿分数线预计7月25-28日公布，届时本工具同步更新2026实际录取线</li>
+        <li style="color:#dc2626;font-weight:600;">⏱️ 录取进行中：统一招生1-15志愿分数线已公布，本工具已采集16区128所2026实际线，其余62所（多为无统招线的开大附中系列及跨区分校）暂标2025线</li>
       </ul>
       <h3 style="margin-top:16px;">📖 2026年官方招生批次顺序</h3>
       <ul>
@@ -1390,7 +1705,7 @@
             <select class="smart-select" id="topCat"></select>
           </div>
           <label style="display:flex;align-items:center;gap:6px;font-size:14px;color:#475569;cursor:pointer;">
-            <input type="checkbox" id="topIncHs"> 包含普通高中（2025数据）
+            <input type="checkbox" id="topIncHs"> 包含普通高中（2026更新中）
           </label>
           <button class="btn-smart" onclick="renderTop()">生成榜单</button>
         </div>
@@ -1437,17 +1752,17 @@
             <div class="tl-desc">市实验性示范性高中、市特色高中名额分配结果公布。</div>
             <span class="tl-status done">✅ 已公布</span>
           </div></div>
-          <div class="tl-item"><div class="tl-dot soon"></div><div class="tl-body">
-            <div class="tl-date">2026-07-23（预计）</div>
+          <div class="tl-item"><div class="tl-dot done"></div><div class="tl-body">
+            <div class="tl-date">2026-07-23</div>
             <div class="tl-title">各区普通高中统一招生 1-15 志愿录取线</div>
-            <div class="tl-desc">由各区招考机构公布。当前高中库为2025年数据，届时将同步更新2026实际线。</div>
-            <span class="tl-status soon">⏳ 待更新（高中库）</span>
+            <div class="tl-desc">由各区招考机构公布。本工具已采集16区2026统招1-15志愿实际线 128 所（含上海本地宝聚合核对），剩余 62 所主要为开放大学附中系列（无统招线）及个别跨区分校，暂标2025。</div>
+            <span class="tl-status done">✅ 已更新（16区·128所）</span>
           </div></div>
           <div class="tl-item"><div class="tl-dot soon"></div><div class="tl-body">
-            <div class="tl-date">2026-07-25（预计）</div>
+            <div class="tl-date">2026-07-25</div>
             <div class="tl-title">民办高中征求志愿 / 补录取</div>
-            <div class="tl-desc">未招满的民办普高、中职校征求志愿，考生可填报。</div>
-            <span class="tl-status soon">⏳ 待进行</span>
+            <div class="tl-desc">未招满的民办普高、中职校征求志愿，考生可填报（本工具未收录该批次分数线）。</div>
+            <span class="tl-status soon">ℹ️ 本工具未收录</span>
           </div></div>
         </div>
       </div>
@@ -1478,171 +1793,171 @@
 // ═══════════════════════════════════════════════════════
 const SCHOOLS = [
   // 浦东新区（平行志愿）
-  { district:"浦东新区", name:"上海中学", type:"市重点", score:710, trend:"↑" },
-  { district:"浦东新区", name:"复旦大学附属中学", type:"市重点", score:710, trend:"↑" },
-  { district:"浦东新区", name:"华东师范大学第二附属中学", type:"市重点", score:709.5, trend:"↑" },
-  { district:"浦东新区", name:"上海交通大学附属中学", type:"市重点", score:709.5, trend:"↑" },
-  { district:"浦东新区", name:"上海市实验学校", type:"市重点", score:703, trend:"—" },
-  { district:"浦东新区", name:"上海市浦东复旦附中分校", type:"市重点", score:703.5, trend:"↑" },
-  { district:"浦东新区", name:"上海市建平中学", type:"市重点", score:699.5, trend:"—" },
-  { district:"浦东新区", name:"上海市进才中学", type:"市重点", score:696.5, trend:"—" },
-  { district:"浦东新区", name:"上海中学东校", type:"市重点", score:692, trend:"—" },
-  { district:"浦东新区", name:"上海市洋泾中学", type:"区重点", score:689.5, trend:"—" },
-  { district:"浦东新区", name:"上海市川沙中学", type:"区重点", score:686.5, trend:"—" },
-  { district:"浦东新区", name:"华东师范大学附属东昌中学", type:"区重点", score:673, trend:"—" },
-  { district:"浦东新区", name:"上海南汇中学", type:"区重点", score:674, trend:"—" },
-  { district:"浦东新区", name:"上海市高桥中学", type:"区重点", score:672.5, trend:"—" },
-  { district:"浦东新区", name:"上海市建平中学筠溪分校", type:"普高", score:678.5, trend:"新" },
-  { district:"浦东新区", name:"上海市进才中学根林分校", type:"普高", score:670, trend:"新" },
-  { district:"浦东新区", name:"华东理工大学附属浦东科技高级中学", type:"普高", score:654.5, trend:"新" },
-  { district:"浦东新区", name:"华东师范大学附属周浦中学", type:"普高", score:654.5, trend:"—" },
-  { district:"浦东新区", name:"华东师范大学附属浦东临港高级中学", type:"普高", score:640, trend:"新" },
-  { district:"浦东新区", name:"上海市川沙中学友仁分校", type:"普高", score:665, trend:"新" },
-  { district:"浦东新区", name:"上海市浦东外国语学校东校", type:"普高", score:634, trend:"—" },
-  { district:"浦东新区", name:"上海市三林中学", type:"普高", score:634.5, trend:"—" },
-  { district:"浦东新区", name:"上海市杨思高级中学", type:"普高", score:626, trend:"—" },
-  { district:"浦东新区", name:"上海市新川中学", type:"普高", score:645.5, trend:"—" },
-  { district:"浦东新区", name:"上海海洋大学附属大团高级中学", type:"普高", score:596, trend:"—" },
-  { district:"浦东新区", name:"上海市新场中学", type:"普高", score:564, trend:"—" },
-  { district:"浦东新区", name:"上海市文建中学", type:"普高", score:589, trend:"—" },
-  { district:"浦东新区", name:"上海市陆行中学", type:"普高", score:635, trend:"—" },
-  { district:"浦东新区", name:"上海市浦东中学", type:"普高", score:581, trend:"—" },
-  { district:"浦东新区", name:"上海立信会计金融学院附属高行中学", type:"普高", score:627.5, trend:"—" },
-  { district:"浦东新区", name:"上海海事大学附属北蔡高级中学", type:"区重点", score:663, trend:"—" },
-  { district:"浦东新区", name:"上海市香山中学", type:"普高", score:603, trend:"—" },
-  { district:"浦东新区", name:"上海民办华曜浦东实验学校", type:"民办", score:660.5, trend:"↑" },
-  { district:"浦东新区", name:"上海市民办尚德实验学校", type:"民办", score:621, trend:"—" },
-  { district:"浦东新区", name:"上海市浦东复旦附中分校(民办班)", type:"民办", score:703.5, trend:"—" },
+  { district:"浦东新区", name:"上海中学", type:"市重点", score:710, score2026:715.5, trend:"↑" },
+  { district:"浦东新区", name:"复旦大学附属中学", type:"市重点", score:710, score2026:715, trend:"↑" },
+  { district:"浦东新区", name:"华东师范大学第二附属中学", type:"市重点", score:709.5, score2026:715, trend:"↑" },
+  { district:"浦东新区", name:"上海交通大学附属中学", type:"市重点", score:709.5, score2026:714, trend:"↑" },
+  { district:"浦东新区", name:"上海市实验学校", type:"市重点", score:703, score2026:709, trend:"—" },
+  { district:"浦东新区", name:"上海市浦东复旦附中分校", type:"市重点", score:703.5, score2026:710, trend:"↑" },
+  { district:"浦东新区", name:"上海市建平中学", type:"市重点", score:699.5, score2026:706, trend:"—" },
+  { district:"浦东新区", name:"上海市进才中学", type:"市重点", score:696.5, score2026:703.5, trend:"—" },
+  { district:"浦东新区", name:"上海中学东校", type:"市重点", score:692, score2026:700, trend:"—" },
+  { district:"浦东新区", name:"上海市洋泾中学", type:"区重点", score:689.5, score2026:697, trend:"—" },
+  { district:"浦东新区", name:"上海市川沙中学", type:"区重点", score:686.5, score2026:695.5, trend:"—" },
+  { district:"浦东新区", name:"华东师范大学附属东昌中学", type:"区重点", score:673, score2026:686.5, trend:"—" },
+  { district:"浦东新区", name:"上海南汇中学", type:"区重点", score:674, score2026:685, trend:"—" },
+  { district:"浦东新区", name:"上海市高桥中学", type:"区重点", score:672.5, score2026:684, trend:"—" },
+  { district:"浦东新区", name:"上海市建平中学筠溪分校", type:"普高", score:678.5, score2026:690.5, trend:"新" },
+  { district:"浦东新区", name:"上海市进才中学根林分校", type:"普高", score:670, score2026:682, trend:"新" },
+  { district:"浦东新区", name:"华东理工大学附属浦东科技高级中学", type:"普高", score:654.5, score2026:665, trend:"新" },
+  { district:"浦东新区", name:"华东师范大学附属周浦中学", type:"普高", score:654.5, score2026:667, trend:"—" },
+  { district:"浦东新区", name:"华东师范大学附属浦东临港高级中学", type:"普高", score:640, score2026:654.5, trend:"新" },
+  { district:"浦东新区", name:"上海市川沙中学友仁分校", type:"普高", score:665, score2026:678, trend:"新" },
+  { district:"浦东新区", name:"上海市浦东外国语学校东校", type:"普高", score:634, score2026:642, trend:"—" },
+  { district:"浦东新区", name:"上海市三林中学", type:"普高", score:634.5, score2026:647.5, trend:"—" },
+  { district:"浦东新区", name:"上海市杨思高级中学", type:"普高", score:626, score2026:641, trend:"—" },
+  { district:"浦东新区", name:"上海市新川中学", type:"普高", score:645.5, score2026:658, trend:"—" },
+  { district:"浦东新区", name:"上海海洋大学附属大团高级中学", type:"普高", score:596, score2026:610.5, trend:"—" },
+  { district:"浦东新区", name:"上海市新场中学", type:"普高", score:564, score2026:579, trend:"—" },
+  { district:"浦东新区", name:"上海市文建中学", type:"普高", score:589, score2026:605.5, trend:"—" },
+  { district:"浦东新区", name:"上海市陆行中学", type:"普高", score:635, score2026:646.5, trend:"—" },
+  { district:"浦东新区", name:"上海市浦东中学", type:"普高", score:581, score2026:600, trend:"—" },
+  { district:"浦东新区", name:"上海立信会计金融学院附属高行中学", type:"普高", score:627.5, score2026:637.5, trend:"—" },
+  { district:"浦东新区", name:"上海海事大学附属北蔡高级中学", type:"区重点", score:663, score2026:674.5, trend:"—" },
+  { district:"浦东新区", name:"上海市香山中学", type:"普高", score:603, score2026:619.5, trend:"—" },
+  { district:"浦东新区", name:"上海民办华曜浦东实验学校", type:"民办", score:660.5, score2026:672.5, trend:"↑" },
+  { district:"浦东新区", name:"上海市民办尚德实验学校", type:"民办", score:621, score2026:627, trend:"—" },
+  { district:"浦东新区", name:"上海市浦东复旦附中分校(民办班)", type:"民办", score:703.5, score2026:710, trend:"—" },
 
   // 闵行区
-  { district:"闵行区", name:"上海市七宝中学", type:"市重点", score:699, trend:"—" },
-  { district:"闵行区", name:"华东师范大学第二附属中学闵行紫竹分校", type:"市重点", score:695, trend:"↑" },
-  { district:"闵行区", name:"上海交通大学附属中学闵行分校", type:"市重点", score:697, trend:"↑" },
-  { district:"闵行区", name:"上海师范大学附属中学闵行分校", type:"市重点", score:691.5, trend:"↑" },
-  { district:"闵行区", name:"上海市闵行中学", type:"市重点", score:685.5, trend:"—" },
-  { district:"闵行区", name:"上海市莘庄中学", type:"区重点", score:667.5, trend:"—" },
-  { district:"闵行区", name:"上海外国语大学闵行外国语中学", type:"区重点", score:679.5, trend:"↑" },
-  { district:"闵行区", name:"华东理工大学附属闵行科技高级中学", type:"普高", score:645.5, trend:"—" },
+  { district:"闵行区", name:"上海市七宝中学", type:"市重点", score:699, trend:"—" , score2026:705},
+  { district:"闵行区", name:"华东师范大学第二附属中学闵行紫竹分校", type:"市重点", score:695, trend:"↑" , score2026:702.5},
+  { district:"闵行区", name:"上海交通大学附属中学闵行分校", type:"市重点", score:697, trend:"↑" , score2026:704.5},
+  { district:"闵行区", name:"上海师范大学附属中学闵行分校", type:"市重点", score:691.5, trend:"↑" , score2026:699.5},
+  { district:"闵行区", name:"上海市闵行中学", type:"市重点", score:685.5, trend:"—" , score2026:694},
+  { district:"闵行区", name:"上海市莘庄中学", type:"区重点", score:667.5, trend:"—" , score2026:679},
+  { district:"闵行区", name:"上海外国语大学闵行外国语中学", type:"区重点", score:679.5, trend:"↑" , score2026:688.5},
+  { district:"闵行区", name:"华东理工大学附属闵行科技高级中学", type:"普高", score:645.5, trend:"—" , score2026:661},
   { district:"闵行区", name:"上海市闵行第三中学", type:"普高", score:652.5, trend:"—" },
   { district:"闵行区", name:"上海市七宝中学附属鑫都实验中学", type:"普高", score:664.5, trend:"↑" },
-  { district:"闵行区", name:"上海市闵行中学东校", type:"普高", score:639, trend:"—" },
-  { district:"闵行区", name:"上海交通大学附属闵行实验学校", type:"普高", score:665, trend:"新" },
-  { district:"闵行区", name:"上海市七宝中学浦江分校", type:"普高", score:659.5, trend:"—" },
-  { district:"闵行区", name:"上海市闵行区实验高级中学", type:"普高", score:623.5, trend:"—" },
-  { district:"闵行区", name:"上海中医药大学附属浦江高级中学", type:"普高", score:601.5, trend:"—" },
-  { district:"闵行区", name:"上海市金汇高级中学", type:"普高", score:594, trend:"—" },
-  { district:"闵行区", name:"北京外国语大学附属上海闵行田园高级中学", type:"普高", score:635, trend:"—" },
-  { district:"闵行区", name:"上海市古美高级中学", type:"普高", score:614, trend:"—" },
+  { district:"闵行区", name:"上海市闵行中学东校", type:"普高", score:639, trend:"—" , score2026:654},
+  { district:"闵行区", name:"上海交通大学附属闵行实验学校", type:"普高", score:665, trend:"新" , score2026:680},
+  { district:"闵行区", name:"上海市七宝中学浦江分校", type:"普高", score:659.5, trend:"—" , score2026:673.5},
+  { district:"闵行区", name:"上海市闵行区实验高级中学", type:"普高", score:623.5, trend:"—" , score2026:639.5},
+  { district:"闵行区", name:"上海中医药大学附属浦江高级中学", type:"普高", score:601.5, trend:"—" , score2026:620},
+  { district:"闵行区", name:"上海市金汇高级中学", type:"普高", score:594, trend:"—" , score2026:614.5},
+  { district:"闵行区", name:"北京外国语大学附属上海闵行田园高级中学", type:"普高", score:635, trend:"—" , score2026:652},
+  { district:"闵行区", name:"上海市古美高级中学", type:"普高", score:614, trend:"—" , score2026:634},
   { district:"闵行区", name:"上海市文来中学", type:"民办", score:648, trend:"↑" },
   { district:"闵行区", name:"上海市民办文绮中学", type:"民办", score:613.5, trend:"—" },
-  { district:"闵行区", name:"上海市闵行区教育学院附属中学", type:"普高", score:585.5, trend:"—" },
-  { district:"闵行区", name:"上海闵行区协和双语教科学校", type:"民办", score:576.5, trend:"—" },
+  { district:"闵行区", name:"上海市闵行区教育学院附属中学", type:"普高", score:585.5, trend:"—" , score2026:607},
+  { district:"闵行区", name:"上海闵行区协和双语教科学校", type:"民办", score:576.5, trend:"—" , score2026:598.5},
   { district:"闵行区", name:"上海市民办燎原双语高级中学", type:"民办", score:571.5, trend:"—" },
   { district:"闵行区", name:"华东师范大学附属闵行永德学校", type:"普高", score:629, trend:"新" },
-  { district:"闵行区", name:"上海闵行区万科双语学校", type:"民办", score:539.5, trend:"—" },
+  { district:"闵行区", name:"上海闵行区万科双语学校", type:"民办", score:539.5, trend:"—" , score2026:558},
 
   // 杨浦区（2025年官方数据 | 来源：杨浦区人民政府）
-  { district:"杨浦区", name:"复旦大学附属中学", type:"四校", score:707.5, trend:"—" },
-  { district:"杨浦区", name:"上海交通大学附属中学", type:"四校", score:707, trend:"—" },
-  { district:"杨浦区", name:"华东师范大学第二附属中学", type:"四校", score:707, trend:"—" },
-  { district:"杨浦区", name:"上海市上海中学", type:"四校", score:707, trend:"—" },
-  { district:"杨浦区", name:"上海市控江中学", type:"市重点", score:690, trend:"↑" },
-  { district:"杨浦区", name:"上海市杨浦高级中学", type:"市重点", score:683.5, trend:"↑" },
-  { district:"杨浦区", name:"复旦大学第二附属中学", type:"市重点", score:688, trend:"—" },
-  { district:"杨浦区", name:"同济大学第一附属中学", type:"市重点", score:677.5, trend:"↑" },
-  { district:"杨浦区", name:"上海理工大学附属中学", type:"区重点", score:661, trend:"—" },
-  { district:"杨浦区", name:"上海市市东实验学校", type:"区重点", score:650, trend:"—" },
-  { district:"杨浦区", name:"上海财经大学附属中学", type:"普高", score:638, trend:"—" },
-  { district:"杨浦区", name:"上海市复旦实验中学", type:"普高", score:631, trend:"—" },
-  { district:"杨浦区", name:"上海市同济中学", type:"普高", score:619.5, trend:"—" },
-  { district:"杨浦区", name:"上海市中原中学", type:"普高", score:606, trend:"—" },
-  { district:"杨浦区", name:"上海理工大学附属杨浦少云中学", type:"普高", score:591.5, trend:"—" },
-  { district:"杨浦区", name:"上海市民星中学", type:"普高", score:573.5, trend:"—" },
+  { district:"杨浦区", name:"复旦大学附属中学", type:"四校", score:707.5, score2026:714, trend:"—" },
+  { district:"杨浦区", name:"上海交通大学附属中学", type:"四校", score:707, score2026:714, trend:"—" },
+  { district:"杨浦区", name:"华东师范大学第二附属中学", type:"四校", score:707, score2026:714, trend:"—" },
+  { district:"杨浦区", name:"上海市上海中学", type:"四校", score:707, score2026:715.5, trend:"—" },
+  { district:"杨浦区", name:"上海市控江中学", type:"市重点", score:690, score2026:699.5, trend:"↑" },
+  { district:"杨浦区", name:"上海市杨浦高级中学", type:"市重点", score:683.5, score2026:691.5, trend:"↑" },
+  { district:"杨浦区", name:"复旦大学第二附属中学", type:"市重点", score:688, score2026:696, trend:"—" },
+  { district:"杨浦区", name:"同济大学第一附属中学", type:"市重点", score:677.5, score2026:686, trend:"↑" },
+  { district:"杨浦区", name:"上海理工大学附属中学", type:"区重点", score:661, score2026:673.5, trend:"—" },
+  { district:"杨浦区", name:"上海市市东实验学校", type:"区重点", score:650, score2026:663, trend:"—" },
+  { district:"杨浦区", name:"上海财经大学附属中学", type:"普高", score:638, score2026:650.5, trend:"—" },
+  { district:"杨浦区", name:"上海市复旦实验中学", type:"普高", score:631, score2026:640.5, trend:"—" },
+  { district:"杨浦区", name:"上海市同济中学", type:"普高", score:619.5, score2026:627, trend:"—" },
+  { district:"杨浦区", name:"上海市中原中学", type:"普高", score:606, score2026:610, trend:"—" },
+  { district:"杨浦区", name:"上海理工大学附属杨浦少云中学", type:"普高", score:591.5, score2026:593.5, trend:"—" },
+  { district:"杨浦区", name:"上海市民星中学", type:"普高", score:573.5, score2026:550.5, trend:"—" },
   { district:"杨浦区", name:"上海市体育学院附属中学", type:"普高", score:562, trend:"—" },
-  { district:"杨浦区", name:"上海存志高级中学", type:"民办", score:655, trend:"—" },
-  { district:"杨浦区", name:"上海市民办上实剑桥外国语中学", type:"民办", score:518, trend:"—" },
-  { district:"杨浦区", name:"上海青浦区世外高级中学", type:"民办(外区)", score:688, trend:"—" },
-  { district:"杨浦区", name:"上海市松江九峰实验学校", type:"民办(外区)", score:653, trend:"—" },
-  { district:"杨浦区", name:"上海市久隆模范中学", type:"普高(外区)", score:609, trend:"—" },
+  { district:"杨浦区", name:"上海存志高级中学", type:"民办", score:655, score2026:653.5, trend:"—" },
+  { district:"杨浦区", name:"上海市民办上实剑桥外国语中学", type:"民办", score:518, score2026:506, trend:"—" },
+  { district:"杨浦区", name:"上海青浦区世外高级中学", type:"民办(外区)", score:688, score2026:627.5, trend:"—" },
+  { district:"杨浦区", name:"上海市松江九峰实验学校", type:"民办(外区)", score:653, score2026:652.5, trend:"—" },
+  { district:"杨浦区", name:"上海市久隆模范中学", type:"普高(外区)", score:609, score2026:653, trend:"—" },
 
   // 徐汇区
   { district:"徐汇区", name:"上海中学", type:"市重点", score:712, trend:"↑" },
   { district:"徐汇区", name:"复旦大学附属中学", type:"市重点", score:712, trend:"↑" },
   { district:"徐汇区", name:"上海交通大学附属中学", type:"市重点", score:712, trend:"↑" },
   { district:"徐汇区", name:"华东师范大学第二附属中学", type:"市重点", score:711.5, trend:"↑" },
-  { district:"徐汇区", name:"上海市第二中学(梅陇校区)", type:"市重点", score:690, trend:"—" },
-  { district:"徐汇区", name:"上海市南洋模范中学", type:"市重点", score:698, trend:"—" },
-  { district:"徐汇区", name:"上海市位育中学", type:"市重点", score:693, trend:"—" },
+  { district:"徐汇区", name:"上海市第二中学(梅陇校区)", type:"市重点", score:690, trend:"—" , score2026:697},
+  { district:"徐汇区", name:"上海市南洋模范中学", type:"市重点", score:698, trend:"—" , score2026:705},
+  { district:"徐汇区", name:"上海市位育中学", type:"市重点", score:693, trend:"—" , score2026:700},
   { district:"徐汇区", name:"上海市市二中学", type:"市重点", score:683, trend:"—" },
-  { district:"徐汇区", name:"上海市南洋中学", type:"区重点", score:672, trend:"—" },
-  { district:"徐汇区", name:"上海市徐汇中学", type:"区重点", score:668, trend:"—" },
+  { district:"徐汇区", name:"上海市南洋中学", type:"区重点", score:672, trend:"—" , score2026:685.5},
+  { district:"徐汇区", name:"上海市徐汇中学", type:"区重点", score:668, trend:"—" , score2026:674},
   { district:"徐汇区", name:"上海市中国中学", type:"普高", score:653, trend:"—" },
   { district:"徐汇区", name:"上海市第四中学", type:"普高", score:642, trend:"—" },
-  { district:"徐汇区", name:"上海市零陵中学", type:"普高", score:620, trend:"—" },
-  { district:"徐汇区", name:"上海市西南模范中学", type:"民办", score:660, trend:"—" },
+  { district:"徐汇区", name:"上海市零陵中学", type:"普高", score:620, trend:"—" , score2026:638},
+  { district:"徐汇区", name:"上海市西南模范中学", type:"民办", score:660, trend:"—" , score2026:613.5},
   { district:"徐汇区", name:"上海市西南高级中学", type:"民办", score:623, trend:"—" },
 
   // 黄浦区
-  { district:"黄浦区", name:"上海市格致中学", type:"市重点", score:698, trend:"—" },
-  { district:"黄浦区", name:"上海市大同中学", type:"市重点", score:696, trend:"—" },
+  { district:"黄浦区", name:"上海市格致中学", type:"市重点", score:698, trend:"—" , score2026:691},
+  { district:"黄浦区", name:"上海市大同中学", type:"市重点", score:696, trend:"—" , score2026:695},
   { district:"黄浦区", name:"上海市大境中学", type:"市重点", score:683, trend:"—" },
-  { district:"黄浦区", name:"上海市光明中学", type:"市重点", score:670, trend:"—" },
-  { district:"黄浦区", name:"上海市敬业中学", type:"市重点", score:678, trend:"—" },
-  { district:"黄浦区", name:"上海市卢湾高级中学", type:"市重点", score:660, trend:"—" },
-  { district:"黄浦区", name:"上海市向明中学(浦江校区)", type:"市重点", score:689, trend:"—" },
+  { district:"黄浦区", name:"上海市光明中学", type:"市重点", score:670, trend:"—" , score2026:663},
+  { district:"黄浦区", name:"上海市敬业中学", type:"市重点", score:678, trend:"—" , score2026:678.5},
+  { district:"黄浦区", name:"上海市卢湾高级中学", type:"市重点", score:660, trend:"—" , score2026:669},
+  { district:"黄浦区", name:"上海市向明中学(浦江校区)", type:"市重点", score:689, trend:"—" , score2026:684.5},
   { district:"黄浦区", name:"上海市同济黄浦设计创意中学", type:"普高", score:625, trend:"—" },
   { district:"黄浦区", name:"上海市民办立达中学", type:"民办", score:680, trend:"↑" },
   { district:"黄浦区", name:"上海市震旦外国语中学", type:"民办", score:600, trend:"—" },
 
   // 静安区
-  { district:"静安区", name:"上海市市西中学", type:"市重点", score:695, trend:"—" },
-  { district:"静安区", name:"上海市市北中学", type:"市重点", score:687, trend:"—" },
-  { district:"静安区", name:"上海市育才中学", type:"市重点", score:680, trend:"—" },
-  { district:"静安区", name:"上海市新中高级中学", type:"市重点", score:672, trend:"—" },
-  { district:"静安区", name:"上海市久隆模范中学", type:"普高", score:638, trend:"—" },
+  { district:"静安区", name:"上海市市西中学", type:"市重点", score:695, trend:"—" , score2026:697},
+  { district:"静安区", name:"上海市市北中学", type:"市重点", score:687, trend:"—" , score2026:690},
+  { district:"静安区", name:"上海市育才中学", type:"市重点", score:680, trend:"—" , score2026:684.5},
+  { district:"静安区", name:"上海市新中高级中学", type:"市重点", score:672, trend:"—" , score2026:679.5},
+  { district:"静安区", name:"上海市久隆模范中学", type:"普高", score:638, trend:"—" , score2026:661.5},
   { district:"静安区", name:"上海田家炳中学", type:"民办", score:634.5, trend:"—" },
-  { district:"静安区", name:"上海戏剧学院附属高级中学(艺术班)", type:"特色", score:615.5, trend:"—" },
+  { district:"静安区", name:"上海戏剧学院附属高级中学(艺术班)", type:"特色", score:615.5, trend:"—" , score2026:598},
 
   // 普陀区
-  { district:"普陀区", name:"上海市曹杨第二中学", type:"市重点", score:682, trend:"—" },
-  { district:"普陀区", name:"上海市宜川中学", type:"市重点", score:668, trend:"—" },
-  { district:"普陀区", name:"上海市晋元高级中学", type:"市重点", score:675, trend:"—" },
+  { district:"普陀区", name:"上海市曹杨第二中学", type:"市重点", score:682, trend:"—" , score2026:700.5},
+  { district:"普陀区", name:"上海市宜川中学", type:"市重点", score:668, trend:"—" , score2026:686},
+  { district:"普陀区", name:"上海市晋元高级中学", type:"市重点", score:675, trend:"—" , score2026:693.5},
   { district:"普陀区", name:"上海市曹杨中学", type:"特色高中", score:652, trend:"—" },
   { district:"普陀区", name:"上海市甘泉外国语中学", type:"特色高中", score:645, trend:"—" },
   { district:"普陀区", name:"上海安生学校", type:"民办", score:513, trend:"—" },
   { district:"普陀区", name:"上海音乐学院附属安师实验中学(艺术班)", type:"特色", score:611, trend:"—" },
 
   // 宝山区
-  { district:"宝山区", name:"上海市行知中学", type:"市重点", score:678, trend:"—" },
-  { district:"宝山区", name:"上海大学附属中学", type:"市重点", score:665, trend:"—" },
-  { district:"宝山区", name:"上海市吴淞中学", type:"市重点", score:657, trend:"—" },
+  { district:"宝山区", name:"上海市行知中学", type:"市重点", score:678, trend:"—" , score2026:695},
+  { district:"宝山区", name:"上海大学附属中学", type:"市重点", score:665, trend:"—" , score2026:678},
+  { district:"宝山区", name:"上海市吴淞中学", type:"市重点", score:657, trend:"—" , score2026:681.5},
   { district:"宝山区", name:"上海市民办行中中学", type:"民办", score:513, trend:"—" },
   { district:"宝山区", name:"上海宝山区世外学校", type:"民办", score:679, trend:"新" },
   { district:"宝山区", name:"上海市宝山华曜高级中学", type:"民办", score:594, trend:"—" },
   { district:"宝山区", name:"上海市同洲模范学校", type:"民办", score:547.5, trend:"—" },
 
   // 虹口区（2025年官方数据 | 来源：虹口区教育局）
-  { district:"虹口区", name:"上海市上海中学", type:"四校", score:705.5, trend:"↑" },
-  { district:"虹口区", name:"复旦大学附属中学", type:"四校", score:705, trend:"—" },
-  { district:"虹口区", name:"华东师范大学第二附属中学", type:"四校", score:704, trend:"—" },
-  { district:"虹口区", name:"上海交通大学附属中学", type:"四校", score:703, trend:"—" },
-  { district:"虹口区", name:"复旦大学附属复兴中学", type:"市重点", score:680, trend:"—" },
-  { district:"虹口区", name:"华东师范大学第一附属中学", type:"市重点", score:670.5, trend:"—" },
-  { district:"虹口区", name:"上海财经大学附属北郊高级中学", type:"市重点", score:664.5, trend:"—" },
-  { district:"虹口区", name:"上海师范大学附属虹口中学", type:"区重点", score:641, trend:"—" },
-  { district:"虹口区", name:"上海音乐学院附属北虹高级中学", type:"区重点", score:627, trend:"—" },
-  { district:"虹口区", name:"鲁迅中学", type:"区重点", score:614.5, trend:"—" },
-  { district:"虹口区", name:"同济大学附属澄衷中学", type:"普高", score:594.5, trend:"—" },
-  { district:"虹口区", name:"继光高级中学", type:"区重点", score:567, trend:"—" },
-  { district:"虹口区", name:"上海市第五十二中学", type:"普高", score:514.5, trend:"—" },
+  { district:"虹口区", name:"上海市上海中学", type:"四校", score:705.5, score2026:716.5, trend:"↑" },
+  { district:"虹口区", name:"复旦大学附属中学", type:"四校", score:705, score2026:714.5, trend:"—" },
+  { district:"虹口区", name:"华东师范大学第二附属中学", type:"四校", score:704, score2026:712.5, trend:"—" },
+  { district:"虹口区", name:"上海交通大学附属中学", type:"四校", score:703, score2026:713.5, trend:"—" },
+  { district:"虹口区", name:"复旦大学附属复兴中学", type:"市重点", score:680, score2026:693.5, trend:"—" },
+  { district:"虹口区", name:"华东师范大学第一附属中学", type:"市重点", score:670.5, score2026:682.5, trend:"—" },
+  { district:"虹口区", name:"上海财经大学附属北郊高级中学", type:"市重点", score:664.5, score2026:677.5, trend:"—" },
+  { district:"虹口区", name:"上海师范大学附属虹口中学", type:"区重点", score:641, score2026:654, trend:"—" },
+  { district:"虹口区", name:"上海音乐学院附属北虹高级中学", type:"区重点", score:627, score2026:640.5, trend:"—" },
+  { district:"虹口区", name:"鲁迅中学", type:"区重点", score:614.5, score2026:628.5, trend:"—" },
+  { district:"虹口区", name:"同济大学附属澄衷中学", type:"普高", score:594.5, score2026:612, trend:"—" },
+  { district:"虹口区", name:"继光高级中学", type:"区重点", score:567, score2026:588, trend:"—" },
+  { district:"虹口区", name:"上海市第五十二中学", type:"普高", score:514.5, score2026:534, trend:"—" },
   { district:"虹口区", name:"上海市久隆模范中学", type:"普高(外区)", score:653.5, trend:"—" },
-  { district:"虹口区", name:"上海田家炳中学", type:"民办(外区)", score:640.5, trend:"—" },
-  { district:"虹口区", name:"上海存志高级中学", type:"民办(外区)", score:659, trend:"—" },
-  { district:"虹口区", name:"上海宝山区世外学校", type:"民办(外区)", score:662.5, trend:"—" },
-  { district:"虹口区", name:"上海戏剧学院附属高级中学(艺术班)", type:"特色(外区)", score:620.5, trend:"—" },
-  { district:"虹口区", name:"上海金山区世外学校", type:"民办(外区)", score:625.5, trend:"—" },
-  { district:"虹口区", name:"上海市西外外国语学校", type:"民办(外区)", score:547.5, trend:"—" },
-  { district:"虹口区", name:"上海青浦区世外高级中学", type:"民办(外区)", score:603.5, trend:"—" },
+  { district:"虹口区", name:"上海田家炳中学", type:"民办(外区)", score:640.5, score2026:653, trend:"—" },
+  { district:"虹口区", name:"上海存志高级中学", type:"民办(外区)", score:659, score2026:668.5, trend:"—" },
+  { district:"虹口区", name:"上海宝山区世外学校", type:"民办(外区)", score:662.5, score2026:681.5, trend:"—" },
+  { district:"虹口区", name:"上海戏剧学院附属高级中学(艺术班)", type:"特色(外区)", score:620.5, score2026:556.5, trend:"—" },
+  { district:"虹口区", name:"上海金山区世外学校", type:"民办(外区)", score:625.5, score2026:662, trend:"—" },
+  { district:"虹口区", name:"上海市西外外国语学校", type:"民办(外区)", score:547.5, score2026:563, trend:"—" },
+  { district:"虹口区", name:"上海青浦区世外高级中学", type:"民办(外区)", score:603.5, score2026:628.5, trend:"—" },
 ];
 
 // ═══════════════════════════════════════════════════════
@@ -2455,11 +2770,11 @@ const SCHOOLS_EXTRA = [
   { district:"虹口区", name:"上海外国语大学附属外国语学校", type:"市重点", score:708, trend:"—" },
   { district:"浦东新区", name:"上海外国语大学附属浦东外国语学校", type:"市重点", score:696, trend:"—" },
   { district:"徐汇区", name:"上海师范大学附属中学", type:"市重点", score:688, trend:"—" },
-  { district:"静安区", name:"上海大学市北附属中学", type:"区重点", score:620, trend:"—" },
-  { district:"黄浦区", name:"上海外国语大学附属大境中学", type:"市重点", score:685, trend:"—" },
+  { district:"静安区", name:"上海大学市北附属中学", type:"区重点", score:620, trend:"—" , score2026:572},
+  { district:"黄浦区", name:"上海外国语大学附属大境中学", type:"市重点", score:685, trend:"—" , score2026:674.5},
   { district:"长宁区", name:"东华大学附属中学(上海市第三女子中学)", type:"市重点", score:678, trend:"—" },
-  { district:"嘉定区", name:"上海大学附属嘉定高级中学", type:"区重点", score:630, trend:"—" },
-  { district:"奉贤区", name:"上海中医药大学附属曙光中学", type:"区重点", score:618, trend:"—" },
+  { district:"嘉定区", name:"上海大学附属嘉定高级中学", type:"区重点", score:630, trend:"—" , score2026:624},
+  { district:"奉贤区", name:"上海中医药大学附属曙光中学", type:"区重点", score:618, score2026:659.5, trend:"—" },
   { district:"闵行区", name:"上海戏剧学院附属戏曲学校", type:"特色高中", score:580, trend:"—" },
   { district:"宝山区", name:"上海师范大学附属宝山罗店中学", type:"区重点", score:628, trend:"—" },
   // ── 开放大学/电视大学附属学校 ──
@@ -2489,23 +2804,23 @@ const SCHOOLS_EXTRA = [
   { district:"浦东新区", name:"上海开大附中中侨教学点", type:"民办普高", score:508, trend:"—" },
   { district:"静安区", name:"上海开大附中华文教学点", type:"民办普高", score:493, trend:"—" },
   // ── 遗漏大学附属 ──
-  { district:"金山区", name:"上海体育大学附属金山亭林中学", type:"区重点", score:560, trend:"—" },
-  { district:"浦东新区", name:"上海立信会计金融学院附属高行中学", type:"区重点", score:590, trend:"—" },
-  { district:"浦东新区", name:"上海海洋大学附属大团高级中学", type:"区重点", score:585, trend:"—" },
-  { district:"浦东新区", name:"上海第二工业大学附属龚路中学", type:"普高", score:555, trend:"—" },
-  { district:"松江区", name:"华东政法大学附属松江高级中学", type:"普高", score:610, trend:"—" },
+  { district:"金山区", name:"上海体育大学附属金山亭林中学", type:"区重点", score:560, trend:"—" , score2026:555},
+  { district:"浦东新区", name:"上海立信会计金融学院附属高行中学", type:"区重点", score:590, score2026:637.5, trend:"—" },
+  { district:"浦东新区", name:"上海海洋大学附属大团高级中学", type:"区重点", score:585, score2026:610.5, trend:"—" },
+  { district:"浦东新区", name:"上海第二工业大学附属龚路中学", type:"普高", score:555, score2026:590, trend:"—" },
+  { district:"松江区", name:"华东政法大学附属松江高级中学", type:"普高", score:610, trend:"—" , score2026:672},
   { district:"松江区", name:"东华大学附属松江高级中学", type:"普高", score:605, trend:"—" },
-  { district:"闵行区", name:"北京外国语大学附属上海闵行田园高级中学", type:"区重点", score:620, trend:"—" },
+  { district:"闵行区", name:"北京外国语大学附属上海闵行田园高级中学", type:"区重点", score:620, trend:"—" , score2026:652},
   { district:"上海市", name:"上海科技大学附属学校", type:"一般高中", score:620, trend:"—" },
   // ── 设计创意/艺术特色遗漏 ──
   { district:"黄浦区", name:"上海市同济黄浦设计创意中学", type:"普高", score:626, trend:"—" },
   { district:"宝山区", name:"上海创艺高级中学", type:"民办普高", score:510, trend:"—" },
-  { district:"虹口区", name:"上海音乐学院虹口区北虹高级中学", type:"区重点", score:600, trend:"—" },
+  { district:"虹口区", name:"上海音乐学院虹口区北虹高级中学", type:"区重点", score:600, score2026:640.5, trend:"—" },
   { district:"杨浦区", name:"上海市体育学院附属中学", type:"区重点", score:535, trend:"—" },
   // ── 其他民办普高 ──
   { district:"青浦区", name:"上海博雅学校", type:"民办普高", score:510, trend:"—" },
 ];
-const SCHOOLS_ALL = SCHOOLS.concat(SCHOOLS_EXTRA);
+const SCHOOLS_ALL = SCHOOLS.concat(SCHOOLS_EXTRA).filter((s,i,a)=>a.findIndex(x=>x.district===s.district&&x.name===s.name)===i);
 
 // ═══════════════════════════════════════════════════════
 // 核心逻辑
@@ -2618,33 +2933,123 @@ function switchTab(name) {
     initSmart();
     window._smartLoaded = true;
   }
+
+  // 移动端：将激活 Tab 滚动到可见区域
+  const tabsEl = document.querySelector('.tabs');
+  if (tabsEl && event.currentTarget) {
+    const tabEl = event.currentTarget;
+    const tabsRect = tabsEl.getBoundingClientRect();
+    const tabRect = tabEl.getBoundingClientRect();
+    // 如果激活 tab 不完全在可视区，滚动使其居中显示
+    if (tabRect.left < tabsRect.left || tabRect.right > tabsRect.right) {
+      const scrollTarget = tabRect.left - tabsRect.left - tabsRect.width / 2 + tabRect.width / 2 + tabsEl.scrollLeft;
+      tabsEl.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+    }
+    // 更新渐变遮罩状态
+    updateTabsScrollState(tabsEl);
+  }
+}
+
+// 更新 Tabs 滚动位置状态类（控制渐变遮罩显隐）
+function updateTabsScrollState(tabsEl) {
+  if (!tabsEl) return;
+  tabsEl.classList.toggle('at-start', tabsEl.scrollLeft <= 3);
+  tabsEl.classList.toggle('at-end', tabsEl.scrollLeft >= tabsEl.scrollWidth - tabsEl.clientWidth - 3);
 }
 
 // —— 高中分数线库 ——
+// 录取分展示：优先 2026 实际线，无则回退 2025 线
+function schoolScoreView(s){
+  const has26 = typeof s.score2026 === 'number';
+  const val = has26 ? s.score2026 : s.score;
+  const color = val>=700?'#dc2626':val>=680?'#ea580c':val>=620?'#ca8a04':val>=501?'#16a34a':'#64748b';
+  return { val, color, has26, prev: has26 ? s.score : null };
+}
+
+// 差值色块徽章：涨=绿底▲，跌=红底▼，平=灰底
+function diffBadge(v, p){
+  if (v === p) return '<span class="diff-badge diff-flat">±0</span>';
+  const d = (v - p).toFixed(1);
+  return v > p
+    ? `<span class="diff-badge diff-up">▲${d}</span>`
+    : `<span class="diff-badge diff-down">▼${Math.abs(d)}</span>`;
+}
+
+// 移动端表格卡片化：从所属 table 的 thead 读取列名，注入到每个 td 的 data-label
+// 仅对显式调用过本函数的数据表生效（其余表格无 data-label，保持横滑）
+function tagTableCells(tbody) {
+  if (!tbody) return;
+  const table = tbody.closest('table');
+  if (!table) return;
+  const ths = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim().replace(/\s+/g, ''));
+  if (!ths.length) return;
+  Array.from(tbody.querySelectorAll('tr')).forEach(tr => {
+    // 跳过分组标题行（含 colspan 占满整行的行，如「体制内 · 普通高中」）
+    if (tr.querySelector('td[colspan]')) return;
+    Array.from(tr.children).forEach((td, i) => {
+      if (!ths[i]) return;
+      // data-label 保留用于 CSS 选择器
+      if (!td.hasAttribute('data-label')) td.setAttribute('data-label', ths[i]);
+      const label = ths[i];
+      // 名称列：作为卡片标题行，加 .name-col 类（不注入前缀标签）
+      if (/学校|名称/.test(label)) { td.classList.add('name-col'); return; }
+      // 避免重复注入
+      if (td.querySelector('.cl')) return;
+      const sp = document.createElement('span');
+      sp.className = 'cl';
+      sp.textContent = label;
+      td.insertBefore(sp, td.firstChild);
+    });
+  });
+}
+
+// 高中库排序：按2026线 / 按涨跌（无2026线的校始终排最后）
+function sortSchoolsArr(arr){
+  const el = document.getElementById('sortSelect');
+  const sort = el ? el.value : 'default';
+  if (sort === 'default') return arr;
+  if (sort === 'score26desc'){
+    return arr.slice().sort((a,b)=> (b.score2026 ?? -1) - (a.score2026 ?? -1));
+  }
+  const diffVal = s => (typeof s.score2026 === 'number') ? (s.score2026 - s.score) : null;
+  return arr.slice().sort((a,b)=>{
+    const da = diffVal(a), db = diffVal(b);
+    if (da === null && db === null) return 0;
+    if (da === null) return 1;
+    if (db === null) return -1;
+    return sort === 'diffUp' ? db - da : da - db;
+  });
+}
+
 function renderSchoolTable() {
   const tbody = document.getElementById('schoolTableBody');
-  tbody.innerHTML = SCHOOLS_ALL.map((s, i) => {
+  tbody.innerHTML = sortSchoolsArr(SCHOOLS_ALL).map((s, i) => {
     const sys = SCHOOL_META.getSystem(s);
     const plan = SCHOOL_META.getPlan(s);
     const affil = SCHOOL_META.affiliations[s.name] || '—';
     const affilTag = affil !== '—' ? `<span class="affil-tag">${affil}</span>` : '';
+    const sv = schoolScoreView(s);
     return `
     <tr class="clickable-row" id="row-hs-${i}" onclick="showSchoolDetail(${i})">
       <td>${s.district}</td>
-      <td><b>${s.name}</b>${affilTag}</td>
+      <td><b>${s.name}</b>${affilTag}<span class="detail-hint" title="点击查看详情">›</span></td>
       <td><span class="badge ${getTypeBadge(s.type)}">${normalizeType(s.type)}</span></td>
       <td><span class="badge ${sys==='体制内'?'b-txnei':'b-txwai'}">${sys}</span></td>
       <td><span class="badge ${plan==='计划内'?'b-planin':'b-planout'}">${plan}</span></td>
-      <td><b style="color:${s.score>=700?'#dc2626':s.score>=680?'#ea580c':s.score>=620?'#ca8a04':s.score>=501?'#16a34a':'#64748b'}">${s.score}</b>分</td>
+      <td>${sv.has26
+        ? `<b style="color:${sv.color}">${sv.val}</b><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <span style="color:#94a3b8">${sv.prev}</span><span class="yr-badge yr25">2025</span> ${diffBadge(sv.val, sv.prev)}`
+        : `<span style="color:#9a3412">—</span><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <b style="color:${sv.color}">${sv.val}</b><span class="yr-badge yr25">2025</span> <span style="color:#6b7280;font-size:12px">官方未发布统招线</span>`
+      }</td>
       <td>${s.trend}</td>
     </tr>`}).join('');
   document.getElementById('schoolCount').textContent = SCHOOLS_ALL.length;
+  tagTableCells(tbody);
   window._allSchools = SCHOOLS_ALL;
 }
 
 function filterSchools() {
-  const district = document.getElementById('districtFilter').value;
-  const type = document.getElementById('typeFilter').value;
+  const district = document.getElementById('districtFilter').value || 'all';
+  const type = document.getElementById('typeFilter').value || 'all';
   const min = parseInt(document.getElementById('minScore').value) || 0;
   const max = parseInt(document.getElementById('maxScore').value) || 999;
 
@@ -2657,23 +3062,28 @@ function filterSchools() {
   // 类型徽章已统一走 getTypeBadge()（见 renderSchoolTable / filterSchools），废弃 getBadgeClass
 
   const tbody = document.getElementById('schoolTableBody');
-  tbody.innerHTML = filtered.map((s, idx) => {
+  tbody.innerHTML = sortSchoolsArr(filtered).map((s, idx) => {
     const origIdx = SCHOOLS_ALL.indexOf(s);
     const sys = SCHOOL_META.getSystem(s);
     const plan = SCHOOL_META.getPlan(s);
     const affil = SCHOOL_META.affiliations[s.name] || '—';
     const affilTag = affil !== '—' ? `<span class="affil-tag">${affil}</span>` : '';
+    const sv = schoolScoreView(s);
     return `
     <tr class="clickable-row" id="row-hs-${origIdx}" onclick="showSchoolDetail(${origIdx})">
       <td>${s.district}</td>
-      <td><b>${s.name}</b>${affilTag}</td>
+      <td><b>${s.name}</b>${affilTag}<span class="detail-hint" title="点击查看详情">›</span></td>
       <td><span class="badge ${getTypeBadge(s.type)}">${normalizeType(s.type)}</span></td>
       <td><span class="badge ${sys==='体制内'?'b-txnei':'b-txwai'}">${sys}</span></td>
       <td><span class="badge ${plan==='计划内'?'b-planin':'b-planout'}">${plan}</span></td>
-      <td><b style="color:${s.score>=700?'#dc2626':s.score>=680?'#ea580c':s.score>=620?'#ca8a04':s.score>=501?'#16a34a':'#64748b'}">${s.score}</b>分</td>
+      <td>${sv.has26
+        ? `<b style="color:${sv.color}">${sv.val}</b><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <span style="color:#94a3b8">${sv.prev}</span><span class="yr-badge yr25">2025</span> ${diffBadge(sv.val, sv.prev)}`
+        : `<span style="color:#9a3412">—</span><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <b style="color:${sv.color}">${sv.val}</b><span class="yr-badge yr25">2025</span> <span style="color:#6b7280;font-size:12px">官方未发布统招线</span>`
+      }</td>
       <td>${s.trend}</td>
     </tr>`}).join('');
   document.getElementById('schoolCount').textContent = filtered.length;
+  tagTableCells(tbody);
 }
 
 // —— 中本贯通专业库 ——
@@ -2713,6 +3123,7 @@ function renderZbTable() {
     </tr>`;
   }).join('');
   document.getElementById('zbCount').textContent = ZB_MAJORS.length;
+  tagTableCells(tbody);
   updateZbStats(ZB_MAJORS);
   window._allZbMajors = ZB_MAJORS;
 }
@@ -2744,6 +3155,7 @@ function filterZbMajors() {
     </tr>`;
   }).join('');
   document.getElementById('zbCount').textContent = filtered.length;
+  tagTableCells(tbody);
   updateZbStats(filtered);
 }
 
@@ -2766,9 +3178,10 @@ function renderIntlTable() {
       <td><span class="badge ${planBadge}">${planLabel}</span></td>
       <td>${s.plan}</td>
       <td>${s.tuition}</td>
-      <td style="font-size:13px;color:#64748b;">—</td>
+        <td style="font-size:13px;color:#64748b;">—</td>
     </tr>`;
   }).join('');
+  tagTableCells(tbody);
 }
 
 // —— 艺术特色学校 ——
@@ -2803,6 +3216,7 @@ function renderArtTable() {
       </tr>`;
   }).join('');
   document.getElementById('artCount').textContent = ART_SCHOOLS.length;
+  tagTableCells(tbody);
 }
 
 function filterArtSchools() {
@@ -2847,6 +3261,7 @@ function filterArtSchools() {
       </tr>`;
   }).join('');
   document.getElementById('artCount').textContent = filtered.length;
+  tagTableCells(tbody);
 }
 
 // —— 中高职贯通 / 五年一贯制 ——
@@ -2868,6 +3283,7 @@ function renderZwgtTable() {
       </tr>`;
   }).join('');
   document.getElementById('zwCount').textContent = ZWGT_DATA.length;
+  tagTableCells(tbody);
 }
 
 function filterZwgt() {
@@ -2899,6 +3315,7 @@ function filterZwgt() {
       </tr>`;
   }).join('');
   document.getElementById('zwCount').textContent = filtered.length;
+  tagTableCells(tbody);
 }
 
 // —— 学校详情弹窗 ——
@@ -2910,7 +3327,8 @@ function showSchoolDetail(idx) {
   const affil = SCHOOL_META.affiliations[s.name] || '无';
   const sysBadge = sys === '体制内' ? 'b-txnei' : 'b-txwai';
   const planBadge = plan === '计划内' ? 'b-planin' : 'b-planout';
-  const scoreColor = s.score >= 700 ? '#dc2626' : s.score >= 680 ? '#ea580c' : s.score >= 620 ? '#ca8a04' : s.score >= 501 ? '#16a34a' : '#64748b';
+  const sv = schoolScoreView(s);
+  const scoreColor = sv.color;
   const typeBadge = getTypeBadge(s.type);
 
   document.getElementById('modalSchoolName').textContent = s.name;
@@ -2934,9 +3352,10 @@ function showSchoolDetail(idx) {
       <span class="info-value">${affil !== '—' ? '<b style="color:#b45309;">'+affil+'</b>' : '无'}</span>
     </div>
     <div class="info-row">
-      <span class="info-label">📊 录取分（2025实际）</span>
-      <span class="info-value"><b style="color:${scoreColor};font-size:22px;">${s.score}</b> 分</span>
+      <span class="info-label">📊 录取分${sv.has26?'（2026实际）':'（2025实际）'}</span>
+      <span class="info-value"><b style="color:${scoreColor};font-size:22px;">${sv.val}</b> 分${sv.has26?'<span class="yr-badge yr26" style="font-size:12px;">2026实际</span>':''}</span>
     </div>
+    ${sv.has26?'':`<div class="info-row"><span class="info-label">⏳ 2026线</span><span class="info-value" style="color:#9a3412;font-size:14px;">本区暂未采集到2026实际线（已采128所/16区，其余多为无统招线的开大附中系列及跨区分校）</span></div>`}
     <div class="info-row">
       <span class="info-label">📈 分数趋势</span>
       <span class="info-value">${s.trend === '↑' ? '上升' : s.trend === '↓' ? '下降' : s.trend === '新' ? '新招生' : '持平'}</span>
@@ -2960,11 +3379,11 @@ function showSchoolDetail(idx) {
     <div class="info-row">
       <span class="info-label">💡 升学建议</span>
       <span class="info-value" style="font-size:14px;color:#475569;">
-        ${s.score >= 700 ? '顶尖学校，适合年级前1%学霸。重点关注自主招生与名额分配到区。' :
-          s.score >= 680 ? '市重点层次，名额分配到校是普通初中学生逆袭的最佳机会。' :
-          s.score >= 620 ? '区重点/中上层次，建议志愿合理拉开梯度，兼顾冲稳保。' :
-          s.score >= 550 ? '中等定位，可同时考虑中本贯通热门专业作为备选路径。' :
-          s.score >= 501 ? '公办普高定位，按部就班走高考路线；志愿合理拉开梯度，可同时关注中本贯通作为备选。' :
+        ${sv.val >= 700 ? '顶尖学校，适合年级前1%学霸。重点关注自主招生与名额分配到区。' :
+          sv.val >= 680 ? '市重点层次，名额分配到校是普通初中学生逆袭的最佳机会。' :
+          sv.val >= 620 ? '区重点/中上层次，建议志愿合理拉开梯度，兼顾冲稳保。' :
+          sv.val >= 550 ? '中等定位，可同时考虑中本贯通热门专业作为备选路径。' :
+          sv.val >= 501 ? '公办普高定位，按部就班走高考路线；志愿合理拉开梯度，可同时关注中本贯通作为备选。' :
           '分数在控分线附近，可考虑民办普高（降分录取但学费较高）或中本/中高职贯通作为稳妥路径。'}
       </span>
     </div>
@@ -2989,6 +3408,7 @@ function renderArtYtlTable() {
       <td><b>${s.school}</b></td>
     </tr>`).join('');
   document.getElementById('artYtlCount').textContent = filtered.length;
+  tagTableCells(tbody);
 }
 
 // —— 官方体育一条龙学校表 ——
@@ -3006,6 +3426,7 @@ function renderSportsYtlTable() {
       <td><b>${s.school}</b></td>
     </tr>`).join('');
   document.getElementById('sportsYtlCount').textContent = filtered.length;
+  tagTableCells(tbody);
 }
 
 // —— 2026年国际课程班招生计划表 ——
@@ -3021,6 +3442,7 @@ function renderIntl2026Plan() {
       <td>${s.local}</td>
       <td>${s.nonLocal}</td>
     </tr>`).join('');
+  tagTableCells(tbody);
 }
 
 // —— 全局搜索 ——
@@ -3316,8 +3738,18 @@ function switchTabGlobal(name) {
   if (name === 'zwgt' && !window._zwgtLoaded) { renderZwgtTable(); window._zwgtLoaded = true; }
 }
 
-// 页面加载时建立搜索索引
-document.addEventListener('DOMContentLoaded', function() { buildSearchIndex(); });
+// 页面加载时建立搜索索引 + 初始化移动端 Tabs 滚动状态
+document.addEventListener('DOMContentLoaded', function() {
+  buildSearchIndex();
+  // 初始化 tabs 渐变遮罩状态
+  const tabsEl = document.querySelector('.tabs');
+  if (tabsEl) {
+    updateTabsScrollState(tabsEl);
+    tabsEl.addEventListener('scroll', () => updateTabsScrollState(tabsEl), { passive: true });
+    // 窗口 resize 时也更新
+    window.addEventListener('resize', () => updateTabsScrollState(tabsEl), { passive: true });
+  }
+});
 
 // Esc 关闭学校弹窗 / 全局搜索；Tab 键盘导航
 document.addEventListener('keydown', function(e) {
@@ -3348,6 +3780,9 @@ renderZbTable();
 renderIntlTable();
 renderArtTable();
 renderZwgtTable();
+// 静态表（全路径对比）也做移动端卡片化
+const pct = document.getElementById('pathCompareTable');
+if (pct) tagTableCells(pct.querySelector('tbody'));
 // 初始化官方一条龙学校表
 if (typeof renderArtYtlTable === 'function') renderArtYtlTable();
 if (typeof renderSportsYtlTable === 'function') renderSportsYtlTable();
@@ -3398,11 +3833,17 @@ function buildSmartItems(){
     label:m.school+' · '+m.major, sub:m.type+'（'+m.years+'）· '+m.degree,
     score:m.score, scorePrev:null, category:m.category, old:false
   }));
-  SCHOOLS_ALL.forEach((m,i)=> items.push({
-    src:'hs', path:'hs', id:'hs'+i,
-    label:m.name, sub:m.district+' · '+normalizeType(m.type),
-    score:m.score, scorePrev:null, category:normalizeType(m.type), old:true
-  }));
+  SCHOOLS_ALL.forEach((m,i)=>{
+    const has26 = typeof m.score2026 === 'number';
+    items.push({
+      src:'hs', path:'hs', id:'hs'+i,
+      label:m.name, sub:m.district+' · '+normalizeType(m.type),
+      score: has26 ? m.score2026 : m.score,
+      scorePrev: has26 ? m.score : null,
+      category:normalizeType(m.type),
+      old: !has26
+    });
+  });
   window._smartItems = items;
   return items;
 }
@@ -3414,7 +3855,7 @@ function pathClass(p){ return p==='hs'?'cc-hs' : p==='zb'?'cc-zb':'cc-zwgt'; }
 function initSmart(){
   const items = buildSmartItems();
   const simPath = document.getElementById('simPath');
-  [['zb','中本贯通'],['zg','中高职贯通'],['yw','五年一贯制'],['hs','普通高中（2025数据）']].forEach(([v,t])=>{
+  [['zb','中本贯通'],['zg','中高职贯通'],['yw','五年一贯制'],['hs','普通高中（2026更新中）']].forEach(([v,t])=>{
     const o=document.createElement('option'); o.value=v; o.textContent=t; simPath.appendChild(o);
   });
   const topPath = document.getElementById('topPath');
@@ -3485,7 +3926,7 @@ function simulate(){
   if (!it) { box.innerHTML = '<div class="warn-old">请先选择一个具体目标。</div>'; return; }
   const ctrl = pathCtrl(path);
   const r = evalTier(score, it.score, ctrl);
-  const oldWarn = it.old ? '<div class="warn-old">⚠️ 该目标为普通高中，当前显示的是 <b>2025年</b> 录取分。2026实际线将于 7月23日 由各区招考机构公布后更新。</div>' : '';
+  const oldWarn = it.old ? '<div class="warn-old">⚠️ 该目标为普通高中，本区<b>2026实际线暂未采集</b>（已采128所/16区，其余多为无统招线的开大附中系列及跨区分校），当前显示的是2025年录取分。</div>' : '';
   const gapTxt = (r.gap>=0?'+':'')+r.gap;
   let deltaHtml;
   if (it.scorePrev!=null){
@@ -3544,11 +3985,11 @@ function renderTop(){
     const hsRanked = hs.map(it=> ({ it, r: evalTier(score, it.score, pathCtrl(it.path)) }))
                        .filter(x=> x.r.tier!=='不达标')
                        .sort((a,b)=> order[a.r.tier]-order[b.r.tier] || b.r.prob-a.r.prob);
-    if (!hsRanked.length){ html += '<div class="top-empty">普通高中（2025数据）当前分数下无匹配。</div>'; }
+    if (!hsRanked.length){ html += '<div class="top-empty">普通高中（2026更新中）当前分数下无匹配。</div>'; }
     else {
       const ht = hsRanked.slice(0,10);
-      html += '<div class="warn-old" style="margin-top:18px;">⚠️ 以下为<b>普通高中2025年</b>录取分匹配，2026实际线将于 7月23日 公布后更新，仅供参考。</div>' +
-        '<div class="smart-hint">普通高中匹配 <b>'+hsRanked.length+'</b> 个（2025数据）：</div><div class="top-list">' +
+      html += '<div class="warn-old" style="margin-top:18px;">⚠️ 以下普通高中含<b>已更新的2026实际线</b>（128所/16区）与<b>2025数据</b>（剩余62所），请注意年份标识，仅供参考。</div>' +
+        '<div class="smart-hint">普通高中匹配 <b>'+hsRanked.length+'</b> 个（2026更新中）：</div><div class="top-list">' +
         ht.map(topItemHtml).join('') + '</div>';
     }
   }
@@ -3613,7 +4054,7 @@ function renderCmp(){
     const dCls = delta>0?'up':delta<0?'down':'flat';
     const dTxt = delta==null?'—':(delta>0?'▲ +'+delta:delta<0?'▼ '+delta:'— 0');
     const dColor = dCls==='up'?'#16a34a':dCls==='down'?'#dc2626':'#64748b';
-    const oldTag = it.old?'<div class="warn-old" style="margin-top:10px;">⚠️ 普通高中，2025年数据，2026线待7/23更新</div>':'';
+    const oldTag = it.old?'<div class="warn-old" style="margin-top:10px;">⚠️ 普通高中，本区2026线暂未采集（已采128所/16区，其余多为无统招线的开大附中系列及跨区分校）</div>':'';
     return '<div class="cmp-card">' +
       '<span class="cc-path '+pathClass(it.path)+'">'+pathName(it.path)+'</span>' +
       '<h4>'+it.label+'</h4>' +
@@ -3623,8 +4064,8 @@ function renderCmp(){
         '<tr><td>类别</td><td>'+(it.category||'—')+'</td></tr>' +
         '<tr><td>控分线</td><td>'+pathCtrl(it.path)+'分</td></tr>' +
         (it.old
-          ? '<tr><td>2025线</td><td>'+it.score+'分</td></tr>'+
-            '<tr><td>2026实际</td><td style="color:#9a3412;">待7/23更新</td></tr>'+
+          ?             '<tr><td>2025线</td><td>'+it.score+'分</td></tr>'+
+            '<tr><td>2026实际</td><td style="color:#9a3412;">本区暂未采集</td></tr>'+
             '<tr><td>较去年</td><td style="color:#64748b;">2026线未出</td></tr>'
           : '<tr><td>2026实际</td><td>'+it.score+'分</td></tr>'+
             '<tr><td>2025线</td><td>'+(it.scorePrev!=null?it.scorePrev+'分':'暂无')+'</td></tr>'+
@@ -3636,7 +4077,7 @@ function renderCmp(){
 }
 
 </script>
-  <div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划</div>
+  <div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划<span class="ver-stamp">构建于 2026-06-20</span></div>
 <script>
 (function(){
   var KEY='zk-theme';
