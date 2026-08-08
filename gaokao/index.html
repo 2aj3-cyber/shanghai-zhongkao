@@ -96,6 +96,11 @@ tbody tr:hover{background:var(--brand-soft)}
   .btn{width:100%}
   table{font-size:12px}
   th,td{padding:7px 4px}
+  .export-row{gap:8px;margin:12px 0 2px}
+  .export-row .btn{width:auto;flex:1 1 42%;text-align:center;padding:9px 6px;font-size:13px}
+  .modal{padding:10px}
+  .modal-card{padding:14px 14px 18px}
+  .sm-name{font-size:16px}
 }
 .warn-box{background:#fff6e8;border:1px solid #f5d99a;border-radius:10px;padding:10px 13px;font-size:12.5px;color:#8a5a00;margin-bottom:12px}
 [data-theme="dark"] .warn-box{background:#3a2e15;border-color:#6b541f;color:#f0c674}
@@ -144,6 +149,10 @@ tbody tr:hover{background:var(--brand-soft)}
 .modal-x{position:absolute;right:12px;top:10px;border:0;background:var(--chip);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:var(--muted);line-height:1}
 .sm-name{font-size:18px;font-weight:800}
 .sm-meta{font-size:13px;color:var(--muted);margin:6px 0 10px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sm-prof{margin:2px 0 6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sm-note{font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0 12px;line-height:1.6}
+.tag.gold{background:#fff3d6;color:#9a6b00;border:1px solid #f0d18a}
+[data-theme="dark"] .tag.gold{background:#4a3a16;border-color:#7a611f;color:#f0c674}
 .mode-hint{font-size:12px;color:var(--muted);margin:-4px 0 8px}
 </style>
 </head>
@@ -603,8 +612,10 @@ function genPlan(){
     ${block('✅ 稳一稳'+(highZone?'（院校线接近你的分数）':'（与你的位次相当）'),'wen',wen)}
     ${block('🛡️ 保一保'+(highZone?'（院校线远低于你的分数）':'（低于你的位次）'),'bao',bao)}
     <div class="export-row">
-      <button class="btn ghost" onclick="exportPlan()">📥 导出志愿表(.txt)</button>
-      <button class="btn ghost" onclick="copyPlan()">📋 复制全部</button>
+      <button class="btn ghost" onclick="exportPlan()">📥 .txt</button>
+      <button class="btn ghost" onclick="exportPlanCSV()">📊 .csv</button>
+      <button class="btn ghost" onclick="exportPlanDoc()">📄 Word</button>
+      <button class="btn ghost" onclick="copyPlan()">📋 复制</button>
     </div>
     <div class="warn-box">⚠️ 本结果为<b>${highZone?'分数差匹配（高分段专用）':'真实投档线位次匹配'}</b>，非录取承诺。580+ 院校因官方不公布具体分，统一列入「冲」档仅作参考。${highZone?'清华/北大走零志愿批次，已注入本表供参考，实际填报请关注零志愿/强基计划报名时间。':''}正式填报请以考试院最新公布为准，并务必勾选服从调剂。</div>
   `;
@@ -612,6 +623,37 @@ function genPlan(){
 
 /* 院校详情弹窗 + 志愿表导出 */
 let __plan=null;
+/* 院校公开资料（保研率≈各校推免公示/公开报道整理的约数，非官方投档数据；未列出的院校不编造） */
+const SCHOOL_PROFILE={
+ '清华大学':{attr:'985/211/双一流',bao:0.76},'北京大学':{attr:'985/211/双一流',bao:0.66},
+ '中国科学院大学':{attr:'双一流',bao:0.64},'中国科学技术大学':{attr:'985/211/双一流',bao:0.62},
+ '南京大学':{attr:'985/211/双一流',bao:0.48},'北京航空航天大学':{attr:'985/211/双一流',bao:0.47},
+ '上海交通大学':{attr:'985/211/双一流',bao:0.43},'复旦大学':{attr:'985/211/双一流',bao:0.44},
+ '北京理工大学':{attr:'985/211/双一流',bao:0.43},'中国人民大学':{attr:'985/211/双一流',bao:0.39},
+ '浙江大学':{attr:'985/211/双一流',bao:0.40},'北京师范大学':{attr:'985/211/双一流',bao:0.35},
+ '同济大学':{attr:'985/211/双一流',bao:0.35},'西北工业大学':{attr:'985/211/双一流',bao:0.33},
+ '南开大学':{attr:'985/211/双一流',bao:0.34},'哈尔滨工业大学':{attr:'985/211/双一流',bao:0.35},
+ '天津大学':{attr:'985/211/双一流',bao:0.29},'东南大学':{attr:'985/211/双一流',bao:0.29},
+ '武汉大学':{attr:'985/211/双一流',bao:0.30},'华中科技大学':{attr:'985/211/双一流',bao:0.37},
+ '西安交通大学':{attr:'985/211/双一流',bao:0.37},'电子科技大学':{attr:'985/211/双一流',bao:0.28},
+ '厦门大学':{attr:'985/211/双一流',bao:0.28},'中山大学':{attr:'985/211/双一流',bao:0.27},
+ '华东师范大学':{attr:'985/211/双一流',bao:0.27},'四川大学':{attr:'985/211/双一流',bao:0.26},
+ '山东大学':{attr:'985/211/双一流',bao:0.27},'吉林大学':{attr:'985/211/双一流',bao:0.24},
+ '中南大学':{attr:'985/211/双一流',bao:0.23},'湖南大学':{attr:'985/211/双一流',bao:0.23},
+ '重庆大学':{attr:'985/211/双一流',bao:0.23},'大连理工大学':{attr:'985/211/双一流',bao:0.23},
+ '华南理工大学':{attr:'985/211/双一流',bao:0.24},'东北大学':{attr:'985/211/双一流',bao:0.23},
+ '兰州大学':{attr:'985/211/双一流',bao:0.29},'中国农业大学':{attr:'985/211/双一流',bao:0.31},
+ '中央民族大学':{attr:'985/211/双一流',bao:0.20},'北京科技大学':{attr:'211/双一流',bao:0.29},
+ '北京交通大学':{attr:'211/双一流',bao:0.31},'南京航空航天大学':{attr:'211/双一流',bao:0.25},
+ '南京理工大学':{attr:'211/双一流',bao:0.26},'苏州大学':{attr:'211/双一流',bao:0.13},
+ '武汉理工大学':{attr:'211/双一流',bao:0.17},'西南交通大学':{attr:'211/双一流',bao:0.19},
+ '河海大学':{attr:'211/双一流',bao:0.20},'华东理工大学':{attr:'211/双一流',bao:0.22},
+ '上海大学':{attr:'211/双一流',bao:0.14},'东华大学':{attr:'211/双一流',bao:0.15},
+ '上海财经大学':{attr:'211/双一流',bao:0.18},'上海外国语大学':{attr:'211/双一流',bao:0.16},
+ '上海科技大学':{attr:'双一流',bao:0.43},'南方科技大学':{attr:'双一流',bao:0.30},
+ '北京邮电大学':{attr:'211/双一流',bao:0.31},'西安电子科技大学':{attr:'211/双一流',bao:0.27},
+ '中国传媒大学':{attr:'211/双一流',bao:0.18},'对外经济贸易大学':{attr:'211/双一流',bao:0.23}
+};
 function openSchool(root){
   const groups=SCHOOLS_ALL.filter(s=>s[1].replace(/[（(]\d+[）)]$/,'')===root);
   const g0=groups.map(s=>GMAP[s[1]]||{}).find(x=>x.tier)||{};
@@ -621,6 +663,16 @@ function openSchool(root){
   if(g0.req) h+=`<span class="tag blue">${g0.req}</span> `;
   if(g0.area) h+=`<span class="tag green">${g0.area}</span> `;
   h+=`共 ${groups.length} 个专业组</div></div></div>`;
+  const pf=SCHOOL_PROFILE[root];
+  if(pf){
+    h+='<div class="sm-prof">';
+    if(pf.attr) h+=`<span class="tag gold">${pf.attr}</span>`;
+    if(pf.bao!=null) h+=`<span class="tag blue">保研率约 ${Math.round(pf.bao*100)}%</span>`;
+    h+='</div>';
+    h+='<div class="sm-note">ⓘ 院校属性/保研率为<b>公开资料整理的约数</b>（来源：各校推免公示及公开报道），<b>非本工具投档数据</b>。就业质量、深造率等请以该校《本科就业质量报告》及招生网为准。</div>';
+  } else {
+    h+='<div class="sm-note">ⓘ 本工具聚焦投档线与位次。该校保研率/就业质量等公开数据暂未整理，请以学校本科招生网及《就业质量报告》为准。</div>';
+  }
   if(groups.length){
     h+=`<table><thead><tr><th>代码</th><th>专业组</th><th>层次</th><th>2026线</th><th>2025线</th><th>涨跌</th></tr></thead><tbody>`;
     groups.forEach(s=>{
@@ -672,6 +724,44 @@ function copyPlan(){
   const t=planText();
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){alert('已复制到剪贴板');}); }
   else { const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); alert('已复制到剪贴板'); }
+}
+/* 通用下载器 + 结构化导出（CSV / Word） */
+function dl(blob,name){ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1000); }
+function planRows(arr){ return arr.map(function(it,i){ const ln=lineOfItem(it); const ref=ln?ln.v+'('+ln.year+')':'580+不公布'; return {i:i+1,code:it.code||'',name:it.name,tier:it.tier||'',req:it.req||'',ref:ref}; }); }
+function csvField(s){ s=String(s==null?'':s); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+function exportPlanCSV(){
+  if(!__plan){ alert('请先生成志愿表'); return; }
+  const head=['档位','序号','代码','院校专业组','层次','选科','参考线'];
+  const L=[head.map(csvField).join(',')];
+  [['冲一冲',__plan.chong],['稳一稳',__plan.wen],['保一保',__plan.bao]].forEach(function(pair){
+    planRows(pair[1]).forEach(function(r){ L.push([pair[0],r.i,r.code,r.name,r.tier,r.req,r.ref].map(csvField).join(',')); });
+  });
+  const blob=new Blob(['\ufeff'+L.join('\r\n')],{type:'text/csv;charset=utf-8'});
+  dl(blob,'上海高考志愿表_'+__plan.score+'分.csv');
+}
+function xmlEsc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function exportPlanDoc(){
+  if(!__plan){ alert('请先生成志愿表'); return; }
+  const tLabel=function(t){ return TIER_LABEL[t]||t; };
+  let body='';
+  [['冲一冲',__plan.chong],['稳一稳',__plan.wen],['保一保',__plan.bao]].forEach(function(pair){
+    body+='<h2>'+xmlEsc(pair[0])+'（'+pair[1].length+' 个）</h2>';
+    if(!pair[1].length){ body+='<p style="color:#888">该档暂无匹配</p>'; return; }
+    body+='<table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse;width:100%;font-size:11pt"><thead><tr style="background:#eef3ff"><th>序号</th><th>代码</th><th>院校专业组</th><th>层次</th><th>选科</th><th>参考线</th></tr></thead><tbody>';
+    planRows(pair[1]).forEach(function(r){
+      body+='<tr><td>'+r.i+'</td><td>'+xmlEsc(r.code)+'</td><td>'+xmlEsc(r.name)+'</td><td>'+xmlEsc(tLabel(r.tier))+'</td><td>'+xmlEsc(r.req)+'</td><td>'+xmlEsc(r.ref)+'</td></tr>';
+    });
+    body+='</tbody></table><br>';
+  });
+  const html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>上海高考志愿表</title></head><body>'
+    +'<h1 style="font-family:微软雅黑,SimHei">上海高考志愿通 2026 — 我的志愿表</h1>'
+    +'<p style="font-family:微软雅黑,SimHei">高考总分：'+__plan.score+' 分　全市位次：'+__plan.myRank+' 名　数据范围：'+(__plan.mode==='precise'?'精选106所':'全量'+SCHOOLS_ALL.length+'组')+'</p>'
+    +'<p style="font-family:微软雅黑,SimHei;color:#888">参考线优先采用 2026 真实投档线，缺则回退 2025；580+ 官方不公布具体分。</p>'
+    +body
+    +'<p style="font-family:微软雅黑,SimHei;color:#c00">⚠️ 本表由真实投档线位次匹配生成，非录取承诺。正式填报以考试院公布为准，务必勾选服从调剂。</p>'
+    +'</body></html>';
+  const blob=new Blob([html],{type:'application/msword;charset=utf-8'});
+  dl(blob,'上海高考志愿表_'+__plan.score+'分.doc');
 }
 
 /* ============ 同分对比 ============ */
