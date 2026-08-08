@@ -84,6 +84,10 @@ tbody tr:hover{background:var(--brand-soft)}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .chip-btn{padding:5px 12px;border-radius:20px;background:var(--chip);color:var(--muted);font-size:12.5px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:.15s}
 .chip-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.view-toggle{display:flex;align-items:center;gap:8px;margin:10px 0 12px}
+.vt-label{font-size:12.5px;color:var(--muted);font-weight:600}
+.vt-btn{padding:5px 14px;border-radius:20px;background:var(--chip);color:var(--muted);font-size:12.5px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:.15s}
+.vt-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
 .float-badge{position:fixed;right:12px;bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 13px;font-size:12px;color:var(--muted);box-shadow:var(--shadow);z-index:40;max-width:46vw}
 .float-badge b{color:var(--brand)}
 .ver-stamp{display:block;font-size:11px;color:var(--muted);margin-top:2px}
@@ -200,8 +204,13 @@ tbody tr:hover{background:var(--brand-soft)}
 <!-- 投档线库 -->
 <div class="panel hidden" id="panel-schools">
   <h2 class="sec">院校专业组投档线库</h2>
-  <div class="sec-desc">2026 上海本科普通批全部 1647 个院校专业组投档线（含 2025 对比），可按校名 / 专业组 / 选科 / 层次检索排序。<b>点击任意院校行</b>可展开该院校全部专业组详情。</div>
+  <div class="sec-desc">2026 上海本科普通批全部 1647 个院校专业组投档线（含 2025 对比）。支持两种视图：<b>按专业组</b>（细到每个组）/ <b>按院校</b>（同校多组合并成院校卡，看在沪组数 + 最低投档线 + 层次 + 地域 + 保研率，全国高校一眼可比）。点击任意行可展开该院校全部专业组详情。</div>
   <input id="skSearch" class="search-box" placeholder="搜索院校名称（本科普通批1647组），如「复旦」「同济」「物理」。清华/北大请在同分对比查看" oninput="renderSchools()">
+  <div class="view-toggle">
+    <span class="vt-label">聚合视图</span>
+    <button class="vt-btn active" data-v="group" onclick="setSkView('group')">按专业组</button>
+    <button class="vt-btn" data-v="school" onclick="setSkView('school')">按院校</button>
+  </div>
   <div class="chips" id="skTierChips"></div>
   <div class="form-row" style="margin-bottom:10px">
     <div class="field"><label>地域筛选</label>
@@ -455,7 +464,71 @@ function buildTierChips(){
   }).join('');
 }
 function setSkTier(t){ skTier=t; document.querySelectorAll('#skTierChips .chip-btn').forEach(c=>c.classList.toggle('active',c.dataset.tier===t)); renderSchools(); }
+let skView='group';
+function setSkView(v){ skView=v; document.querySelectorAll('.vt-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===v)); renderSchools(); }
+function aggregateBySchool(){
+  const map={};
+  SCHOOLS_ALL.forEach(s=>{
+    const root=s[1].replace(/[（(]\d+[）)]$/,'');
+    if(!map[root]) map[root]={name:root,groups:0,nums26:[],above26:0,aboveMin:999,nums25:[],above25:0,aboveMin25:999,tier:'',area:''};
+    const m=map[root]; m.groups++;
+    const v26=s[3]||'', v25=s[2]||'';
+    if(/分及以上/.test(v26)){ const a=numScore(v26); if(a!=null){ m.above26++; if(a<m.aboveMin) m.aboveMin=a; } }
+    else { const a=numScore(v26); if(a!=null) m.nums26.push(a); }
+    if(/分及以上/.test(v25)){ const a=numScore(v25); if(a!=null){ m.above25++; if(a<m.aboveMin25) m.aboveMin25=a; } }
+    else { const a=numScore(v25); if(a!=null) m.nums25.push(a); }
+    const g=GMAP[s[1]]||{};
+    if(!m.tier && g.tier) m.tier=g.tier;
+    if(!m.area && g.area) m.area=g.area;
+  });
+  return Object.values(map).map(m=>{ const pf=SCHOOL_PROFILE[m.name]; return Object.assign(m,{bao:pf?pf.bao:null,attr:pf?pf.attr:null}); });
+}
+function schoolMin(m,year){
+  if(year===2026) return m.nums26.length?Math.min.apply(null,m.nums26):(m.above26?m.aboveMin:-1);
+  return m.nums25.length?Math.min.apply(null,m.nums25):(m.above25?m.aboveMin25:-1);
+}
+function minLineHTML(m){
+  if(m.nums26.length) return `<span class="tag green">${Math.min.apply(null,m.nums26)}</span>`;
+  if(m.above26) return `<span class="tag gray">≥${m.aboveMin}</span>`;
+  return `<span class="tag gray">不公布</span>`;
+}
+function renderSchoolAgg(){
+  const q=(document.getElementById('skSearch').value||'').trim().toLowerCase();
+  const area=document.getElementById('skArea').value;
+  const sort=document.getElementById('skSort').value;
+  let rows=aggregateBySchool().filter(m=>{
+    if(q && !m.name.toLowerCase().includes(q)) return false;
+    if(area!=='all' && m.area && m.area!==area) return false;
+    if(skTier!=='all' && m.tier!==skTier) return false;
+    return true;
+  });
+  if(rows.length===0){
+    const hints=[];
+    if(/清华|北京大学|北大/.test(q)) hints.push('<b>清华大学 / 北京大学</b> 在上海通过<b>零志愿批次</b>录取，不进入本表。');
+    if(hints.length){ document.getElementById('skTable').innerHTML='<div class="empty" style="text-align:left;padding:16px 20px">🔍 <b>未找到</b><br><br>'+hints.join('<br><br>')+'</div>'; }
+    else document.getElementById('skTable').innerHTML='<div class="empty">未匹配到院校，试试其他关键词</div>';
+    document.getElementById('skCount').innerHTML='共匹配 <b style="color:var(--brand)">0</b> 所院校';
+    return;
+  }
+  if(sort==='y26') rows.sort((a,b)=>schoolMin(b,2026)-schoolMin(a,2026));
+  else if(sort==='y25') rows.sort((a,b)=>schoolMin(b,2025)-schoolMin(a,2025));
+  else if(sort==='diff') rows.sort((a,b)=>b.groups-a.groups);
+  else rows.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('skCount').innerHTML=`共匹配 <b style="color:var(--brand)">${rows.length}</b> 所院校（按院校聚合）`;
+  const show=rows.slice(0,400);
+  let html=`<table><thead><tr><th>院校</th><th>层次</th><th>地域</th><th>在沪组数</th><th>2026最低线</th><th>保研率</th></tr></thead><tbody>`;
+  for(const m of show){
+    const tl=m.tier?`<span class="tag ${tierTag(m.tier)}">${TIER_LABEL[m.tier]||m.tier}</span>`:'<span class="tag gray">—</span>';
+    const al=m.area?`<span class="tag green">${m.area}</span>`:'<span class="tag gray">—</span>';
+    const bao=m.bao!=null?`<span class="tag blue">${Math.round(m.bao*100)}%</span>`:'<span class="tag gray">—</span>';
+    html+=`<tr class="row-click" onclick="openSchool('${m.name.replace(/'/g,"\\'")}')"><td><b>${m.name}</b></td><td>${tl}</td><td>${al}</td><td>${m.groups}</td><td>${minLineHTML(m)}</td><td>${bao}</td></tr>`;
+  }
+  html+='</tbody></table>';
+  if(rows.length>400) html+=`<div class="note">… 仅显示前 400 所，缩小检索范围查看全部 ${rows.length} 所</div>`;
+  document.getElementById('skTable').innerHTML=html;
+}
 function renderSchools(){
+  if(skView==='school'){ renderSchoolAgg(); return; }
   const q=(document.getElementById('skSearch').value||'').trim().toLowerCase();
   const area=document.getElementById('skArea').value;
   const sort=document.getElementById('skSort').value;
