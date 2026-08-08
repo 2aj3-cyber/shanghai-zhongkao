@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>上海高考志愿通 2026 · 位次换算 / 投档线库 / 冲稳保</title>
+<meta name="description" content="2026上海高考位次换算、1647个院校专业组投档线库（2025/2026真实数据）、冲稳保志愿生成、同分位次对比、志愿规则科普。数据源自上海市教育考试院。">
+
+<style>
+:root{
+  --warn-bg:rgba(255,170,0,.10);--warn-bd:rgba(255,170,0,.35);--warn-fg:var(--fg);
+  --bg:#f0f4f8; --text:#1a2b4a; --card:#ffffff; --muted:#5b6b85;
+  --line:#e2e8f0; --brand:#0f4c81; --brand2:#1a6fb5; --brand-soft:#e6f0fa;
+  --ok:#1f9d6b; --warn:#d98a00; --bad:#d64545; --chip:#eef3f9;
+  --shadow:0 2px 12px rgba(15,76,129,.08);
+  --bd:var(--line); --fg:var(--text);
+}
+[data-theme="dark"]{
+  --warn-bg:rgba(255,170,0,.12);--warn-bd:rgba(255,170,0,.30);--warn-fg:#f0e6d2;
+  --bg:#0f172a; --text:#e6edf6; --card:#16223c; --muted:#93a4c2;
+  --line:#243456; --brand:#60a5fa; --brand2:#3b82f6; --brand-soft:#1e3a5f;
+  --ok:#34d399; --warn:#fbbf24; --bad:#f87171; --chip:#1c2a47;
+  --shadow:0 2px 16px rgba(0,0,0,.35);
+  --bd:var(--line); --fg:var(--text);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:48px}
+a{color:var(--brand2);text-decoration:none}
+.header{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;padding:18px 16px 14px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+[data-theme="dark"] .header{background:linear-gradient(135deg,#0f172a,#1e3a8a)}
+.header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.header h1{font-size:19px;font-weight:800;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.header .sub{font-size:12px;opacity:.85;margin-top:2px}
+.theme-switch{display:flex;background:rgba(255,255,255,.15);border-radius:20px;padding:3px;gap:2px;flex-shrink:0}
+.theme-btn{border:0;background:transparent;color:#fff;width:34px;height:30px;border-radius:16px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.theme-btn.active{background:rgba(255,255,255,.9);color:var(--brand)}
+.update-badge{max-width:1000px;margin:10px auto 0;background:rgba(255,255,255,.18);border-radius:10px;padding:7px 12px;font-size:12.5px;color:#fff;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+.update-badge b{color:#ffe9a8}
+.tabs{max-width:1000px;margin:14px auto 0;display:flex;gap:8px;overflow-x:auto;padding:0 12px;-webkit-overflow-scrolling:touch}
+.tab{flex:0 0 auto;padding:9px 14px;border-radius:12px 12px 0 0;background:var(--card);color:var(--muted);font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);border-bottom:0;white-space:nowrap;transition:.2s}
+.tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.panel{max-width:1000px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:0 0 14px 14px;padding:18px 16px;box-shadow:var(--shadow);min-height:300px}
+.panel.hidden{display:none}
+h2.sec{font-size:17px;font-weight:800;margin-bottom:4px;color:var(--text)}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:14px}
+.form-row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:14px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:12.5px;color:var(--muted);font-weight:600}
+.field input,.field select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:15px;min-width:120px;outline:none;transition:.15s}
+.field input:focus,.field select:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.btn{padding:11px 22px;border:0;border-radius:10px;background:var(--brand);color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
+.btn:hover{background:var(--brand2);transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:var(--bg);color:var(--brand);border:1px solid var(--line)}
+.result{margin-top:16px}
+.rank-card{background:var(--brand-soft);border-radius:14px;padding:18px;margin-bottom:14px;border:1px solid var(--line)}
+.rank-card .big{font-size:34px;font-weight:900;color:var(--brand)}
+[data-theme="dark"] .rank-card .big{color:var(--brand)}
+.rank-card .lab{font-size:13px;color:var(--muted)}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.stat{background:var(--bg);border-radius:10px;padding:12px;border:1px solid var(--line)}
+.stat .v{font-size:20px;font-weight:800;color:var(--text)}
+.stat .k{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+th,td{padding:9px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--bg);font-weight:700;color:var(--muted);position:sticky;top:0;font-size:12.5px;z-index:1}
+tbody tr:hover{background:var(--brand-soft)}
+.tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tag.red{background:#fde8e8;color:#b91c1c}
+.tag.blue{background:#e3eefc;color:#1a56a8}
+.tag.gray{background:var(--chip);color:#475569}
+.tag.green{background:#e3f7ee;color:#0f7a52}
+.tag.gold{background:#fbf0d6;color:#8a5a00}
+.tag.purple{background:#efe6fb;color:#5b2e9e}
+.tag.dark{background:#dfe6ef;color:#37455c}
+.tier{margin:14px 0 6px;font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.tier .dot{width:10px;height:10px;border-radius:50%}
+.tier.chong .dot{background:var(--bad)} .tier.wen .dot{background:var(--ok)} .tier.bao .dot{background:var(--brand2)}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:14px;background:var(--bg);border-radius:12px;border:1px dashed var(--line)}
+.note{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.7}
+.note b{color:var(--text)}
+.search-box{width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:15px;margin-bottom:12px;outline:none}
+.search-box:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.chip-btn{padding:5px 12px;border-radius:20px;background:var(--chip);color:var(--muted);font-size:12.5px;font-weight:600;border:1px solid transparent;cursor:pointer;transition:.15s}
+.chip-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.float-badge{position:fixed;right:12px;bottom:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 13px;font-size:12px;color:var(--muted);box-shadow:var(--shadow);z-index:40;max-width:46vw}
+.float-badge b{color:var(--brand)}
+.ver-stamp{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+@media(max-width:600px){
+  .header h1{font-size:16px}
+  .rank-card .big{font-size:28px}
+  .field input,.field select{min-width:100%}
+  .form-row{gap:8px}
+  .field{flex:1 1 100%}
+  .btn{width:100%}
+  table{font-size:12px}
+  th,td{padding:7px 4px}
+}
+.warn-box{background:#fff6e8;border:1px solid #f5d99a;border-radius:10px;padding:10px 13px;font-size:12.5px;color:#8a5a00;margin-bottom:12px}
+[data-theme="dark"] .warn-box{background:#3a2e15;border-color:#6b541f;color:#f0c674}
+.timeline{position:relative;margin:16px 0 8px;padding-left:22px}
+.timeline:before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tl-item{position:relative;margin-bottom:16px}
+.tl-item:before{content:"";position:absolute;left:-19px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--brand);border:2px solid var(--card)}
+.tl-item .d{font-weight:800;font-size:13.5px;color:var(--brand)}
+.tl-item .t{font-size:13px;color:var(--text)}
+.tl-item .s{font-size:12px;color:var(--muted)}
+.rule-card{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.rule-card h3{font-size:14.5px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.rule-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.rule-card ol{margin:6px 0 0 18px;font-size:13px;color:var(--muted)}
+.rule-card li{margin-bottom:3px}
+.cmp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
+.cmp-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)}
+.cmp-card .cn{font-weight:800;font-size:15px}
+.cmp-card .meta{font-size:12px;color:var(--muted);margin:4px 0 8px}
+.cmp-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.cmp-row .up{color:var(--bad);font-weight:700}
+.cmp-row .down{color:var(--ok);font-weight:700}
+.cmp-row .flat{color:var(--muted);font-weight:700}
+@media(max-width:600px){.cmp-wrap{grid-template-columns:1fr}}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+  .supp-block{margin-top:8px}
+  .warn-box{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-fg);padding:12px 14px;border-radius:12px;font-size:13px;line-height:1.7;margin:10px 0 6px}
+  .supp-block .sub{margin:16px 0 6px;font-size:15px;font-weight:700}
+  .supp-note{font-size:12px;opacity:.7;margin-bottom:6px}
+  .supp-table{max-height:340px;overflow:auto;border:1px solid var(--bd);border-radius:10px}
+  .supp-table.scroll{max-height:260px}
+  table.st{width:100%;border-collapse:collapse;font-size:13px}
+  table.st th,table.st td{padding:7px 10px;border-bottom:1px solid var(--bd);text-align:left}
+  table.st th{position:sticky;top:0;background:var(--card);font-weight:600}
+  table.st td.sc{font-weight:700;text-align:right;color:var(--accent)}
+  table.st td.nm{font-weight:500}
+  .empty{padding:14px;opacity:.6;font-size:13px}
+/* 院校详情弹窗 / 行点击 / 导出 */
+.row-click{cursor:pointer;transition:.15s}
+.row-click:hover{background:var(--brand-soft)}
+.export-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 4px}
+.modal{position:fixed;inset:0;background:rgba(10,20,40,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal.hidden{display:none}
+.modal-card{background:var(--card);border-radius:16px;max-width:780px;width:100%;max-height:86vh;overflow:auto;padding:18px 18px 22px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.4);border:1px solid var(--line)}
+.modal-x{position:absolute;right:12px;top:10px;border:0;background:var(--chip);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:15px;color:var(--muted);line-height:1}
+.sm-name{font-size:18px;font-weight:800}
+.sm-meta{font-size:13px;color:var(--muted);margin:6px 0 10px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.mode-hint{font-size:12px;color:var(--muted);margin:-4px 0 8px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1>🎓 上海高考志愿通 <span style="font-size:12px;opacity:.8;font-weight:600">2026版</span></h1>
+      <div class="sub">位次换算 · 1647个院校专业组投档线 · 冲稳保 · 同分对比 · 志愿科普</div>
+    </div>
+    <div class="theme-switch">
+      <button class="theme-btn active" data-set="light" onclick="setTheme('light')" title="浅色">☀️</button>
+      <button class="theme-btn" data-set="dark" onclick="setTheme('dark')" title="深色">🌙</button>
+    </div>
+  </div>
+  <div class="update-badge">
+    🔄 数据截至 <b>2026-07-22</b> · 一分一段表✅ · 本科普通批投档线✅<b>2026真实线已收录</b>（638所院校1647个专业组）· 2025对比线✅
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="rank" onclick="switchTab('rank')">📊 位次换算</div>
+  <div class="tab" data-tab="schools" onclick="switchTab('schools')">🏫 投档线库</div>
+  <div class="tab" data-tab="planner" onclick="switchTab('planner')">🎯 冲稳保</div>
+  <div class="tab" data-tab="compare" onclick="switchTab('compare')">🔍 同分对比</div>
+  <div class="tab" data-tab="guide" onclick="switchTab('guide')">📚 志愿科普</div>
+  <div class="tab" data-tab="about" onclick="switchTab('about')">ℹ️ 数据说明</div>
+</div>
+
+<!-- 位次换算 -->
+<div class="panel" id="panel-rank">
+  <h2 class="sec">高考位次换算</h2>
+  <div class="sec-desc">输入 2026 高考总分，一键查出全市位次、百分位，以及与本科线 / 特殊类型招生控制线的分差。</div>
+  <div class="form-row">
+    <div class="field">
+      <label>2026 高考总分（403–660）</label>
+      <input id="rkScore" type="number" inputmode="numeric" placeholder="如 540" onkeydown="if(event.key==='Enter')calcRank()">
+    </div>
+    <button class="btn" onclick="calcRank()">查位次</button>
+  </div>
+  <div class="warn-box">⚠️ 考试院明文：<b>580 分及以上</b>院校专业组不公布具体投档分（仅公布到累计人数），故高分段的"具体等位分"无法给出，但位次信息完整可用。</div>
+  <div id="rkResult"></div>
+</div>
+
+<!-- 投档线库 -->
+<div class="panel hidden" id="panel-schools">
+  <h2 class="sec">院校专业组投档线库</h2>
+  <div class="sec-desc">2026 上海本科普通批全部 1647 个院校专业组投档线（含 2025 对比），可按校名 / 专业组 / 选科 / 层次检索排序。<b>点击任意院校行</b>可展开该院校全部专业组详情。</div>
+  <input id="skSearch" class="search-box" placeholder="搜索院校名称（本科普通批1647组），如「复旦」「同济」「物理」。清华/北大请在同分对比查看" oninput="renderSchools()">
+  <div class="chips" id="skTierChips"></div>
+  <div class="form-row" style="margin-bottom:10px">
+    <div class="field"><label>地域筛选</label>
+      <select id="skArea" onchange="renderSchools()">
+        <option value="all">全部</option><option value="上海">上海本地</option><option value="外地">外地</option>
+      </select>
+    </div>
+    <div class="field"><label>排序</label>
+      <select id="skSort" onchange="renderSchools()">
+        <option value="code">按代码</option><option value="y26">按2026线(高→低)</option><option value="y25">按2025线(高→低)</option><option value="diff">按涨跌(大→小)</option>
+      </select>
+    </div>
+  </div>
+  <div id="skCount" class="note"></div>
+  <div class="note" style="margin-bottom:8px">💡 按<b>选科</b>精准筛选请到「冲稳保」标签，切到<b>精选</b>模式（可选 物理 / 物理化学 / 不限）。本库为全量 1647 条真实投档线，按校名 / 代码 / 层次 / 地域检索更高效。</div>
+  <div id="skTable"></div>
+  <div class="note">📥 本库为<b>考试院官方全量真实数据</b>（2026 主表 + Q组 + 2025 主表），580 分及以上投档线官方不公布具体分，标「不公布」属正常。投档线=该专业组末位进档考生成绩，非院校录取线。</div>
+</div>
+
+<!-- 冲稳保生成 -->
+<div class="panel hidden" id="panel-planner">
+  <h2 class="sec">冲稳保志愿生成器</h2>
+  <div class="sec-desc">输入分数与选科，自动按位次 + 真实投档线匹配生成「冲 / 稳 / 保」三档院校专业组清单。<b>默认覆盖全量 1647 个专业组</b>（优先 2026 真实线，缺则回退 2025）；需要按选科 / 地域 / 层次精准筛选时，切换到「精选」模式。</div>
+  <div class="form-row">
+    <div class="field">
+      <label>2026 高考总分</label>
+      <input id="plScore" type="number" inputmode="numeric" placeholder="如 540" onkeydown="if(event.key==='Enter')genPlan()">
+    </div>
+    <div class="field"><label>选科要求</label>
+      <select id="plReq">
+        <option value="all">不限（全部）</option><option value="物理">物理</option><option value="化学">化学</option>
+        <option value="物理化学">物理+化学</option><option value="不限">不限</option><option value="政治">政治</option>
+        <option value="历史">历史</option><option value="地理">地理</option><option value="生物">生物</option>
+      </select>
+    </div>
+    <div class="field"><label>院校地域</label>
+      <select id="plArea">
+        <option value="all">全部</option><option value="上海">上海本地</option><option value="外地">外地</option>
+      </select>
+    </div>
+    <div class="field"><label>数据范围</label>
+      <select id="plMode">
+        <option value="full">全量（1647 专业组·按分数段）</option>
+        <option value="precise">精选（106 所·含选科/层次）</option>
+      </select>
+    </div>
+    <button class="btn" onclick="genPlan()">生成志愿表</button>
+  </div>
+  <div class="mode-hint">💡 全量模式按分数段匹配全部专业组；精选模式可启用上方「选科 / 地域」筛选（按选科要求精确到组）。</div>
+  </div>
+  <div id="plResult"></div>
+</div>
+
+<!-- 同分对比 -->
+<div class="panel hidden" id="panel-compare">
+  <h2 class="sec">同分位次对比（2025 vs 2026）</h2>
+  <div class="sec-desc">选 2 个院校专业组并排对比两年投档线涨跌；下方自动展示今年涨 / 跌最明显的专业组榜。</div>
+  <div class="form-row">
+    <div class="field" style="flex:1 1 200px"><label>院校专业组 A</label><select id="cmpA"></select></div>
+    <div class="field" style="flex:1 1 200px"><label>院校专业组 B</label><select id="cmpB"></select></div>
+    <button class="btn" onclick="renderCompare()" style="align-self:flex-end">对比</button>
+  </div>
+  <div id="cmpResult"></div>
+  <h3 class="sec" style="margin-top:18px">📈 今年投档线涨跌榜（基于已公布具体分的院校专业组）</h3>
+  <div id="cmpRank"></div>
+</div>
+
+<!-- 志愿科普 -->
+<div class="panel hidden" id="panel-guide">
+  <h2 class="sec">志愿填报规则科普</h2>
+  <div class="sec-desc">搞懂平行志愿与投档规则，填志愿不踩坑。</div>
+  <div class="rule-card">
+    <h3>🧮 平行志愿核心规则</h3>
+    <p>本科普通批实行<b>「分数优先、遵循志愿、一轮投档」</b>：按考生总分由高到低排序，逐一检索其 24 个院校专业组志愿。一旦被某专业组投档，后续志愿立即作废（只投一次）。</p>
+  </div>
+  <div class="rule-card">
+    <h3>⚖️ 同分如何排序（很重要！）</h3>
+    <p>总分相同时依次比较：</p>
+    <ol>
+      <li>语文 + 数学两门合计成绩（高者优先）</li>
+      <li>语文或数学中单科较高分</li>
+      <li>外语成绩</li>
+      <li>选考科目中单科最高分</li>
+      <li>选考科目中次高分</li>
+      <li>考生志愿顺序</li>
+    </ol>
+  </div>
+  <div class="rule-card">
+    <h3>🎯 24 个志愿填报策略</h3>
+    <p>官方数据显示：前 13 个志愿总体投档成功率接近 <b>90%</b>。建议按「冲（略高）8 个 + 稳（相当）8 个 + 保（略低）8 个」梯次填满，避免全部扎堆同层次导致滑档。</p>
+  </div>
+  <div class="rule-card">
+    <h3>✅ 投档 ≠ 录取</h3>
+    <p>按 1:1 投档后大概率录取，但<b>不服从专业调剂</b>或不符合组内专业的体检 / 单科成绩 / 外语语种等要求，可能<b>退档</b>。退档后只能参加征求志愿。务必勾选「服从调剂」保底。</p>
+  </div>
+  <h3 class="sec" style="margin-top:18px">🗓️ 2026 上海高招关键时间轴</h3>
+  <div class="timeline">
+    <div class="tl-item"><div class="d">6月23日</div><div class="t">高考成绩公布</div><div class="s">同步划定本科控制线 403 分、特殊类型招生控制线 504 分</div></div>
+    <div class="tl-item"><div class="d">6月26日–7月1日</div><div class="t">综合评价批次 / 零志愿 / 本科提前批</div><div class="s">强基计划、综评、提前批等率先录取，约 1.3 万人</div></div>
+    <div class="tl-item"><div class="d">7月1日–7月3日</div><div class="t">本科普通批次志愿填报</div><div class="s">可填 24 个院校专业组平行志愿</div></div>
+    <div class="tl-item"><div class="d">7月19日</div><div class="t">本科普通批正式投档</div><div class="s">考试院按 1:1 投档并公布 638 所院校 1647 个专业组投档线</div></div>
+    <div class="tl-item"><div class="d">7月23日</div><div class="t">本科普通批录取结果查询</div><div class="s">「上海招考热线」开通查询；未录取可填两次征求志愿</div></div>
+    <div class="tl-item"><div class="d">7月下旬</div><div class="t">征求志愿 + 专科阶段</div><div class="s">第二次征求志愿降分控制线 388 分；之后进入专科批</div></div>
+  </div>
+
+  <section class="supp-block">
+    <h3 class="sec" style="margin-top:22px">📌 补充官方数据（征求志愿 + 特殊类型 + 综合评价批）</h3>
+    <div class="warn-box">
+      ⚠️ <b>以下为官方其他批次数据，与「冲稳保」主参考<b>无关</b>：</b><br>
+      • <b>征求志愿</b>：仅面向第一轮未录取、且达到<b>降分控制线（第二次为 388 分）</b>的考生补录，分数明显低于平行志愿正常线，<b>请勿用作冲稳保参考</b>。<br>
+      • <b>Q组特殊类型</b>：代码含字母 Q（如 101Q3、102Q4），面向内地新疆班 / 西藏班 / 边防军人子女预科等特定群体，<b>普通考生不适用</b>。<br>
+      • <b>综合评价批</b>：平行志愿 1:1.5 投档 + 校测折算（高考 85% + 校测 15%），下表为<b>入围资格线（非投档线/录取线）</b>，仅作定位参考，入围后须参加校测。
+    </div>
+    <h4 class="sub">🔸 第一次征求志愿（2026-07-19 公布 · 65 组）</h4>
+    <div class="supp-table" id="zx1Table"></div>
+    <h4 class="sub">🔸 第二次征求志愿（2026-07-27 公布 · 降分线 388 · 52 组）</h4>
+    <div class="supp-table" id="zx2Table"></div>
+    <h4 class="sub">🔸 Q组特殊类型（新疆班/西藏班/边防军人子女预科等 · 250 组）</h4>
+    <div class="supp-note">代码含字母 Q（如 101Q3），仅特定群体可报，普通考生无需关注。</div>
+    <div class="supp-table scroll" id="qTable"></div>
+    <h4 class="sub">🔸 综合评价批入围资格线（2026 · 11校 · 32组）</h4>
+    <div class="supp-note">复旦/交大/同济/华师大/华理/东华/上财/上外/上大/上中医/浙大。7/3 各校公布面试资格线，7/6–7 校测，7/9 录取。入围线≠录取线，校测表现决定最终录取。</div>
+    <div class="supp-table scroll" id="compreTable"></div>
+  </section>
+
+</div>
+
+<!-- 数据说明 -->
+<div class="panel hidden" id="panel-about">
+  <h2 class="sec">数据说明与使用方法</h2>
+  <div class="sec-desc">本工具定位与中考版一致：把官方零散数据聚合成家长秒懂的决策。</div>
+  <div class="note">
+    <p><b>📊 数据来源</b><br>一分一段表、本科普通批院校专业组投档线均来自<b>上海市教育考试院</b>（2026 主表 + Q组 + 2025 主表 PDF 原文解析）。本工具为<b>公益聚合</b>，不替代官方查询，正式填报请以考试院公布为准。</p>
+    <p style="margin-top:10px"><b>🔢 位次换算原理</b><br>「位次」= 该分数及以上的累计考生人数。输入分数后查一分一段表即得位次与百分位；并给出与本科线 / 特控线的分差。</p>
+    <p style="margin-top:10px"><b>🎯 冲稳保逻辑</b><br>以考生位次 / 真实投档线为基准：<span class="tag red">冲</span> 院校线略高于考生（难一档）· <span class="tag green">稳</span> 院校线与考生相当 · <span class="tag blue">保</span> 院校线低于考生（兜底）。优先用 2026 真实线，缺则回退 2025。</p>
+    <p style="margin-top:10px"><b>⚠️ 重要提示</b><br>① 投档线每年波动，本表为历史参考，非录取承诺；② <b>580 分及以上</b>官方不公布具体投档分（标「不公布」属正常）；③ 专业组选科要求以当年招生章程为准；④ 本工具免费、微信可直接打开，地址永久有效。</p>
+    <p style="margin-top:10px"><b>📥 数据进度</b><br>一分一段表（616→403 全量 214 行）✅；本科普通批投档线全量 <b>1647 个专业组</b>✅（2026 真实线 + 2025 对比线）；<b>征求志愿两次（65+52组）+ Q组特殊类型（250组）</b>✅ 均已从考试院官方 PDF 解析收录；<b>综合评价批入围资格线（11校·32组）</b>✅ 已补录为参考（非投档线）。以上均独立标注于「志愿科普」板块。<b>冲稳保生成器已覆盖全量 1647 个专业组</b>（可按分数段一键匹配，或切换精选模式按选科/层次筛选）。</p>
+    <p style="margin-top:10px"><b>🧭 数据覆盖边界（诚实说明）</b><br>本工具聚焦<b>本科普通批</b>（上海高考志愿主战场），已做到全量收录。另有批次因规则/计分口径不同，单列说明，<b>不混入冲稳保主引擎</b>：① <b>专科普通批 / 专科征求志愿</b>（8/1、8/4 公布，按语数外 450 分制录取，非 660 分制）——官方查询：<a href="https://www.shmeea.edu.cn/page/02200/20260804/20543.html" target="_blank" rel="noopener">专科征求志愿投档线（考试院）</a>；② <b>本科艺体类</b>（甲/乙批，按综合分折算）；③ <b>本科提前批 / 地方农村专项计划批</b>（顺序志愿，考试院仅开通录取结果查询、<b>无统一投档线表</b>，由各高校分散公布录取分，故不系统化收录，以各校官网 / 上海招考热线为准）；④ <b>清华、北大</b>在上海通过<b>零志愿批次</b>（6/26–7/1，先于本科普通批）录取，不进入《本科普通批投档线表》，故投档线库与默认冲稳保（全量模式）不含它们；已收录于<b>精选集（外地985，零志愿2026最低录取分≥611，官方未公布逐专业组线）</b>，在冲稳保切换「精选」模式或「同分对比」中可查——其招生走零志愿批次，与本科普通批 24 志愿无关；⑤ <b>综合评价批</b>入围线已单列于「志愿科普」参考（非投档线）。以上均以「上海招考热线」官网公布为准。</p>
+  </div>
+</div>
+
+<div id="schoolModal" class="modal hidden" onclick="if(event.target===this)closeSchool()">
+  <div class="modal-card">
+    <button class="modal-x" onclick="closeSchool()">✕</button>
+    <div id="smBody"></div>
+  </div>
+</div>
+<div class="float-badge">本工具由 <b>野兔人她爹</b> 原创策划<span class="ver-stamp">构建于 2026-08-07</span></div>
+
+<script>
+/* ============ 数据底座 ============ */
+// 2026 上海高考成绩分布表（一分一段表）[分数,本段人数,累计人数]
+const GAOKAO_FS_2026 = [616,58,58,615,9,67,614,24,91,613,18,109,612,16,125,611,15,140,610,19,159,609,34,193,608,26,219,607,30,249,606,36,285,605,40,325,604,46,371,603,56,427,602,59,486,601,77,563,600,63,626,599,55,681,598,73,754,597,81,835,596,74,909,595,97,1006,594,102,1108,593,89,1197,592,124,1321,591,121,1442,590,112,1554,589,113,1667,588,119,1786,587,123,1909,586,132,2041,585,134,2175,584,154,2329,583,166,2495,582,152,2647,581,172,2819,580,161,2980,579,183,3163,578,175,3338,577,183,3521,576,187,3708,575,183,3891,574,178,4069,573,208,4277,572,183,4460,571,222,4682,570,204,4886,569,236,5122,568,208,5330,567,187,5517,566,236,5753,565,209,5962,564,221,6183,563,236,6419,562,229,6648,561,240,6888,560,243,7131,559,242,7373,558,231,7604,557,236,7840,556,222,8062,555,247,8309,554,244,8553,553,268,8821,552,271,9092,551,289,9381,550,256,9637,549,274,9911,548,261,10172,547,281,10453,546,278,10731,545,284,11015,544,295,11310,543,291,11601,542,297,11898,541,308,12206,540,302,12508,539,271,12779,538,287,13066,537,328,13394,536,283,13677,535,298,13975,534,306,14281,533,299,14580,532,311,14891,531,313,15204,530,317,15521,529,280,15801,528,286,16087,527,271,16358,526,303,16661,525,317,16978,524,298,17276,523,309,17585,522,318,17903,521,327,18230,520,291,18521,519,305,18826,518,325,19151,517,305,19456,516,325,19781,515,317,20098,514,312,20410,513,339,20749,512,322,21071,511,334,21405,510,292,21697,509,301,21998,508,326,22324,507,321,22645,506,330,22975,505,287,23262,504,371,23633,503,332,23965,502,328,24293,501,378,24671,500,318,24989,499,286,25275,498,306,25581,497,334,25915,496,304,26219,495,298,26517,494,318,26835,493,297,27132,492,282,27414,491,320,27734,490,328,28062,489,307,28369,488,313,28682,487,333,29015,486,335,29350,485,307,29657,484,287,29944,483,308,30252,482,315,30567,481,318,30885,480,287,31172,479,306,31478,478,285,31763,477,332,32095,476,302,32397,475,317,32714,474,316,33030,473,341,33371,472,324,33695,471,308,34003,470,299,34302,469,319,34621,468,316,34937,467,283,35220,466,329,35549,465,306,35855,464,302,36157,463,322,36479,462,318,36797,461,320,37117,460,305,37422,459,322,37744,458,333,38077,457,290,38367,456,316,38683,455,318,39001,454,315,39316,453,316,39632,452,309,39941,451,322,40263,450,314,40577,449,300,40877,448,322,41200,447,319,41519,446,309,41828,445,312,42140,444,311,42451,443,300,42751,442,309,43060,441,301,43361,440,300,43661,439,297,43958,438,304,44262,437,292,44554,436,294,44848,435,292,45140,434,294,45434,433,281,45715,432,272,45987,431,283,46270,430,268,46538,429,266,46804,428,255,47059,427,261,47320,426,264,47584,425,256,47840,424,268,48108,423,254,48362,422,244,48606,421,247,48853,420,243,49096,419,235,49331,418,238,49569,417,236,49805,416,233,50038,415,221,50259,414,212,50471,413,209,50680,412,199,50879,411,196,51075,410,189,51264,409,170,51434,408,160,51594,407,140,51734,406,90,51824,405,21,51845,404,6,51851,403,2,51853]
+  .reduce((acc,_,i,arr)=> (i%3===0?acc.push([arr[i],arr[i+1],arr[i+2]]):0, acc), []);
+
+// 投档线全量库（考试院官方 PDF 解析）：[code, name, y25, y26]  y25/y26 为 "580分及以上" 或 数字或空
+const SCHOOLS_ALL = [["10101", "复旦大学(01)", "580分及以上", "580分及以上"], ["10102", "复旦大学(02)", "580分及以上", "580分及以上"], ["10201", "上海交大(01)", "580分及以上", "580分及以上"], ["10301", "同济大学(01)", "580分及以上", "580分及以上"], ["10302", "同济大学(02)", "580分及以上", "575"], ["10401", "华东师大(01)", "580分及以上", "571"], ["10402", "华东师大(02)", "580分及以上", "576"], ["10403", "华东师大(03)", "580分及以上", ""], ["10501", "华东理工(01)", "560", "565"], ["10502", "华东理工(02)", "568", "558"], ["10503", "华东理工(03)", "548", "554"], ["10504", "华东理工(04)", "", "543"], ["10601", "东华大学(01)", "553", "547"], ["10602", "东华大学(02)", "553", "548"], ["10603", "东华大学(03)", "546", "548"], ["10701", "上海财大(01)", "573", "566"], ["10702", "上海财大(02)", "573", "568"], ["10703", "上海财大(03)", "576", "569"], ["10704", "上海财大(04)", "578", "571"], ["10801", "上海外大(01)", "567", "559"], ["10802", "上海外大(02)", "565", "557"], ["10803", "上海外大(03)", "565", "559"], ["10804", "上海外大(04)", "572", "564"], ["10805", "上海外大(05)", "570", "557"], ["10806", "上海外大(06)", "", "561"], ["10901", "上海海事(01)", "542", "539"], ["10902", "上海海事(02)", "505", "506"], ["10903", "上海海事(03)", "515", "510"], ["10904", "上海海事(04)", "510", "507"], ["10905", "上海海事(05)", "493", "498"], ["11001", "上海理工(01)", "549", "546"], ["11002", "上海理工(02)", "531", "531"], ["11003", "上海理工(03)", "534", "532"], ["11004", "上海理工(04)", "533", "528"], ["11005", "上海理工(05)", "524", ""], ["11101", "上海杉达(01)", "440", "447"], ["11102", "上海杉达(02)", "418", "436"], ["11103", "上海杉达(03)", "437", "443"], ["11104", "上海杉达(04)", "434", "430"], ["11105", "上海杉达(05)", "436", "442"], ["11201", "华东政法(01)", "567", "557"], ["11202", "华东政法(02)", "546", "538"], ["11203", "华东政法(03)", "531", "544"], ["11204", "华东政法(04)", "", "524"], ["11301", "上经贸大(01)", "540", "535"], ["11302", "上经贸大(02)", "523", "520"], ["11303", "上经贸大(03)", "516", "512"], ["11304", "上经贸大(04)", "523", "517"], ["11305", "上经贸大(05)", "525", "522"], ["11401", "复旦医学(01)", "580分及以上", "580分及以上"], ["11501", "上海海大(01)", "491", "500"], ["11502", "上海海大(02)", "493", "489"], ["11503", "上海海大(03)", "510", "498"], ["11504", "上海海大(04)", "494", "507"], ["11505", "上海海大(05)", "", "510"], ["11506", "上海海大(06)", "", "496"], ["11601", "上海戏剧(01)", "531", "522"], ["11701", "上海电力(01)", "532", "531"], ["11702", "上海电力(02)", "500", "504"], ["11703", "上海电力(03)", "488", "491"], ["11704", "上海电力(04)", "490", "491"], ["11705", "上海电力(05)", "483", "485"], ["11801", "上海音乐(01)", "506", "506"], ["11802", "上海音乐(02)", "507", "508"], ["11901", "上海大学(01)", "565", "561"], ["11902", "上海大学(02)", "555", "549"], ["11903", "上海大学(03)", "545", "543"], ["11904", "上海大学(04)", "546", "543"], ["12001", "交大医学(01)", "580分及以上", "580分及以上"], ["12101", "上海中医(01)", "563", "551"], ["12102", "上海中医(02)", "559", "546"], ["12103", "上海中医(03)", "542", "531"], ["12104", "上海中医(04)", "523", "531"], ["12105", "上海中医(05)", "535", "526"], ["12106", "上海中医(06)", "", "519"], ["12107", "上海中医(07)", "504", "499"], ["12108", "上海中医(08)", "525", ""], ["12201", "上应大(01)", "477", "504"], ["12202", "上应大(02)", "444", "484"], ["12203", "上应大(03)", "508", "477"], ["12204", "上应大(04)", "472", "454"], ["12205", "上应大(05)", "468", "474"], ["12206", "上应大(06)", "", "469"], ["12301", "上海师大(01)", "531", "519"], ["12302", "上海师大(02)", "513", "509"], ["12303", "上海师大(03)", "517", "506"], ["12304", "上海师大(04)", "516", "512"], ["12305", "上海师大(05)", "528", "511"], ["12306", "上海师大(06)", "505", "520"], ["12307", "上海师大(07)", "518", "499"], ["12308", "上海师大(08)", "494", "501"], ["12309", "上海师大(09)", "", "517"], ["12310", "上海师大(10)", "", "514"], ["12311", "上海师大(11)", "", "488"], ["12312", "上海师大(12)", "", "490"], ["12313", "上海师大(13)", "", "500"], ["12401", "上工程(01)", "498", "501"], ["12402", "上工程(02)", "486", "480"], ["12403", "上工程(03)", "466", "488"], ["12404", "上工程(04)", "483", "475"], ["12405", "上工程(05)", "459", "469"], ["12406", "上工程(06)", "475", "470"], ["12407", "上工程(07)", "", "480"], ["12408", "上工程(08)", "", "465"], ["12409", "上工程(09)", "", "475"], ["12501", "上海体大(01)", "516", "511"], ["12502", "上海体大(02)", "509", "504"], ["12503", "上海体大(03)", "496", "499"], ["12504", "上海体大(04)", "493", "495"], ["12505", "上海体大(05)", "493", "497"], ["12506", "上海体大(06)", "489", "495"], ["12507", "上海体大(07)", "489", "484"], ["12508", "上海体大(08)", "", "488"], ["12509", "上海体大(09)", "", "489"], ["12601", "海医大(01)", "565", "553"], ["12602", "海医大(02)", "556", "549"], ["12603", "海医大(03)", "544", "538"], ["12701", "立信金融(01)", "478", "478"], ["12702", "立信金融(02)", "485", "481"], ["12703", "立信金融(03)", "451", "448"], ["12704", "立信金融(04)", "448", "448"], ["12801", "二工大(01)", "483", "485"], ["12802", "二工大(02)", "456", "447"], ["12803", "二工大(03)", "441", "446"], ["12804", "二工大(04)", "445", "447"], ["12805", "二工大(05)", "454", "451"], ["12806", "二工大(06)", "463", "465"], ["12901", "上海商院(01)", "473", "474"], ["12902", "上海商院(02)", "460", "464"], ["12903", "上海商院(03)", "443", "463"], ["12904", "上海商院(04)", "439", "461"], ["12905", "上海商院(05)", "", "447"], ["12906", "上海商院(06)", "", "445"], ["13001", "上海电机(01)", "478", "489"], ["13002", "上海电机(02)", "443", "467"], ["13003", "上海电机(03)", "460", "455"], ["13004", "上海电机(04)", "454", "462"], ["13005", "上海电机(05)", "", "456"], ["13101", "上海政法(01)", "539", "534"], ["13102", "上海政法(02)", "521", "515"], ["13103", "上海政法(03)", "502", "499"], ["13104", "上海政法(04)", "499", "495"], ["13105", "上海政法(05)", "512", "506"], ["13106", "上海政法(06)", "516", "512"], ["13301", "上外贤达(01)", "402", "424"], ["13302", "上外贤达(02)", "416", "415"], ["13303", "上外贤达(03)", "402", "403"], ["13304", "上外贤达(04)", "402", "407"], ["13305", "上外贤达(05)", "410", "415"], ["13401", "建桥学院(01)", "418", "439"], ["13402", "建桥学院(02)", "418", "426"], ["13403", "建桥学院(03)", "425", "427"], ["13404", "建桥学院(04)", "435", "438"], ["13405", "建桥学院(05)", "415", "430"], ["13406", "建桥学院(06)", "415", "421"], ["13407", "建桥学院(07)", "", "425"], ["13408", "建桥学院(08)", "", "435"], ["13409", "建桥学院(09)", "", "420"], ["13410", "建桥学院(10)", "", "420"], ["13501", "健康医学(01)", "517", "507"], ["13502", "健康医学(02)", "489", "482"], ["13503", "健康医学(03)", "471", "465"], ["13504", "健康医学(04)", "464", "456"], ["13505", "健康医学(05)", "459", "452"], ["13506", "健康医学(06)", "473", "472"], ["13507", "健康医学(07)", "458", "453"], ["13508", "健康医学(08)", "465", "456"], ["13601", "海关学院(01)", "515", "511"], ["13602", "海关学院(02)", "519", "513"], ["13603", "海关学院(03)", "520", "517"], ["16201", "中侨大学(01)", "402", "408"], ["16202", "中侨大学(02)", "404", "409"], ["16501", "立达学院(01)", "402", "403"], ["16502", "立达学院(02)", "409", "403"], ["16503", "立达学院(03)", "402", "403"], ["17001", "上海视觉(01)", "429", "425"], ["17002", "上海视觉(02)", "437", "441"], ["17201", "上师天华(01)", "431", "441"], ["17202", "上师天华(02)", "423", "442"], ["17203", "上师天华(03)", "439", "436"], ["17204", "上师天华(04)", "448", "437"], ["17205", "上师天华(05)", "434", "451"], ["17206", "上师天华(06)", "", "449"], ["17207", "上师天华(07)", "", "440"], ["17401", "兴伟学院(01)", "", "501"], ["20101", "中央民族(01)", "560", "552"], ["20102", "中央民族(02)", "562", "549"], ["20201", "中国人大(01)", "580分及以上", "580分及以上"], ["20202", "中国人大(02)", "580分及以上", "580分及以上"], ["20301", "北京交大(01)", "560", "550"], ["20302", "北京交大(02)", "580分及以上", "571"], ["20303", "北京交大(03)", "577", "571"], ["20304", "北京交大(04)", "", "569"], ["20401", "北京科大(01)", "574", "562"], ["20402", "北京科大(02)", "568", "559"], ["20403", "北京科大(03)", "562", ""], ["20501", "北京化工(01)", "553", "549"], ["20502", "北京化工(02)", "550", "545"], ["20503", "北京化工(03)", "552", "546"], ["20601", "北京邮电(01)", "580分及以上", "580分及以上"], ["20602", "北京邮电(02)", "580分及以上", "572"], ["20701", "中国农大(01)", "573", "562"], ["20702", "中国农大(02)", "", "568"], ["20801", "北京林大(01)", "536", "522"], ["20802", "北京林大(02)", "540", "526"], ["20803", "北京林大(03)", "542", "539"], ["20804", "北京林大(04)", "", "542"], ["20901", "北京中医(01)", "567", "563"], ["20902", "北京中医(02)", "", "554"], ["21001", "北师大(01)", "577", "569"], ["21002", "北师大(02)", "", "571"], ["21101", "北外大(01)", "566", "552"], ["21102", "北外大(02)", "566", "556"], ["21201", "中国传媒(01)", "560", "555"], ["21202", "中国传媒(02)", "563", "554"], ["21203", "中国传媒(03)", "560", "559"], ["21204", "中国传媒(04)", "561", "537"], ["21205", "中国传媒(05)", "", "555"], ["21206", "中国传媒(06)", "", "549"], ["21301", "中央财大(01)", "571", "564"], ["21302", "中央财大(02)", "573", "565"], ["21303", "中央财大(03)", "", "571"], ["21304", "中央财大(04)", "", "569"], ["21401", "外经贸大(01)", "569", "563"], ["21402", "外经贸大(02)", "571", "564"], ["21403", "外经贸大(03)", "567", "565"], ["21404", "外经贸大(04)", "570", "556"], ["21501", "中国政法(01)", "580分及以上", "577"], ["21502", "中国政法(02)", "569", "559"], ["21601", "华电北京(01)", "551", "574"], ["21602", "华电北京(02)", "545", "565"], ["21603", "华电北京(03)", "563", "552"], ["21604", "华电北京(04)", "", "547"], ["21605", "华电北京(05)", "", "538"], ["21701", "石油北京(01)", "546", "545"], ["21801", "地大北京(01)", "535", "528"], ["21802", "地大北京(02)", "543", "537"], ["21901", "国科大(01)", "", "580分及以上"], ["22001", "北京体育(01)", "517", "518"], ["22101", "北京航大(01)", "580分及以上", "580分及以上"], ["22102", "北京航大(02)", "579", "572"], ["22201", "北京理工(01)", "580分及以上", "580分及以上"], ["22301", "中国劳关(01)", "450", "452"], ["22302", "中国劳关(02)", "431", "443"], ["22401", "中华女子(01)", "442", "446"], ["22402", "中华女子(02)", "433", "441"], ["22501", "北京工商(01)", "515", "509"], ["22502", "北京工商(02)", "501", "487"], ["22701", "北京协和(01)", "531", "528"], ["22801", "北京二外(01)", "499", "499"], ["22802", "北京二外(02)", "", "517"], ["22901", "北京物资(01)", "465", "469"], ["23001", "首都经贸(01)", "526", "515"], ["23002", "首都经贸(02)", "", "523"], ["23101", "北京联大(01)", "460", "489"], ["23102", "北京联大(02)", "482", "449"], ["23103", "北京联大(03)", "464", "468"], ["23104", "北京联大(04)", "481", "456"], ["23105", "北京联大(05)", "445", ""], ["23201", "中国公安(01)", "543", "533"], ["23301", "中国戏曲(01)", "514", "505"], ["23501", "二外中瑞(01)", "403", "406"], ["23601", "北京城市(01)", "406", "404"], ["23701", "北京印刷(01)", "477", "482"], ["23801", "中国音乐(01)", "508", "508"], ["23901", "首都体院(01)", "491", "490"], ["23902", "首都体院(02)", "482", "480"], ["24001", "北京语言(01)", "520", "517"], ["24002", "北京语言(02)", "513", "505"], ["24003", "北京语言(03)", "519", "492"], ["24004", "北京语言(04)", "530", "509"], ["24101", "中央美院(01)", "542", "528"], ["24102", "中央美院(02)", "530", "542"], ["24202", "首师科德(02)", "", "428"], ["24401", "京工耿丹(01)", "", "412"], ["24402", "京工耿丹(02)", "", "403"], ["24501", "中央戏剧(01)", "528", "516"], ["24601", "北京电影(01)", "530", "543"], ["24602", "北京电影(02)", "562", "529"], ["24603", "北京电影(03)", "538", "517"], ["24604", "北京电影(04)", "542", "532"], ["24605", "北京电影(05)", "528", "517"], ["24701", "矿大北京(01)", "537", "546"], ["24702", "矿大北京(02)", "551", "542"], ["24801", "北京工业(01)", "554", "549"], ["24901", "首都师大(01)", "520", "434"], ["24902", "首都师大(02)", "530", "513"], ["24903", "首都师大(03)", "", "536"], ["24904", "首都师大(04)", "", "522"], ["24905", "首都师大(05)", "", "544"], ["24906", "首都师大(06)", "", "527"], ["25101", "南开大学(01)", "580分及以上", "576"], ["25102", "南开大学(02)", "580分及以上", "572"], ["25201", "天津大学(01)", "576", "574"], ["25202", "天津大学(02)", "579", ""], ["25301", "中国民航(01)", "488", "485"], ["25302", "中国民航(02)", "490", "488"], ["25303", "中国民航(03)", "499", "503"], ["25304", "中国民航(04)", "489", "485"], ["25305", "中国民航(05)", "", "494"], ["25401", "天津科大(01)", "480", "476"], ["25402", "天津科大(02)", "466", "468"], ["25403", "天津科大(03)", "475", "469"], ["25404", "天津科大(04)", "468", "460"], ["25501", "天津工大(01)", "495", "520"], ["25502", "天津工大(02)", "529", ""], ["25601", "天津中医(01)", "479", "467"], ["25602", "天津中医(02)", "535", "514"], ["25603", "天津中医(03)", "503", "468"], ["25701", "天津职师(01)", "447", "438"], ["25702", "天津职师(02)", "432", "448"], ["25801", "天津商大(01)", "462", "455"], ["25901", "天津财大(01)", "500", "503"], ["25902", "天津财大(02)", "492", "496"], ["25903", "天津财大(03)", "", "481"], ["26001", "天津城建(01)", "443", "447"], ["26002", "天津城建(02)", "446", "437"], ["26003", "天津城建(03)", "433", "451"], ["26101", "津商宝德(01)", "402", "406"], ["26102", "津商宝德(02)", "409", "408"], ["26103", "津商宝德(03)", "406", "412"], ["26104", "津商宝德(04)", "", "415"], ["26201", "津医临床(01)", "416", "433"], ["26202", "津医临床(02)", "423", "474"], ["26203", "津医临床(03)", "425", "417"], ["26204", "津医临床(04)", "413", "415"], ["26205", "津医临床(05)", "462", "414"], ["26206", "津医临床(06)", "478", "422"], ["26301", "津理中环(01)", "412", "412"], ["26302", "津理中环(02)", "417", "425"], ["26401", "京科天津(01)", "404", "413"], ["26402", "京科天津(02)", "410", "406"], ["26403", "京科天津(03)", "424", "404"], ["26501", "津财珠江(01)", "404", "405"], ["26601", "河北工大(01)", "545", "537"], ["26701", "天津理工(01)", "498", "500"], ["26702", "天津理工(02)", "496", "493"], ["26703", "天津理工(03)", "477", "456"], ["26801", "天津外大(01)", "480", "489"], ["26802", "天津外大(02)", "474", "477"], ["26803", "天津外大(03)", "", "485"], ["26901", "天津美院(01)", "476", ""], ["27001", "天津医大(01)", "561", "547"], ["27002", "天津医大(02)", "", "552"], ["27101", "天津师大(01)", "", "484"], ["28101", "华电保定(01)", "543", "549"], ["28102", "华电保定(02)", "555", "550"], ["28201", "东大秦岛(01)", "541", "535"], ["28202", "东大秦岛(02)", "556", "553"], ["28203", "东大秦岛(03)", "564", "557"], ["28301", "河北工程(01)", "446", "446"], ["28302", "河北工程(02)", "430", "434"], ["28401", "河北地质(01)", "438", "437"], ["28402", "河北地质(02)", "429", "430"], ["28403", "河北地质(03)", "434", "438"], ["28404", "河北地质(04)", "", "441"], ["28501", "华北理工(01)", "435", "440"], ["28502", "华北理工(02)", "436", "461"], ["28503", "华北理工(03)", "454", "442"], ["28504", "华北理工(04)", "497", "494"], ["28601", "河北医科(01)", "478", "523"], ["28602", "河北医科(02)", "460", "418"], ["28603", "河北医科(03)", "458", "470"], ["28701", "承德医学(01)", "465", "459"], ["28801", "衡水学院(01)", "425", "425"], ["28802", "衡水学院(02)", "450", ""], ["28901", "燕山大学(01)", "531", "527"], ["29001", "北华航工(01)", "435", "441"], ["29002", "北华航工(02)", "436", "442"], ["29101", "冀外国语(01)", "402", "404"], ["29201", "应急大学(01)", "", "445"], ["29202", "应急大学(02)", "", "449"], ["29301", "石铁四方(01)", "411", "413"], ["29302", "石铁四方(02)", "408", "405"], ["29303", "石铁四方(03)", "413", "416"], ["29401", "保定理工(01)", "402", "403"], ["29501", "京中东方(01)", "427", "426"], ["29502", "京中东方(02)", "419", "404"], ["29503", "京中东方(03)", "427", "408"], ["29504", "京中东方(04)", "407", "427"], ["29701", "河北环境(01)", "423", "425"], ["29702", "河北环境(02)", "421", "425"], ["29703", "河北环境(03)", "", "424"], ["29801", "河北建工(01)", "432", "431"], ["29802", "河北建工(02)", "436", "426"], ["29803", "河北建工(03)", "427", "408"], ["29901", "中国警察(01)", "479", "477"], ["29902", "中国警察(02)", "483", "479"], ["29903", "中国警察(03)", "448", "450"], ["30101", "石铁大(01)", "481", "447"], ["30102", "石铁大(02)", "452", "456"], ["30103", "石铁大(03)", "438", "489"], ["30201", "冀油职大(01)", "423", "423"], ["30202", "冀油职大(02)", "423", "420"], ["30203", "冀油职大(03)", "", "425"], ["30901", "太原理工(01)", "", "540"], ["31001", "山西大学(01)", "", "526"], ["31101", "太原科大(01)", "451", "451"], ["31201", "中北大学(01)", "440", "523"], ["31202", "中北大学(02)", "506", "494"], ["31203", "中北大学(03)", "482", "490"], ["31204", "中北大学(04)", "", "482"], ["31205", "中北大学(05)", "", "448"], ["31206", "中北大学(06)", "", "490"], ["31207", "中北大学(07)", "", "444"], ["31301", "山西财大(01)", "544", "452"], ["31302", "山西财大(02)", "", "436"], ["31303", "山西财大(03)", "", "441"], ["31401", "山西农大(01)", "408", "426"], ["31501", "山西医大(01)", "528", "516"], ["31502", "山西医大(02)", "445", "533"], ["31503", "山西医大(03)", "448", "475"], ["31504", "山西医大(04)", "", "447"], ["31601", "大同大学(01)", "432", "403"], ["31602", "大同大学(02)", "455", "433"], ["31701", "忻州师院(01)", "426", "446"], ["31702", "忻州师院(02)", "446", "412"], ["31703", "忻州师院(03)", "446", "430"], ["31704", "忻州师院(04)", "443", "430"], ["31801", "运城职大(01)", "450", "408"], ["31802", "运城职大(02)", "437", "409"], ["31803", "山西财大(03)", "440", ""], ["31901", "山西中医(01)", "496", "489"], ["31902", "山西中医(02)", "453", "410"], ["31903", "山西中医(03)", "475", "423"], ["31904", "山西中医(04)", "", "414"], ["31905", "山西中医(05)", "", "421"], ["31906", "山西中医(06)", "", "428"], ["32001", "吕梁学院(01)", "430", "429"], ["32002", "吕梁学院(02)", "425", "427"], ["32101", "山西工程(01)", "", "433"], ["32201", "山西工院(01)", "422", "423"], ["32301", "山西电科(01)", "509", "428"], ["32302", "山西大学(02)", "530", ""], ["32401", "内蒙大学(01)", "409", "515"], ["32402", "内蒙大学(02)", "402", "503"], ["32403", "内蒙大学(03)", "", "507"], ["32404", "内蒙大学(04)", "", "520"], ["32405", "内蒙大学(05)", "", "515"], ["32406", "内蒙大学(06)", "", "518"], ["32501", "内蒙农大(01)", "428", "423"], ["32502", "内蒙农大(02)", "", "426"], ["32503", "内蒙农大(03)", "", "420"], ["32504", "内蒙农大(04)", "", "425"], ["32505", "内蒙农大(05)", "", "419"], ["32601", "内蒙医大(01)", "", "460"], ["32602", "内蒙医大(02)", "", "483"], ["32603", "内蒙医大(03)", "", "420"], ["32604", "内蒙医大(04)", "", "474"], ["32605", "内蒙医大(05)", "", "472"], ["32701", "内蒙师大(01)", "", "430"], ["32702", "内蒙师大(02)", "", "424"], ["32703", "内蒙师大(03)", "", "403"], ["32801", "内蒙民族(01)", "514", "418"], ["32802", "内蒙民族(02)", "508", "417"], ["32803", "内蒙民族(03)", "509", "417"], ["32804", "内蒙民族(04)", "504", "418"], ["32805", "内蒙大学(05)", "517", ""], ["32901", "内蒙科大(01)", "", "420"], ["32902", "内蒙科大(02)", "", "421"], ["32903", "内蒙科大(03)", "", "446"], ["32904", "内蒙科大(04)", "", "452"], ["32905", "内蒙科大(05)", "", "427"], ["32906", "内蒙科大(06)", "", "432"], ["32907", "内蒙科大(07)", "", "417"], ["32908", "内蒙科大(08)", "", "417"], ["33001", "内蒙工大(01)", "", "406"], ["33002", "内蒙工大(02)", "", "424"], ["33003", "内蒙工大(03)", "", "425"], ["33004", "内蒙工大(04)", "", "430"], ["33101", "大连民族(01)", "440", "441"], ["33201", "大连海事(01)", "544", "537"], ["33202", "大连海事(02)", "537", "531"], ["33301", "大连理工(01)", "580分及以上", "576"], ["33401", "东北大学(01)", "575", "560"], ["33501", "理工盘锦(01)", "569", "560"], ["33601", "辽宁大学(01)", "509", "514"], ["33602", "辽宁大学(02)", "507", ""], ["33701", "沈阳工大(01)", "444", "405"], ["33702", "沈阳工大(02)", "441", "426"], ["33703", "沈阳工大(03)", "488", "438"], ["33801", "沈阳航空(01)", "499", "471"], ["33901", "沈阳理工(01)", "440", "439"], ["33902", "沈阳理工(02)", "442", "442"], ["33903", "沈阳理工(03)", "435", "441"], ["34001", "辽宁科大(01)", "430", "434"], ["34101", "辽宁工程(01)", "435", "432"], ["34102", "辽宁工程(02)", "427", "436"], ["34201", "辽宁石化(01)", "430", "437"], ["34301", "沈阳化工(01)", "431", "432"], ["34302", "沈阳化工(02)", "", "439"], ["34401", "大连交大(01)", "443", "445"], ["34402", "大连交大(02)", "455", "464"], ["34403", "大连交大(03)", "", "467"], ["34601", "沈阳建筑(01)", "469", "433"], ["34602", "沈阳建筑(02)", "431", "445"], ["34603", "沈阳建筑(03)", "430", "432"], ["34604", "沈阳建筑(04)", "", "425"], ["34605", "沈阳建筑(05)", "", "434"], ["34701", "沈阳农大(01)", "429", "422"], ["34801", "大连海洋(01)", "437", "442"], ["34802", "大连海洋(02)", "446", "447"], ["34803", "大连海洋(03)", "444", "448"], ["34901", "中国医大(01)", "533", "548"], ["35001", "锦州医大(01)", "502", "492"], ["35002", "锦州医大(02)", "431", "429"], ["35003", "锦州医大(03)", "474", "424"], ["35101", "大连医科(01)", "539", "543"], ["35102", "大连医科(02)", "558", "535"], ["35103", "大连医科(03)", "551", ""], ["35201", "沈阳药大(01)", "531", "519"], ["35301", "辽宁师大(01)", "455", "450"], ["35401", "东北财大(01)", "526", "522"], ["35501", "辽宁外贸(01)", "409", "407"], ["35601", "大连大学(01)", "467", "436"], ["35602", "大连大学(02)", "435", "436"], ["35603", "大连大学(03)", "", "465"], ["35701", "沈阳工程(01)", "433", "448"], ["35801", "理大城市(01)", "403", ""], ["35802", "理大城市(02)", "417", ""], ["35901", "大连财经(01)", "412", "407"], ["35902", "大连财经(02)", "404", ""], ["36001", "辽宁何氏(01)", "402", "403"], ["36101", "大连东软(01)", "412", "404"], ["36201", "辽宁中医(01)", "517", "510"], ["36301", "朝阳师院(01)", "", "421"], ["36302", "朝阳师院(02)", "", "414"], ["36401", "辽理职大(01)", "", "405"], ["36501", "辽师海华(01)", "", "403"], ["36502", "辽师海华(02)", "", "419"], ["37101", "吉林大学(01)", "574", "551"], ["37102", "吉林大学(02)", "561", "563"], ["37103", "吉林大学(03)", "570", "568"], ["37104", "吉林大学(04)", "", "561"], ["37201", "东北师大(01)", "531", "526"], ["37202", "东北师大(02)", "539", "531"], ["37301", "延边大学(01)", "492", "480"], ["37302", "延边大学(02)", "490", "497"], ["37303", "延边大学(03)", "", "497"], ["37401", "长春理工(01)", "442", "496"], ["37402", "长春理工(02)", "445", "441"], ["37403", "长春理工(03)", "452", "443"], ["37404", "长春理工(04)", "501", "447"], ["37405", "长春理工(05)", "506", ""], ["37501", "东北电力(01)", "516", "518"], ["37601", "长春工大(01)", "428", "440"], ["37602", "长春工大(02)", "432", "429"], ["37603", "长春工大(03)", "428", "435"], ["37604", "长春工大(04)", "", "430"], ["37701", "北华大学(01)", "435", ""], ["37702", "北华大学(02)", "437", ""], ["37801", "吉林师大(01)", "452", "433"], ["37802", "吉林师大(02)", "431", "429"], ["37803", "吉林师大(03)", "440", "438"], ["37804", "吉林师大(04)", "432", "440"], ["37901", "吉林财大(01)", "451", "473"], ["37902", "吉林财大(02)", "432", "458"], ["37903", "吉林财大(03)", "", "472"], ["37904", "吉林财大(04)", "", "439"], ["38001", "长春财经(01)", "402", "407"], ["38101", "长春建筑(01)", "402", ""], ["38201", "长春工程(01)", "425", "435"], ["38202", "长春工程(02)", "430", "427"], ["38301", "吉林工商(01)", "427", "428"], ["38302", "吉林工商(02)", "429", "431"], ["38401", "长春中医(01)", "502", "486"], ["38402", "长春中医(02)", "443", "420"], ["38501", "吉林艺术(01)", "421", "422"], ["38502", "吉林艺术(02)", "423", "447"], ["39101", "东北林大(01)", "529", "508"], ["39102", "东北林大(02)", "503", "482"], ["39201", "哈工大(01)", "580分及以上", "580分及以上"], ["39202", "哈工大(02)", "580分及以上", ""], ["39301", "哈工程(01)", "572", "527"], ["39302", "哈工程(02)", "573", "567"], ["39303", "哈工程(03)", "573", "570"], ["39304", "哈工程(04)", "571", "569"], ["39305", "哈工程(05)", "573", "569"], ["39401", "黑龙江大(01)", "438", "441"], ["39402", "黑龙江大(02)", "454", "445"], ["39403", "黑龙江大(03)", "434", "443"], ["39404", "黑龙江大(04)", "", "449"], ["39405", "黑龙江大(05)", "", "436"], ["39406", "黑龙江大(06)", "", "443"], ["39407", "黑龙江大(07)", "", "441"], ["39408", "黑龙江大(08)", "", "434"], ["39501", "哈理工(01)", "440", "439"], ["39601", "黑科大(01)", "427", "431"], ["39701", "东北石油(01)", "433", "433"], ["39702", "东北石油(02)", "430", "430"], ["39801", "佳木斯大(01)", "471", "430"], ["39901", "东北农大(01)", "527", "477"], ["39902", "东北农大(02)", "520", "515"], ["39903", "东北农大(03)", "475", "491"], ["40001", "哈医大(01)", "514", "517"], ["40002", "哈医大(02)", "518", "494"], ["40003", "哈医大(03)", "504", "510"], ["40004", "哈医大(04)", "502", "452"], ["40005", "哈医大(05)", "482", "449"], ["40006", "哈医大(06)", "453", "472"], ["40007", "哈医大(07)", "", "469"], ["40101", "哈师大(01)", "435", "444"], ["40102", "哈师大(02)", "415", "442"], ["40103", "哈师大(03)", "476", "436"], ["40201", "齐齐哈尔(01)", "424", "426"], ["40202", "齐齐哈尔(02)", "432", "429"], ["40203", "齐齐哈尔(03)", "424", "430"], ["40204", "齐齐哈尔(04)", "", "426"], ["40301", "哈商大(01)", "433", "440"], ["40302", "哈商大(02)", "424", "429"], ["40401", "哈金融(01)", "424", "426"], ["40402", "哈金融(02)", "421", "423"], ["40501", "齐医学院(01)", "442", "432"], ["40502", "齐医学院(02)", "442", "420"], ["40503", "齐医学院(03)", "423", "420"], ["40504", "齐医学院(04)", "442", "415"], ["40505", "齐医学院(05)", "431", "419"], ["40506", "齐医学院(06)", "", "435"], ["40601", "黑外国语(01)", "410", "426"], ["40701", "八一农大(01)", "", "424"], ["40801", "龙中医(01)", "", "490"], ["40901", "牡医大(01)", "", "445"], ["41001", "哈体院(01)", "", "435"], ["42101", "南京大学(01)", "580分及以上", "580分及以上"], ["42201", "东南大学(01)", "580分及以上", "580分及以上"], ["42301", "中国矿大(01)", "541", "530"], ["42302", "中国矿大(02)", "550", "548"], ["42303", "中国矿大(03)", "553", "542"], ["42401", "河海大学(01)", "543", "546"], ["42402", "河海大学(02)", "546", "543"], ["42403", "河海大学(03)", "552", "537"], ["42501", "江南大学(01)", "547", "547"], ["42502", "江南大学(02)", "544", "552"], ["42503", "江南大学(03)", "553", "553"], ["42504", "江南大学(04)", "549", "545"], ["42505", "江南大学(05)", "553", "547"], ["42506", "江南大学(06)", "552", "548"], ["42507", "江南大学(07)", "559", "553"], ["42508", "江南大学(08)", "556", "543"], ["42509", "江南大学(09)", "552", "534"], ["42510", "江南大学(10)", "555", "540"], ["42511", "江南大学(11)", "558", "533"], ["42601", "南京农大(01)", "537", "532"], ["42602", "南京农大(02)", "544", "540"], ["42603", "南京农大(03)", "538", "528"], ["42701", "中国药大(01)", "580分及以上", "548"], ["42702", "中国药大(02)", "559", ""], ["42801", "人大苏州(01)", "580分及以上", "580分及以上"], ["42901", "南京航大(01)", "578", "576"], ["42902", "南京航大(02)", "", "572"], ["43001", "南京理工(01)", "575", "535"], ["43002", "南京理工(02)", "544", "569"], ["43003", "南京理工(03)", "", "543"], ["43101", "苏州大学(01)", "556", "543"], ["43102", "苏州大学(02)", "561", "557"], ["43103", "苏州大学(03)", "572", "554"], ["43104", "苏州大学(04)", "569", "560"], ["43201", "江苏科大(01)", "481", "482"], ["43202", "江苏科大(02)", "490", "491"], ["43301", "南京工大(01)", "494", "489"], ["43302", "南京工大(02)", "512", "510"], ["43303", "南京工大(03)", "525", "518"], ["43401", "常州大学(01)", "477", "469"], ["43402", "常州大学(02)", "477", "473"], ["43501", "南京邮电(01)", "559", "552"], ["43601", "南京林大(01)", "504", "495"], ["43602", "南京林大(02)", "519", "494"], ["43603", "南京林大(03)", "529", "504"], ["43604", "南京林大(04)", "517", "515"], ["43701", "江苏大学(01)", "501", "496"], ["43702", "江苏大学(02)", "533", "527"], ["43801", "南京信息(01)", "551", "544"], ["43901", "南通大学(01)", "477", "474"], ["43902", "南通大学(02)", "509", "495"], ["44001", "盐城工院(01)", "438", "444"], ["44101", "南京医大(01)", "558", "564"], ["44102", "南京医大(02)", "518", "534"], ["44103", "南京医大(03)", "532", "515"], ["44104", "南京医大(04)", "", "527"], ["44201", "南京中医(01)", "549", "537"], ["44202", "南京中医(02)", "519", "514"], ["44203", "南京中医(03)", "521", "506"], ["44301", "南京师大(01)", "554", "540"], ["44302", "南京师大(02)", "562", "551"], ["44303", "南京师大(03)", "548", "540"], ["44401", "淮阴师范(01)", "448", "451"], ["44501", "盐城师范(01)", "453", "456"], ["44502", "盐城师范(02)", "492", "485"], ["44601", "南京财大(01)", "496", "492"], ["44602", "南京财大(02)", "496", "489"], ["44701", "江苏师范(01)", "", "511"], ["44801", "苏州科大(01)", "484", "488"], ["44802", "苏州科大(02)", "472", "473"], ["44803", "苏州科大(03)", "", "479"], ["44901", "苏州工院(01)", "453", "456"], ["44902", "苏州工院(02)", "", "442"], ["45001", "金陵科技(01)", "454", "456"], ["45002", "金陵科技(02)", "440", "445"], ["45101", "徐州工程(01)", "456", "443"], ["45102", "徐州工程(02)", "439", "449"], ["45103", "徐州工程(03)", "441", "456"], ["45201", "常州工院(01)", "450", "454"], ["45301", "扬州大学(01)", "507", "494"], ["45302", "扬州大学(02)", "516", "505"], ["45401", "南京工程(01)", "470", "475"], ["45402", "南京工程(02)", "452", "456"], ["45403", "南京工程(03)", "471", "469"], ["45501", "南京审计(01)", "510", "503"], ["45502", "南京审计(02)", "522", "509"], ["45601", "江苏理工(01)", "459", "466"], ["45602", "江苏理工(02)", "442", "452"], ["45701", "江苏海大(01)", "458", "456"], ["45702", "江苏海大(02)", "438", "444"], ["45801", "南京特师(01)", "461", "455"], ["45802", "南京特师(02)", "435", "443"], ["45803", "南京特师(03)", "435", "442"], ["45901", "南通理工(01)", "415", "416"], ["45902", "南通理工(02)", "413", "416"], ["46001", "东南成贤(01)", "441", "434"], ["46002", "东南成贤(02)", "424", "446"], ["46101", "太湖学院(01)", "416", "421"], ["46201", "南理紫金(01)", "438", "443"], ["46202", "南理紫金(02)", "432", "435"], ["46301", "南航金城(01)", "425", "437"], ["46302", "南航金城(02)", "433", "435"], ["46401", "南京传媒(01)", "435", "439"], ["46501", "南师泰州(01)", "421", "425"], ["46502", "南师泰州(02)", "415", "421"], ["46601", "南工浦江(01)", "418", "422"], ["46602", "南工浦江(02)", "417", "428"], ["46603", "南工浦江(03)", "415", "416"], ["46604", "南工浦江(04)", "419", "420"], ["46701", "南医康达(01)", "445", "464"], ["46702", "南医康达(02)", "421", "426"], ["46703", "南医康达(03)", "", "445"], ["46704", "南医康达(04)", "", "441"], ["46901", "无锡学院(01)", "443", "449"], ["46902", "无锡学院(02)", "442", "445"], ["46903", "无锡学院(03)", "470", "470"], ["47001", "苏州城院(01)", "453", "456"], ["47002", "苏州城院(02)", "439", "444"], ["47101", "苏大应用(01)", "427", "434"], ["47301", "江大京江(01)", "429", "434"], ["47401", "南邮通达(01)", "428", "430"], ["47501", "江科苏理(01)", "434", "433"], ["47502", "江科苏理(02)", "429", "444"], ["47601", "南通杏林(01)", "413", "418"], ["47602", "南通杏林(02)", "415", "419"], ["47701", "南审金审(01)", "433", "440"], ["47702", "南审金审(02)", "429", "431"], ["47703", "南审金审(03)", "423", "427"], ["47801", "西浦大学(01)", "547", "540"], ["47802", "西浦大学(02)", "547", "540"], ["47803", "西浦大学(03)", "549", "541"], ["47901", "徐州医大(01)", "527", "480"], ["48001", "南京艺术(01)", "500", "493"], ["48002", "南京艺术(02)", "508", "492"], ["48101", "南京晓庄(01)", "457", "460"], ["48201", "宿迁学院(01)", "451", "453"], ["48202", "宿迁学院(02)", "438", "442"], ["49101", "浙江大学(01)", "580分及以上", "580分及以上"], ["49102", "浙江大学(02)", "580分及以上", "580分及以上"], ["49201", "杭州电子(01)", "494", "496"], ["49202", "杭州电子(02)", "544", "540"], ["49203", "杭州电子(03)", "550", "545"], ["49301", "浙江工大(01)", "543", "539"], ["49302", "浙江工大(02)", "523", "512"], ["49303", "浙江工大(03)", "521", "511"], ["49401", "浙江理工(01)", "496", "493"], ["49402", "浙江理工(02)", "501", "498"], ["49501", "浙江海洋(01)", "450", "457"], ["49502", "浙江海洋(02)", "", "453"], ["49601", "浙江农林(01)", "490", "483"], ["49602", "浙江农林(02)", "485", "484"], ["49701", "温州医大(01)", "533", "526"], ["49702", "温州医大(02)", "", "522"], ["49801", "浙江师大(01)", "506", "494"], ["49802", "浙江师大(02)", "512", "518"], ["49803", "浙江师大(03)", "490", "495"], ["49804", "浙江师大(04)", "501", "497"], ["49805", "浙江师大(05)", "506", "484"], ["49806", "浙江师大(06)", "477", "496"], ["49901", "杭州师大(01)", "484", "472"], ["49902", "杭州师大(02)", "504", "483"], ["49903", "杭州师大(03)", "495", "478"], ["49904", "杭州师大(04)", "486", ""], ["50001", "湖州师范(01)", "456", "443"], ["50002", "湖州师范(02)", "439", "482"], ["50003", "湖州师范(03)", "455", "485"], ["50004", "湖州师范(04)", "436", "457"], ["50005", "湖州师范(05)", "509", "451"], ["50101", "浙江工商(01)", "495", "489"], ["50102", "浙江工商(02)", "501", "496"], ["50201", "嘉兴大学(01)", "438", "444"], ["50202", "嘉兴大学(02)", "", "479"], ["50301", "中国计量(01)", "514", "513"], ["50302", "中国计量(02)", "508", "501"], ["50303", "中国计量(03)", "501", "511"], ["50401", "浙江财大(01)", "505", "513"], ["50402", "浙江财大(02)", "495", "502"], ["50403", "浙江财大(03)", "503", "495"], ["50404", "浙江财大(04)", "", "489"], ["50501", "西湖大学(01)", "", "580分及以上"], ["50601", "浙江传媒(01)", "519", "510"], ["50602", "浙江传媒(02)", "502", "502"], ["50603", "浙江传媒(03)", "506", "500"], ["50604", "浙江传媒(04)", "481", "492"], ["50701", "温医仁济(01)", "427", "442"], ["50702", "温医仁济(02)", "415", "422"], ["50801", "湖州学院(01)", "450", "454"], ["50901", "南湖学院(01)", "453", "456"], ["50902", "南湖学院(02)", "441", "441"], ["50903", "南湖学院(03)", "437", "443"], ["51001", "中计现代(01)", "418", "426"], ["51002", "中计现代(02)", "", "417"], ["51101", "宁波大学(01)", "", "491"], ["51102", "宁波大学(02)", "", "507"], ["51103", "宁波大学(03)", "", "510"], ["51201", "上财浙院(01)", "421", "429"], ["51202", "上财浙院(02)", "421", "421"], ["51203", "上财浙院(03)", "420", "424"], ["51301", "诺丁汉(01)", "546", "541"], ["51302", "诺丁汉(02)", "547", "544"], ["51303", "诺丁汉(03)", "", "543"], ["51401", "温州肯恩(01)", "524", "516"], ["51402", "温州肯恩(02)", "520", "524"], ["51601", "浙大医学(01)", "580分及以上", "578"], ["51701", "浙江中医(01)", "543", "541"], ["51702", "浙江中医(02)", "528", "517"], ["51703", "浙江中医(03)", "497", "495"], ["51704", "浙江中医(04)", "513", "514"], ["51705", "浙江中医(05)", "501", "497"], ["51706", "浙江中医(06)", "500", "492"], ["51707", "浙江中医(07)", "503", "522"], ["51708", "浙江中医(08)", "504", ""], ["51801", "温州大学(01)", "484", "489"], ["51802", "温州大学(02)", "467", "461"], ["51803", "温州大学(03)", "434", "472"], ["51804", "温州大学(04)", "", "454"], ["51901", "中国美院(01)", "538", "530"], ["51902", "中国美院(02)", "551", "544"], ["52001", "衢州学院(01)", "436", "442"], ["52101", "丽水学院(01)", "", "505"], ["53101", "合肥工大(01)", "548", "557"], ["53102", "合肥工大(02)", "558", "543"], ["53103", "合肥工大(03)", "", "515"], ["53201", "中国科大(01)", "580分及以上", "580分及以上"], ["53301", "安徽大学(01)", "529", "521"], ["53302", "安徽大学(02)", "", "547"], ["53401", "安徽工大(01)", "453", "446"], ["53402", "安徽工大(02)", "439", "463"], ["53501", "安徽理工(01)", "452", "468"], ["53502", "安徽理工(02)", "437", "444"], ["53503", "安徽理工(03)", "", "455"], ["53601", "安徽农大(01)", "476", "439"], ["53602", "安徽农大(02)", "436", ""], ["53701", "安徽医大(01)", "486", "544"], ["53702", "安徽医大(02)", "552", "487"], ["53801", "安徽师大(01)", "480", "474"], ["53802", "安徽师大(02)", "491", "464"], ["53803", "安徽师大(03)", "472", "458"], ["53901", "淮北师大(01)", "450", "449"], ["53902", "淮北师大(02)", "429", "450"], ["53903", "淮北师大(03)", "449", "436"], ["54001", "滁州学院(01)", "443", "448"], ["54101", "安徽财大(01)", "478", "473"], ["54201", "淮南师院(01)", "447", "449"], ["54202", "淮南师院(02)", "435", "438"], ["54301", "安徽建筑(01)", "450", "436"], ["54302", "安徽建筑(02)", "433", "452"], ["54303", "安徽建筑(03)", "433", "438"], ["54304", "安徽建筑(04)", "438", ""], ["54401", "安徽科技(01)", "435", "437"], ["54402", "安徽科技(02)", "447", "439"], ["54403", "安徽科技(03)", "432", "450"], ["54501", "合肥城院(01)", "412", "409"], ["54502", "合肥城院(02)", "405", "405"], ["54503", "合肥城院(03)", "408", "415"], ["54601", "安医临床(01)", "443", "436"], ["54701", "安徽中医(01)", "533", "523"], ["54801", "安徽工程(01)", "439", "446"], ["54802", "安徽工程(02)", "436", "442"], ["56101", "厦门大学(01)", "577", "565"], ["56102", "厦门大学(02)", "", "573"], ["56103", "厦门大学(03)", "580分及以上", ""], ["56201", "华侨大学(01)", "479", "473"], ["56202", "华侨大学(02)", "480", "474"], ["56301", "福州大学(01)", "534", "545"], ["56302", "福州大学(02)", "551", "528"], ["56303", "福州大学(03)", "560", "547"], ["56401", "福建理工(01)", "453", "457"], ["56501", "福建农林(01)", "452", "450"], ["56601", "集美大学(01)", "478", "482"], ["56602", "集美大学(02)", "464", "469"], ["56603", "集美大学(03)", "471", "464"], ["56604", "集美大学(04)", "476", "475"], ["56605", "集美大学(05)", "", "475"], ["56701", "福建医大(01)", "524", "496"], ["56801", "厦门医学(01)", "532", "504"], ["56901", "泉州师范(01)", "438", "448"], ["56902", "泉州师范(02)", "431", "436"], ["57001", "厦门理工(01)", "453", "453"], ["57002", "厦门理工(02)", "443", "448"], ["57003", "厦门理工(03)", "443", "445"], ["57101", "厦大嘉庚(01)", "417", "423"], ["57102", "厦大嘉庚(02)", "414", "418"], ["57103", "厦大嘉庚(03)", "418", "421"], ["57104", "厦大嘉庚(04)", "", "425"], ["57105", "厦大嘉庚(05)", "", "416"], ["57201", "集美诚毅(01)", "410", "413"], ["57202", "集美诚毅(02)", "", "408"], ["57301", "闽农金山(01)", "404", "406"], ["57401", "福州外贸(01)", "402", "403"], ["57402", "福州外贸(02)", "405", "403"], ["57403", "福州外贸(03)", "403", "404"], ["59101", "南昌大学(01)", "545", "539"], ["59102", "南昌大学(02)", "549", "545"], ["59103", "南昌大学(03)", "539", ""], ["59201", "华东交大(01)", "479", "470"], ["59202", "华东交大(02)", "474", "476"], ["59301", "东华理工(01)", "449", "452"], ["59302", "东华理工(02)", "438", "441"], ["59401", "南昌航大(01)", "448", "453"], ["59402", "南昌航大(02)", "448", "450"], ["59403", "南昌航大(03)", "489", "487"], ["59404", "南昌航大(04)", "", "488"], ["59501", "江西理工(01)", "443", "439"], ["59502", "江西理工(02)", "446", "439"], ["59503", "江西理工(03)", "437", "449"], ["59504", "江西理工(04)", "437", "447"], ["59601", "景德陶瓷(01)", "446", "470"], ["59602", "景德陶瓷(02)", "443", "448"], ["59603", "景德陶瓷(03)", "473", "473"], ["59604", "景德陶瓷(04)", "", "470"], ["59701", "江西农大(01)", "442", "447"], ["59702", "江西农大(02)", "448", "449"], ["59703", "江西农大(03)", "452", "437"], ["59704", "江西农大(04)", "438", "439"], ["59705", "江西农大(05)", "434", "449"], ["59801", "江西中医(01)", "513", "504"], ["59802", "江西中医(02)", "445", "444"], ["59901", "赣南医大(01)", "444", "487"], ["59902", "赣南医大(02)", "461", "419"], ["59903", "赣南医大(03)", "", "417"], ["60001", "江西师大(01)", "497", "511"], ["60002", "江西师大(02)", "523", "505"], ["60003", "江西师大(03)", "495", "483"], ["60004", "江西师大(04)", "512", "502"], ["60005", "江西师大(05)", "", "508"], ["60006", "江西师大(06)", "", "508"], ["60007", "江西师大(07)", "", "514"], ["60008", "江西师大(08)", "", "506"], ["60009", "江西师大(09)", "", "505"], ["60010", "江西师大(10)", "", "487"], ["60101", "上饶师院(01)", "440", "432"], ["60102", "上饶师院(02)", "427", ""], ["60201", "宜春学院(01)", "435", "436"], ["60202", "宜春学院(02)", "431", "432"], ["60203", "宜春学院(03)", "440", "432"], ["60204", "宜春学院(04)", "418", "439"], ["60205", "宜春学院(05)", "429", "436"], ["60206", "宜春学院(06)", "436", "431"], ["60207", "宜春学院(07)", "", "423"], ["60208", "宜春学院(08)", "", "446"], ["60301", "赣南师大(01)", "481", "455"], ["60302", "赣南师大(02)", "440", "472"], ["60303", "赣南师大(03)", "440", "463"], ["60304", "赣南师大(04)", "466", "450"], ["60305", "赣南师大(05)", "443", "434"], ["60306", "赣南师大(06)", "440", "462"], ["60307", "赣南师大(07)", "", "436"], ["60308", "赣南师大(08)", "", "429"], ["60309", "赣南师大(09)", "", "437"], ["60401", "井冈山大(01)", "431", "429"], ["60402", "井冈山大(02)", "425", "437"], ["60501", "江西财大(01)", "507", "499"], ["60502", "江西财大(02)", "512", "507"], ["60503", "江西财大(03)", "504", "501"], ["60504", "江西财大(04)", "508", "487"], ["60505", "江西财大(05)", "494", ""], ["60601", "江西科技(01)", "407", "421"], ["60602", "江西科技(02)", "417", "421"], ["60701", "江西科师(01)", "447", "453"], ["60702", "江西科师(02)", "477", "471"], ["60703", "江西科师(03)", "433", "435"], ["60704", "江西科师(04)", "408", ""], ["60801", "江西水电(01)", "436", "441"], ["60802", "江西水电(02)", "410", "425"], ["60803", "江西水电(03)", "442", "445"], ["61001", "九江学院(01)", "441", "426"], ["61002", "九江学院(02)", "417", "433"], ["61003", "九江学院(03)", "432", "445"], ["61301", "南昌工院(01)", "419", "425"], ["61401", "昌大科技(01)", "406", "409"], ["61402", "昌大科技(02)", "", "409"], ["61403", "昌大科技(03)", "", "421"], ["61501", "南昌交院(01)", "404", "408"], ["61601", "赣东学院(01)", "438", "440"], ["61602", "赣东学院(02)", "431", "435"], ["61701", "南航科技(01)", "411", "426"], ["61702", "南航科技(02)", "419", "411"], ["61801", "赣南科院(01)", "431", "432"], ["61802", "赣南科院(02)", "429", "431"], ["61803", "赣南科院(03)", "", "432"], ["62001", "赣农商院(01)", "405", "408"], ["62002", "赣农商院(02)", "412", "404"], ["62101", "南昌医学(01)", "445", "439"], ["62102", "南昌医学(02)", "447", "448"], ["62103", "南昌医学(03)", "430", "433"], ["62104", "南昌医学(04)", "432", "437"], ["62105", "南昌医学(05)", "503", "487"], ["62106", "南昌医学(06)", "507", "491"], ["62107", "南昌医学(07)", "471", "470"], ["62108", "南昌医学(08)", "468", "441"], ["62201", "江师科技(01)", "415", "414"], ["62202", "江师科技(02)", "411", "410"], ["62203", "江师科技(03)", "412", "412"], ["62301", "赣师科技(01)", "409", "409"], ["62302", "赣师科技(02)", "405", "411"], ["62401", "江财经管(01)", "415", "417"], ["62402", "江财经管(02)", "405", "408"], ["62403", "江财经管(03)", "410", "418"], ["62501", "南昌师院(01)", "437", "439"], ["62601", "赣应科院(01)", "413", "418"], ["62701", "江西工程(01)", "415", "421"], ["64101", "山东大学(01)", "567", "557"], ["64102", "山东大学(02)", "578", "571"], ["64103", "山东大学(03)", "577", ""], ["64201", "中国海洋(01)", "563", "550"], ["64202", "中国海洋(02)", "558", "547"], ["64203", "中国海洋(03)", "", "552"], ["64204", "中国海洋(04)", "", "557"], ["64301", "石油华东(01)", "538", "530"], ["64302", "石油华东(02)", "547", "543"], ["64401", "山大威海(01)", "567", "563"], ["64402", "山大威海(02)", "575", "568"], ["64501", "哈工威海(01)", "580分及以上", "575"], ["64601", "山东科大(01)", "465", "483"], ["64602", "山东科大(02)", "486", "445"], ["64701", "青岛科大(01)", "452", "477"], ["64702", "青岛科大(02)", "477", "452"], ["64801", "济南大学(01)", "470", "498"], ["64802", "济南大学(02)", "497", "457"], ["64901", "青岛理工(01)", "454", "453"], ["64902", "青岛理工(02)", "488", "456"], ["64903", "青岛理工(03)", "438", "455"], ["65001", "山东建筑(01)", "443", "452"], ["65002", "山东建筑(02)", "436", "438"], ["65101", "山东理工(01)", "459", "455"], ["65201", "青岛农大(01)", "429", "432"], ["65202", "青岛农大(02)", "", "431"], ["65301", "山东二医(01)", "503", "438"], ["65401", "山东医大(01)", "516", "505"], ["65501", "济宁医学(01)", "476", "433"], ["65601", "山东师大(01)", "481", "471"], ["65602", "山东师大(02)", "488", "469"], ["65603", "山东师大(03)", "490", "491"], ["65604", "山东师大(04)", "498", "488"], ["65605", "山东师大(05)", "470", ""], ["65701", "曲阜师大(01)", "510", "509"], ["65702", "曲阜师大(02)", "502", "475"], ["65703", "曲阜师大(03)", "465", "422"], ["65901", "鲁东大学(01)", "445", "447"], ["65902", "鲁东大学(02)", "432", "435"], ["66001", "济宁学院(01)", "419", "430"], ["66002", "济宁学院(02)", "425", "429"], ["66101", "齐鲁医药(01)", "435", "427"], ["66102", "齐鲁医药(02)", "413", "413"], ["66201", "潍坊学院(01)", "433", "435"], ["66202", "潍坊学院(02)", "441", "423"], ["66203", "潍坊学院(03)", "", "438"], ["66301", "山东交通(01)", "443", "437"], ["66401", "山东工商(01)", "443", "446"], ["66501", "山东石化(01)", "426", "424"], ["66601", "聊城东昌(01)", "402", "405"], ["66701", "青岛大学(01)", "492", "488"], ["66702", "青岛大学(02)", "497", "487"], ["66703", "青岛大学(03)", "519", "533"], ["66704", "青岛大学(04)", "548", "514"], ["66801", "青岛恒星(01)", "403", "406"], ["66802", "青岛恒星(02)", "404", "403"], ["66901", "烟台大学(01)", "484", "467"], ["66902", "烟台大学(02)", "466", "467"], ["66903", "烟台大学(03)", "486", "479"], ["66904", "烟台大学(04)", "", "468"], ["67001", "齐鲁工大(01)", "477", "477"], ["67101", "山东航空(01)", "441", "438"], ["67102", "山东航空(02)", "436", "440"], ["67201", "山东中医(01)", "505", "489"], ["67301", "北交威海(01)", "543", "530"], ["67401", "山一大(01)", "457", "464"], ["67402", "山一大(02)", "543", "500"], ["67403", "山一大(03)", "473", "455"], ["67404", "山一大(04)", "465", "534"], ["67405", "山一大(05)", "450", "490"], ["67406", "山一大(06)", "", "450"], ["67407", "山一大(07)", "", "470"], ["67408", "山一大(08)", "", "455"], ["67409", "山一大(09)", "", "455"], ["67410", "山一大(10)", "", "499"], ["68101", "华北水电(01)", "442", "437"], ["68102", "华北水电(02)", "442", "443"], ["68103", "华北水电(03)", "430", "445"], ["68201", "郑州大学(01)", "533", "540"], ["68202", "郑州大学(02)", "538", "534"], ["68203", "郑州大学(03)", "544", "527"], ["68301", "河南理工(01)", "456", "452"], ["68302", "河南理工(02)", "443", "441"], ["68303", "河南理工(03)", "435", "439"], ["68304", "河南理工(04)", "434", "449"], ["68305", "河南理工(05)", "451", ""], ["68306", "河南理工(06)", "436", ""], ["68401", "郑州轻工(01)", "436", "443"], ["68402", "郑州轻工(02)", "440", "444"], ["68501", "河南工大(01)", "442", "447"], ["68502", "河南工大(02)", "445", "433"], ["68503", "河南工大(03)", "441", "452"], ["68601", "河南科大(01)", "443", "446"], ["68701", "中原工院(01)", "426", "427"], ["68801", "河南农大(01)", "429", "456"], ["68802", "河南农大(02)", "467", "465"], ["68803", "河南农大(03)", "448", "434"], ["68804", "河南农大(04)", "", "444"], ["68901", "河南中医(01)", "458", "415"], ["68902", "河南中医(02)", "493", "481"], ["69001", "河南医药(01)", "461", "444"], ["69101", "河南大学(01)", "517", "514"], ["69102", "河南大学(02)", "474", "485"], ["69103", "河南大学(03)", "507", "504"], ["69104", "河南大学(04)", "486", "478"], ["69105", "河南大学(05)", "499", "498"], ["69201", "南阳师范(01)", "437", "437"], ["69202", "南阳师范(02)", "422", "432"], ["69203", "南阳师范(03)", "", "426"], ["69301", "商丘师范(01)", "434", "434"], ["69302", "商丘师范(02)", "423", "425"], ["69303", "商丘师范(03)", "429", "431"], ["69401", "河南财政(01)", "475", "470"], ["69402", "河南财政(02)", "440", "481"], ["69403", "河南财政(03)", "431", "486"], ["69404", "河南财政(04)", "", "440"], ["69501", "郑州航空(01)", "429", "427"], ["69502", "郑州航空(02)", "", "432"], ["69503", "郑州航空(03)", "", "431"], ["69601", "洛阳理工(01)", "435", "436"], ["69701", "安阳工院(01)", "425", "431"], ["69702", "安阳工院(02)", "427", "427"], ["69801", "河南城建(01)", "425", "424"], ["69901", "河南师大(01)", "486", "483"], ["69902", "河南师大(02)", "457", "454"], ["70101", "平顶学院(01)", "422", "424"], ["70102", "平顶学院(02)", "", "427"], ["70201", "河南工院(01)", "435", "438"], ["70202", "河南工院(02)", "", "432"], ["70301", "新乡学院(01)", "423", "427"], ["70401", "河南财金(01)", "441", "446"], ["71101", "中南民族(01)", "473", "466"], ["71102", "中南民族(02)", "468", "455"], ["71201", "武汉大学(01)", "580分及以上", "571"], ["71202", "武汉大学(02)", "580分及以上", "577"], ["71301", "华中科大(01)", "580分及以上", "580分及以上"], ["71302", "华中科大(02)", "580分及以上", "579"], ["71303", "华中科大(03)", "", "571"], ["71401", "地大武汉(01)", "549", "534"], ["71402", "地大武汉(02)", "538", "545"], ["71501", "武汉理工(01)", "544", "552"], ["71502", "武汉理工(02)", "559", "535"], ["71601", "华中农大(01)", "538", "540"], ["71602", "华中农大(02)", "535", "524"], ["71701", "华中师大(01)", "542", "532"], ["71702", "华中师大(02)", "566", "544"], ["71703", "华中师大(03)", "531", "546"], ["71704", "华中师大(04)", "556", ""], ["71705", "华中师大(05)", "548", ""], ["71801", "中南财政(01)", "561", "551"], ["71802", "中南财政(02)", "551", ""], ["71901", "武汉科大(01)", "521", "519"], ["72001", "长江大学(01)", "468", "474"], ["72002", "长江大学(02)", "462", "485"], ["72003", "长江大学(03)", "458", "461"], ["72004", "长江大学(04)", "480", ""], ["72101", "武汉工程(01)", "458", "457"], ["72102", "武汉工程(02)", "", "444"], ["72201", "武汉轻工(01)", "437", "443"], ["72301", "湖北中医(01)", "459", "504"], ["72302", "湖北中医(02)", "458", "465"], ["72303", "湖北中医(03)", "442", "498"], ["72304", "湖北中医(04)", "", "448"], ["72305", "湖北中医(05)", "", "440"], ["72306", "湖北中医(06)", "", "446"], ["72401", "湖北大学(01)", "491", "479"], ["72402", "湖北大学(02)", "490", "465"], ["72501", "湖北医药(01)", "468", "418"], ["72601", "三峡大学(01)", "474", "473"], ["72602", "三峡大学(02)", "498", "464"], ["72801", "武昌首义(01)", "415", "421"], ["72802", "武昌首义(02)", "416", "420"], ["72901", "武昌理工(01)", "404", "423"], ["73001", "武汉城院(01)", "409", "411"], ["73002", "武汉城院(02)", "", "417"], ["73101", "三峡科技(01)", "427", "422"], ["73201", "武汉文理(01)", "414", "420"], ["73202", "武汉文理(02)", "415", "417"], ["73301", "文华学院(01)", "409", "411"], ["73302", "文华学院(02)", "411", "416"], ["73401", "武汉华夏(01)", "408", "411"], ["73402", "武汉华夏(02)", "408", "412"], ["73501", "鄂医药护(01)", "432", "411"], ["73801", "武纺外贸(01)", "413", "416"], ["73901", "湖北汽院(01)", "439", "453"], ["74101", "湖南大学(01)", "569", "558"], ["74102", "湖南大学(02)", "569", "564"], ["74103", "湖南大学(03)", "576", "570"], ["74104", "湖南大学(04)", "", "569"], ["74201", "中南大学(01)", "577", "573"], ["74202", "中南大学(02)", "580分及以上", "571"], ["74301", "湘潭大学(01)", "500", "438"], ["74302", "湘潭大学(02)", "", "520"], ["74401", "湖南科大(01)", "452", "453"], ["74402", "湖南科大(02)", "451", "440"], ["74403", "湖南科大(03)", "440", "416"], ["74404", "湖南科大(04)", "480", "441"], ["74405", "湖南科大(05)", "440", "452"], ["74406", "湖南科大(06)", "", "478"], ["74501", "长沙理工(01)", "480", "481"], ["74502", "长沙理工(02)", "487", "486"], ["74503", "长沙理工(03)", "509", "494"], ["74601", "湖南农大(01)", "461", "475"], ["74602", "湖南农大(02)", "471", "462"], ["74701", "湖南中医(01)", "537", "520"], ["74702", "湖南中医(02)", "490", "513"], ["74703", "湖南中医(03)", "423", "500"], ["74704", "湖南中医(04)", "", "458"], ["74801", "湖南师大(01)", "539", "512"], ["74802", "湖南师大(02)", "540", "535"], ["74803", "湖南师大(03)", "537", "532"], ["74901", "湖南理工(01)", "436", "465"], ["74902", "湖南理工(02)", "430", "440"], ["74903", "湖南理工(03)", "", "437"], ["75001", "湘南学院(01)", "432", "434"], ["75002", "湘南学院(02)", "431", "429"], ["75003", "湘南学院(03)", "447", "435"], ["75101", "衡阳师范(01)", "439", "439"], ["75102", "衡阳师范(02)", "447", "429"], ["75103", "衡阳师范(03)", "441", "450"], ["75201", "邵阳学院(01)", "427", "433"], ["75202", "邵阳学院(02)", "", "432"], ["75301", "湖南文理(01)", "435", "435"], ["75302", "湖南文理(02)", "431", "408"], ["75303", "湖南文理(03)", "440", "446"], ["75401", "湖南科技(01)", "434", "434"], ["75402", "湖南科技(02)", "429", "424"], ["75403", "湖南科技(03)", "423", "436"], ["75501", "湖南工商(01)", "457", "455"], ["75502", "湖南工商(02)", "", "463"], ["75601", "南华大学(01)", "444", "441"], ["75602", "南华大学(02)", "438", "446"], ["75603", "南华大学(03)", "464", "404"], ["75701", "长沙医学(01)", "447", "415"], ["75702", "长沙医学(02)", "417", "434"], ["75801", "长沙学院(01)", "443", "441"], ["75802", "长沙学院(02)", "432", ""], ["75803", "长沙学院(03)", "442", ""], ["75901", "湖南工程(01)", "436", "440"], ["75902", "湖南工程(02)", "432", "433"], ["76001", "湖南工学(01)", "425", "436"], ["76002", "湖南工学(02)", "431", "430"], ["76101", "湖南财经(01)", "443", "445"], ["76102", "湖南财经(02)", "420", "431"], ["76103", "湖南财经(03)", "421", "435"], ["76201", "岳阳学院(01)", "402", "405"], ["76301", "湖南工大(01)", "447", "444"], ["76302", "湖南工大(02)", "435", "439"], ["76303", "湖南工大(03)", "435", ""], ["76401", "湖南城市(01)", "432", "434"], ["76402", "湖南城市(02)", "427", "435"], ["77101", "中山大学(01)", "578", "566"], ["77102", "中山大学(02)", "580分及以上", "574"], ["77201", "暨南大学(01)", "542", "536"], ["77202", "暨南大学(02)", "545", "541"], ["77203", "暨南大学(03)", "549", "543"], ["77204", "暨南大学(04)", "558", "550"], ["77205", "暨南大学(05)", "", "541"], ["77301", "汕头大学(01)", "476", "475"], ["77302", "汕头大学(02)", "", "483"], ["77401", "华南理工(01)", "580分及以上", "574"], ["77501", "华南农大(01)", "522", "500"], ["77601", "广东海洋(01)", "448", "450"], ["77602", "广东海洋(02)", "462", "449"], ["77603", "广东海洋(03)", "", "457"], ["77701", "广州医大(01)", "551", "543"], ["77702", "广州医大(02)", "519", "512"], ["77801", "广东医科(01)", "535", "513"], ["77802", "广东医科(02)", "476", "478"], ["77901", "广州中医(01)", "546", "555"], ["77902", "广州中医(02)", "515", "540"], ["77903", "广州中医(03)", "", "505"], ["78001", "广东药科(01)", "474", "443"], ["78002", "广东药科(02)", "461", "482"], ["78101", "华南师大(01)", "536", "548"], ["78102", "华南师大(02)", "558", "529"], ["78201", "韶关学院(01)", "438", "434"], ["78202", "韶关学院(02)", "419", "421"], ["78301", "岭南师院(01)", "432", "439"], ["78302", "岭南师院(02)", "423", "426"], ["78303", "岭南师院(03)", "456", "429"], ["78304", "岭南师院(04)", "425", "436"], ["78401", "广州体院(01)", "480", "480"], ["78501", "广技师大(01)", "435", "441"], ["78502", "广技师大(02)", "436", "448"], ["78601", "深圳大学(01)", "542", "535"], ["78602", "深圳大学(02)", "558", "553"], ["78701", "广东财大(01)", "494", "495"], ["78801", "广东轻大(01)", "426", "438"], ["78802", "广东轻大(02)", "419", "427"], ["78901", "广州大学(01)", "503", "501"], ["79001", "广东金融(01)", "458", "462"], ["79002", "广东金融(02)", "", "437"], ["79101", "南方医科(01)", "532", "570"], ["79102", "南方医科(02)", "", "496"], ["79201", "珠海科院(01)", "422", "423"], ["79202", "珠海科院(02)", "420", "426"], ["79301", "港城莞(01)", "566", "563"], ["79401", "北师浸会(01)", "529", "523"], ["79402", "北师浸会(02)", "540", "532"], ["79403", "北师浸会(03)", "541", "536"], ["79501", "广以理工(01)", "528", "525"], ["79601", "北师珠海(01)", "", "570"], ["79701", "广州商院(01)", "405", "405"], ["79801", "广东工业(01)", "", "528"], ["79802", "广东工业(02)", "", "473"], ["79902", "华南珠江(02)", "", "407"], ["81101", "广西大学(01)", "494", "493"], ["81201", "桂林电子(01)", "441", "440"], ["81202", "桂林电子(02)", "522", "518"], ["81301", "桂林理工(01)", "434", "432"], ["81302", "桂林理工(02)", "", "437"], ["81303", "桂林理工(03)", "", "440"], ["81401", "桂林医大(01)", "463", "441"], ["81402", "桂林医大(02)", "455", "435"], ["81501", "广西师大(01)", "473", "449"], ["81502", "广西师大(02)", "435", "444"], ["81503", "广西师大(03)", "426", "436"], ["81601", "河池学院(01)", "412", "424"], ["81701", "梧州学院(01)", "430", "434"], ["81702", "梧州学院(02)", "421", "426"], ["81801", "北部湾大(01)", "432", "430"], ["81901", "桂航工院(01)", "429", "440"], ["82001", "柳州职大(01)", "407", "418"], ["82002", "柳州职大(02)", "417", "421"], ["82101", "北海艺术(01)", "", "403"], ["83101", "海南大学(01)", "537", "521"], ["83102", "海南大学(02)", "", "523"], ["83201", "海南师大(01)", "452", "462"], ["83202", "海南师大(02)", "454", "453"], ["83301", "海南医大(01)", "527", "516"], ["83302", "海南医大(02)", "475", "455"], ["83401", "三亚学院(01)", "403", ""], ["83402", "三亚学院(02)", "", "403"], ["83403", "三亚学院(03)", "406", ""], ["83501", "海南比科(01)", "408", "403"], ["83502", "海南比科(02)", "420", "428"], ["83503", "海南比科(03)", "481", "407"], ["83504", "海南比科(04)", "", "405"], ["83601", "海南洛桑(01)", "", "417"], ["84101", "重庆大学(01)", "579", "571"], ["84102", "重庆大学(02)", "576", "572"], ["84103", "重庆大学(03)", "", "570"], ["84201", "重庆邮电(01)", "544", "538"], ["84301", "重庆交大(01)", "471", "486"], ["84302", "重庆交大(02)", "501", "468"], ["84401", "重庆医大(01)", "537", "522"], ["84402", "重庆医大(02)", "488", "491"], ["84403", "重庆医大(03)", "491", "480"], ["84404", "重庆医大(04)", "494", "477"], ["84501", "西南大学(01)", "543", "530"], ["84502", "西南大学(02)", "548", "539"], ["84601", "重庆师大(01)", "476", "500"], ["84602", "重庆师大(02)", "449", "483"], ["84603", "重庆师大(03)", "506", "451"], ["84604", "重庆师大(04)", "464", "433"], ["84605", "重庆师大(05)", "", "452"], ["84701", "川外国语(01)", "485", "485"], ["84702", "川外国语(02)", "", "489"], ["84801", "西南政法(01)", "544", "538"], ["84802", "西南政法(02)", "", "535"], ["84901", "四川美院(01)", "497", "487"], ["84902", "四川美院(02)", "526", "522"], ["85001", "重庆科大(01)", "463", "464"], ["85002", "重庆科大(02)", "450", "434"], ["85101", "重庆理工(01)", "462", "473"], ["85102", "重庆理工(02)", "449", ""], ["85103", "重庆理工(03)", "475", ""], ["85201", "重庆工商(01)", "449", "454"], ["85202", "重庆工商(02)", "437", "443"], ["85301", "重庆城科(01)", "413", "424"], ["85302", "重庆城科(02)", "415", "425"], ["85401", "重庆外贸(01)", "407", "404"], ["85501", "重庆移通(01)", "403", "409"], ["85502", "重庆移通(02)", "", "425"], ["86101", "四川大学(01)", "580分及以上", "572"], ["86102", "四川大学(02)", "580分及以上", "570"], ["86103", "四川大学(03)", "580分及以上", "580分及以上"], ["86104", "四川大学(04)", "570", "565"], ["86105", "四川大学(05)", "572", "566"], ["86201", "西南交大(01)", "559", "556"], ["86301", "电子科大(01)", "580分及以上", "576"], ["86401", "西南石油(01)", "492", "508"], ["86402", "西南石油(02)", "511", "484"], ["86403", "西南石油(03)", "498", "503"], ["86501", "成都理工(01)", "526", "488"], ["86502", "成都理工(02)", "521", "517"], ["86503", "成都理工(03)", "479", "476"], ["86504", "成都理工(04)", "531", "534"], ["86505", "成都理工(05)", "517", "509"], ["86506", "成都理工(06)", "490", ""], ["86601", "西南科大(01)", "441", "440"], ["86602", "西南科大(02)", "433", "437"], ["86603", "西南科大(03)", "437", "439"], ["86701", "成都信息(01)", "464", "470"], ["86702", "成都信息(02)", "467", "473"], ["86703", "成都信息(03)", "474", ""], ["86704", "成都信息(04)", "458", "481"], ["86705", "成都信息(05)", "481", "458"], ["86801", "四川轻化(01)", "439", "435"], ["86901", "西华大学(01)", "454", "455"], ["87001", "民航飞院(01)", "439", "444"], ["87002", "民航飞院(02)", "438", "435"], ["87003", "民航飞院(03)", "467", "440"], ["87004", "民航飞院(04)", "437", "462"], ["87101", "四川农大(01)", "522", "520"], ["87201", "西南医大(01)", "522", "500"], ["87301", "成都中医(01)", "541", "548"], ["87302", "成都中医(02)", "", "536"], ["87401", "四川师大(01)", "511", "487"], ["87402", "四川师大(02)", "487", "493"], ["87403", "四川师大(03)", "504", "496"], ["87404", "四川师大(04)", "492", "489"], ["87405", "四川师大(05)", "488", ""], ["87501", "西华师大(01)", "435", "435"], ["87601", "内江师院(01)", "446", "450"], ["87602", "内江师院(02)", "434", "426"], ["87701", "西南财大(01)", "565", "558"], ["87702", "西南财大(02)", "560", "549"], ["87703", "西南财大(03)", "563", "552"], ["87801", "西南民族(01)", "454", "467"], ["87802", "西南民族(02)", "449", "444"], ["87901", "成都大学(01)", "478", "474"], ["87902", "成都大学(02)", "470", "486"], ["87903", "成都大学(03)", "491", "479"], ["87904", "成都大学(04)", "478", "488"], ["88001", "攀枝花(01)", "428", "433"], ["88002", "攀枝花(02)", "465", "445"], ["88101", "成都东软(01)", "408", "417"], ["88102", "成都东软(02)", "417", "408"], ["88201", "吉利学院(01)", "408", "416"], ["88301", "电科成院(01)", "426", "426"], ["88401", "四川传媒(01)", "419", "428"], ["88402", "四川传媒(02)", "425", "430"], ["88403", "四川传媒(03)", "410", "416"], ["88404", "四川传媒(04)", "", "422"], ["88501", "成都医学(01)", "458", "444"], ["88601", "川工科院(01)", "414", "412"], ["88701", "西财天府(01)", "417", "415"], ["88801", "川大锦江(01)", "412", "415"], ["88802", "川大锦江(02)", "423", "425"], ["88901", "电科沙河(01)", "580分及以上", "573"], ["89001", "川工职大(01)", "424", "431"], ["89101", "云南大学(01)", "528", "521"], ["89102", "云南大学(02)", "532", "525"], ["89103", "云南大学(03)", "536", "532"], ["89104", "云南大学(04)", "533", "533"], ["89105", "云南大学(05)", "539", "537"], ["89201", "昆明理工(01)", "491", "492"], ["89202", "昆明理工(02)", "494", "485"], ["89203", "昆明理工(03)", "", "491"], ["89301", "云南农大(01)", "438", "451"], ["89302", "云南农大(02)", "", "448"], ["89401", "昆明医大(01)", "488", "491"], ["89402", "昆明医大(02)", "", "460"], ["89501", "大理大学(01)", "438", "437"], ["89502", "大理大学(02)", "484", "440"], ["89601", "云南师大(01)", "479", "457"], ["89602", "云南师大(02)", "499", "481"], ["89701", "云南财大(01)", "450", "451"], ["89801", "云南民大(01)", "432", "481"], ["89802", "云南民大(02)", "482", "449"], ["89803", "云南民大(03)", "456", "434"], ["89901", "云南警官(01)", "460", "465"], ["89902", "云南警官(02)", "", "445"], ["90001", "滇池学院(01)", "402", "403"], ["90002", "滇池学院(02)", "403", "407"], ["90003", "滇池学院(03)", "", "403"], ["90004", "滇池学院(04)", "404", ""], ["90101", "丽江文旅(01)", "", "403"], ["90201", "昆医海源(01)", "420", "409"], ["90301", "昆理津桥(01)", "402", "405"], ["90302", "昆理津桥(02)", "", "404"], ["91101", "贵州大学(01)", "503", "473"], ["91102", "贵州大学(02)", "524", "530"], ["91103", "贵州大学(03)", "484", "515"], ["91104", "贵州大学(04)", "494", "491"], ["91105", "贵州大学(05)", "526", "528"], ["91201", "贵州中医(01)", "501", "488"], ["91202", "贵州中医(02)", "435", "439"], ["91301", "贵州财大(01)", "439", "434"], ["91302", "贵州财大(02)", "402", "409"], ["91401", "贵州师院(01)", "418", "432"], ["91402", "贵州师院(02)", "413", "425"], ["92101", "西北大学(01)", "538", "524"], ["92102", "西北大学(02)", "557", "541"], ["92103", "西北大学(03)", "540", "519"], ["92104", "西北大学(04)", "543", "543"], ["92201", "西安交大(01)", "580分及以上", "580分及以上"], ["92301", "西北工大(01)", "580分及以上", "580分及以上"], ["92401", "西安理工(01)", "507", "502"], ["92501", "西电科大(01)", "580分及以上", "572"], ["92601", "西安工大(01)", "460", "489"], ["92602", "西安工大(02)", "486", "451"], ["92701", "西安建科(01)", "547", "452"], ["92702", "西安建科(02)", "462", "468"], ["92801", "西安科大(01)", "463", "492"], ["92802", "西安科大(02)", "493", "467"], ["92901", "西安石油(01)", "445", "445"], ["92902", "西安石油(02)", "443", "450"], ["93001", "陕西科大(01)", "494", "501"], ["93002", "陕西科大(02)", "452", "446"], ["93101", "长安大学(01)", "546", "544"], ["93102", "长安大学(02)", "", "542"], ["93201", "西北农林(01)", "539", "535"], ["93202", "西北农林(02)", "539", "535"], ["93203", "西北农林(03)", "550", "531"], ["93204", "西北农林(04)", "542", "542"], ["93205", "西北农林(05)", "547", "542"], ["93206", "西北农林(06)", "", "541"], ["93207", "西北农林(07)", "", "550"], ["93301", "陕西师大(01)", "532", "535"], ["93302", "陕西师大(02)", "551", "525"], ["93303", "陕西师大(03)", "534", "536"], ["93304", "陕西师大(04)", "", "536"], ["93305", "陕西师大(05)", "", "541"], ["93401", "延安大学(01)", "437", "438"], ["93402", "延安大学(02)", "434", "435"], ["93403", "延安大学(03)", "", "419"], ["93501", "陕西理工(01)", "437", "432"], ["93502", "陕西理工(02)", "", "434"], ["93503", "陕西理工(03)", "", "442"], ["93601", "宝鸡文理(01)", "431", "434"], ["93701", "渭南师范(01)", "404", "404"], ["93801", "西安外大(01)", "482", "477"], ["93901", "西北政法(01)", "538", "526"], ["94001", "西安培华(01)", "402", "403"], ["94002", "西安培华(02)", "413", "404"], ["94003", "西安培华(03)", "425", "403"], ["94004", "西安培华(04)", "", "415"], ["94101", "西安财大(01)", "472", "466"], ["94201", "西安邮电(01)", "531", "530"], ["94301", "西安思源(01)", "", "406"], ["94302", "西安思源(02)", "402", ""], ["94401", "西交城市(01)", "415", "413"], ["95101", "兰州大学(01)", "552", "547"], ["95102", "兰州大学(02)", "559", "541"], ["95103", "兰州大学(03)", "564", "543"], ["95104", "兰州大学(04)", "", "565"], ["95105", "兰州大学(05)", "", "559"], ["95106", "兰州大学(06)", "", "561"], ["95107", "兰州大学(07)", "", "558"], ["95201", "兰州理工(01)", "451", "441"], ["95202", "兰州理工(02)", "437", "440"], ["95203", "兰州理工(03)", "440", "454"], ["95301", "兰州交大(01)", "451", "459"], ["95302", "兰州交大(02)", "452", ""], ["95401", "西北师大(01)", "442", "439"], ["95402", "西北师大(02)", "431", "414"], ["95403", "西北师大(03)", "", "437"], ["95501", "兰州财大(01)", "433", "437"], ["95502", "兰州财大(02)", "431", "431"], ["95601", "西北民族(01)", "440", "441"], ["95602", "西北民族(02)", "410", "446"], ["95603", "西北民族(03)", "430", "431"], ["95604", "西北民族(04)", "435", "436"], ["95701", "甘肃政法(01)", "467", "473"], ["95702", "甘肃政法(02)", "429", "432"], ["95801", "兰州环职(01)", "422", "423"], ["96101", "青海大学(01)", "489", "489"], ["96102", "青海大学(02)", "517", "511"], ["96103", "青海大学(03)", "518", "513"], ["96201", "青海理工(01)", "423", "430"], ["96202", "青海理工(02)", "421", "426"], ["97101", "宁夏大学(01)", "483", "475"], ["97102", "宁夏大学(02)", "513", "483"], ["97103", "宁夏大学(03)", "", "468"], ["97104", "宁夏大学(04)", "", "470"], ["97105", "宁夏大学(05)", "", "509"], ["97106", "宁夏大学(06)", "", "499"], ["97201", "宁夏医大(01)", "421", "470"], ["97301", "北方民族(01)", "434", "462"], ["97302", "北方民族(02)", "448", "434"], ["97303", "北方民族(03)", "", "456"], ["98101", "新疆大学(01)", "485", "471"], ["98102", "新疆大学(02)", "467", "483"], ["98201", "塔里木(01)", "411", "416"], ["98202", "塔里木(02)", "", "424"], ["98301", "新疆农大(01)", "413", "407"], ["98302", "新疆农大(02)", "420", "422"], ["98401", "石河子(01)", "455", "467"], ["98402", "石河子(02)", "467", "467"], ["98403", "石河子(03)", "468", "465"], ["98501", "喀什大学(01)", "405", "412"], ["98502", "喀什大学(02)", "", "404"], ["98503", "喀什大学(03)", "407", "415"], ["98504", "喀什大学(04)", "402", ""], ["98505", "喀什大学(05)", "423", "407"], ["98506", "喀什大学(06)", "", "407"], ["98507", "喀什大学(07)", "", "407"], ["98508", "喀什大学(08)", "", "408"], ["98601", "伊犁师大(01)", "413", "415"], ["98602", "伊犁师大(02)", "403", "403"], ["98603", "伊犁师大(03)", "402", "403"], ["98604", "伊犁师大(04)", "422", "405"], ["98701", "新疆财大(01)", "417", "423"], ["98702", "新疆财大(02)", "415", "419"], ["98703", "新疆财大(03)", "421", "423"], ["98801", "新疆工程(01)", "406", "407"], ["98802", "新疆工程(02)", "", "417"], ["98803", "新疆工程(03)", "", "412"], ["98804", "新疆工程(04)", "", "407"], ["98805", "新疆工程(05)", "", "406"], ["98901", "昌吉学院(01)", "406", "403"], ["98902", "昌吉学院(02)", "404", "404"], ["98903", "昌吉学院(03)", "", "403"], ["99001", "新疆理工(01)", "", "403"], ["99002", "新疆理工(02)", "403", "406"], ["99003", "新疆理工(03)", "402", "403"], ["99101", "新疆科技(01)", "402", "403"], ["99102", "新疆科技(02)", "402", "403"], ["99103", "新疆科技(03)", "", "403"], ["99104", "新疆科技(04)", "", "403"], ["99201", "新疆政法(01)", "427", "423"], ["99301", "中油北克(01)", "501", "503"], ["99302", "中油北克(02)", "", "502"], ["99601", "西藏大学(01)", "455", "447"], ["99602", "西藏大学(02)", "485", "439"], ["99603", "西藏大学(03)", "434", "431"], ["99604", "西藏大学(04)", "470", "473"], ["99605", "西藏大学(05)", "469", "447"], ["99801", "成都航大(01)", "", "434"]];
+
+// 精选院校专业组（含 选科/层次/地域，供冲稳保与对比）：[name, major, req, area, tier, y25, y26]
+const SCHOOLS_GK = [["复旦大学(01)", "不限科目", "不限", "上海", "985", "580分及以上", "580分及以上"], ["复旦大学(02)", "物理", "物理", "上海", "985", "580分及以上", "580分及以上"], ["上海交大(01)", "物理", "物理", "上海", "985", "580分及以上", "580分及以上"], ["上海交大(03)", "不限科目", "不限", "上海", "985", "580分及以上", "580分及以上"], ["同济大学(01)", "物理", "物理", "上海", "985", "580分及以上", "580分及以上"], ["同济大学(02)", "不限科目", "不限", "上海", "985", "580分及以上", "575"], ["华东师大(01)", "不限科目", "不限", "上海", "985", "580分及以上", "571"], ["华东师大(02)", "物理", "物理", "上海", "985", "580分及以上", "576"], ["华东师大(03)", "物理化学", "物理化学", "上海", "985", "580分及以上", ""], ["复旦医学(01)", "物理化学", "物理化学", "上海", "985医学", "580分及以上", "580分及以上"], ["交大医学(01)", "物理化学", "物理化学", "上海", "985医学", "580分及以上", "580分及以上"], ["上海财大(01)", "不限科目", "不限", "上海", "211", "573", "566"], ["上海财大(02)", "物理", "物理", "上海", "211", "573", "568"], ["上海财大(03)", "不限科目", "不限", "上海", "211", "576", "569"], ["上海财大(04)", "物理化学", "物理化学", "上海", "211", "578", "571"], ["上海外大(01)", "不限科目", "不限", "上海", "211", "567", "559"], ["上海外大(02)", "物理", "物理", "上海", "211", "565", "557"], ["上海外大(03)", "不限科目", "不限", "上海", "211", "565", "559"], ["上海外大(04)", "物理化学", "物理化学", "上海", "211", "572", "564"], ["上海外大(05)", "不限科目", "不限", "上海", "211", "570", "557"], ["上海外大(06)", "不限科目", "不限", "上海", "211", "", "561"], ["华东理工(01)", "物理", "物理", "上海", "211", "560", "565"], ["华东理工(02)", "不限科目", "不限", "上海", "211", "568", "558"], ["华东理工(03)", "物理化学", "物理化学", "上海", "211", "548", "554"], ["华东理工(04)", "物理化学", "物理化学", "上海", "211", "", "543"], ["东华大学(01)", "物理化学", "物理化学", "上海", "211", "553", "547"], ["东华大学(02)", "物理", "物理", "上海", "211", "553", "548"], ["东华大学(03)", "不限科目", "不限", "上海", "211", "546", "548"], ["上海大学(01)", "物理化学", "物理化学", "上海", "211", "565", "561"], ["上海大学(02)", "物理化学", "物理化学", "上海", "211", "555", "549"], ["上海大学(03)", "物理", "物理", "上海", "211", "545", "543"], ["上海大学(04)", "不限科目", "不限", "上海", "211", "546", "543"], ["上海理工(01)", "物理化学", "物理化学", "上海", "市属重点", "549", "546"], ["上海理工(02)", "不限科目", "不限", "上海", "市属重点", "531", "531"], ["上海理工(03)", "物理化学", "物理化学", "上海", "市属重点", "534", "532"], ["上海理工(04)", "物理", "物理", "上海", "市属重点", "533", "528"], ["上海理工(05)", "不限科目", "不限", "上海", "市属重点", "524", ""], ["上海海事(01)", "物理化学", "物理化学", "上海", "市属重点", "542", "539"], ["上海海事(02)", "不限科目", "不限", "上海", "市属重点", "505", "506"], ["上海海事(03)", "不限科目", "不限", "上海", "市属重点", "515", "510"], ["上海海事(04)", "物理", "物理", "上海", "市属重点", "510", "507"], ["上海海事(05)", "不限科目", "不限", "上海", "市属重点", "493", "498"], ["华东政法(01)", "不限科目", "不限", "上海", "市属重点", "567", "557"], ["华东政法(02)", "物理", "物理", "上海", "市属重点", "546", "538"], ["华东政法(03)", "不限科目", "不限", "上海", "市属重点", "531", "544"], ["上经贸大(01)", "不限科目", "不限", "上海", "市属重点", "540", "535"], ["上经贸大(02)", "物理", "物理", "上海", "市属重点", "523", "520"], ["上经贸大(03)", "不限科目", "不限", "上海", "市属重点", "516", "512"], ["上经贸大(04)", "物理", "物理", "上海", "市属重点", "523", "517"], ["上经贸大(05)", "不限科目", "不限", "上海", "市属重点", "525", "522"], ["上海海大(01)", "物理化学", "物理化学", "上海", "市属重点", "491", "500"], ["上海海大(02)", "生物化学", "生物化学", "上海", "市属重点", "493", "489"], ["上海师大(01)", "不限科目", "不限", "上海", "市属重点", "531", "519"], ["上海师大(02)", "物理化学", "物理化学", "上海", "市属重点", "513", "509"], ["上海师大(03)", "不限科目", "不限", "上海", "市属重点", "517", "506"], ["上海杉达(01)", "不限科目", "不限", "上海", "民办", "440", "447"], ["上海杉达(02)", "不限科目", "不限", "上海", "民办", "418", "436"], ["上海杉达(03)", "不限科目", "不限", "上海", "民办", "437", "443"], ["上海杉达(04)", "不限科目", "不限", "上海", "民办", "434", "430"], ["上海杉达(05)", "不限科目", "不限", "上海", "民办", "436", "442"], ["上海商院(01)", "不限科目", "不限", "上海", "市属重点", "473", "474"], ["上海商院(02)", "物理化学", "物理化学", "上海", "市属重点", "460", "464"], ["上海商院(03)", "不限科目", "不限", "上海", "市属重点", "443", "463"], ["上海政法(01)", "不限科目", "不限", "上海", "市属重点", "539", "534"], ["上海政法(02)", "物理", "物理", "上海", "市属重点", "521", "515"], ["上海政法(03)", "不限科目", "不限", "上海", "市属重点", "502", "499"], ["北京大学(01)", "不限科目", "不限", "外地", "外地985", "611分及以上", "611分及以上"], ["清华大学(01)", "物理", "物理", "外地", "外地985", "611分及以上", "611分及以上"], ["清华大学(02)", "不限科目", "不限", "外地", "外地985", "611分及以上", "611分及以上"], ["浙江大学(01)", "物理", "物理", "外地", "外地985", "580分及以上", "580分及以上"], ["浙江大学(02)", "不限科目", "不限", "外地", "外地985", "580分及以上", "580分及以上"], ["南京大学(01)", "物理", "物理", "外地", "外地985", "580分及以上", "580分及以上"], ["中国科大(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["国科大(01)", "物理化学", "物理化学", "外地", "双一流", "", "580分及以上"], ["北师大(01)", "不限科目", "不限", "外地", "外地985", "577", "569"], ["南开大学(01)", "不限科目", "不限", "外地", "外地985", "580分及以上", "576"], ["天津大学(01)", "物理化学", "物理化学", "外地", "外地985", "576", "574"], ["东南大学(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["武汉大学(01)", "不限科目", "不限", "外地", "外地985", "580分及以上", "571"], ["武汉大学(02)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "577"], ["中山大学(01)", "不限科目", "不限", "外地", "外地985", "578", "566"], ["中山大学(02)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "574"], ["西安交大(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["北京理工(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["北京邮电(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["北京邮电(02)", "不限科目", "不限", "外地", "外地985", "580分及以上", "572"], ["大连理工(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "576"], ["东北大学(01)", "物理化学", "物理化学", "外地", "外地985", "575", "560"], ["厦门大学(01)", "不限科目", "不限", "外地", "外地985", "577", "565"], ["厦门大学(02)", "物理", "物理", "外地", "外地985", "", "573"], ["四川大学(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "572"], ["山东大学(01)", "不限科目", "不限", "外地", "外地985", "567", "557"], ["山东大学(02)", "物理化学", "物理化学", "外地", "外地985", "578", "571"], ["吉林大学(01)", "物理化学", "物理化学", "外地", "外地985", "574", "551"], ["吉林大学(02)", "不限科目", "不限", "外地", "外地985", "561", "563"], ["吉林大学(03)", "物理化学", "物理化学", "外地", "外地985", "570", "568"], ["华中科技(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["中南大学(01)", "物理化学", "物理化学", "外地", "外地985", "577", "573"], ["湖南大学(01)", "不限科目", "不限", "外地", "外地985", "569", "558"], ["重庆大学(01)", "物理化学", "物理化学", "外地", "外地985", "579", "571"], ["电子科技(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["华南理工(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "574"], ["西北工大(01)", "物理化学", "物理化学", "外地", "外地985", "580分及以上", "580分及以上"], ["兰州大学(01)", "物理化学", "物理化学", "外地", "外地985", "552", "547"], ["中央民大(01)", "不限科目", "不限", "外地", "外地985", "580分及以上", "580分及以上"], ["西电(01)", "物理化学", "物理化学", "外地", "外地211", "580分及以上", "580分及以上"]];
+
+const TIER_LABEL={ '985':'985','211':'211','985医学':'985(医学)','双一流':'双一流','市属重点':'市属重点','民办':'民办','外地985':'外地985','外地211':'外地211' };
+function tierTag(t){ if(t==='985'||t==='985医学')return 'gold'; if(t==='211'||t==='外地211')return 'purple'; if(t==='双一流')return 'blue'; if(t==='市属重点')return 'green'; if(t==='民办')return 'gray'; if(t==='外地985')return 'red'; return 'dark'; }
+function numScore(s){ if(!s) return null; if(s.indexOf('580')===0) return 580; const n=parseInt(s,10); return isNaN(n)?null:n; }
+function diffHTML(a,b){ // a=2025, b=2026
+  const na=numScore(a), nb=numScore(b);
+  if(na==null||nb==null) return '<span class="tag gray">—</span>';
+  const d=nb-na;
+  if(d>0) return `<span class="up">▲${d}</span>`;
+  if(d<0) return `<span class="down">▼${Math.abs(d)}</span>`;
+  return '<span class="flat">＝0</span>';
+}
+
+/* ============ 主题切换 ============ */
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  try{localStorage.setItem('gk-theme',t);}catch(e){}
+  document.querySelectorAll('.theme-btn').forEach(b=>b.classList.toggle('active',b.dataset.set===t));
+}
+document.querySelectorAll('.theme-btn').forEach(b=>b.onclick=()=>setTheme(b.dataset.set));
+
+/* ============ Tab 切换 ============ */
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.add('hidden'));
+  const tab=document.querySelector('.tab[data-tab="'+id+'"]');
+  if(tab) tab.classList.add('active');
+  document.getElementById('panel-'+id).classList.remove('hidden');
+  if(id==='schools') renderSchools();
+  if(id==='compare'){ initCompare(); renderCompare(); renderCmpRank(); }
+}
+
+/* ============ 位次换算 ============ */
+function findFS(score){ for(const r of GAOKAO_FS_2026){ if(r[0]===score) return {s:r[0],c:r[1],cum:r[2]}; } return null; }
+function findFSNear(score){
+  /* 精确匹配优先；若分数高于表上限则返回表顶条目（累计位次仍有效） */
+  const r=findFS(score);
+  if(r) return {r, high:false};
+  if(score>GAOKAO_FS_2026[0][0]){
+    const top=GAOKAO_FS_2026[0];
+    return {r:{s:score, c:'—', cum:top[2]}, high:true};
+  }
+  return {r:null, high:false};
+}
+function rankFromScore(score){ const n=findFSNear(score); return n.r? n.r.cum : null; }
+function calcRank(){
+  const el=document.getElementById('rkScore');
+  const score=parseInt(el.value,10);
+  const box=document.getElementById('rkResult');
+  if(!score||isNaN(score)){ box.innerHTML='<div class="empty">请输入有效的分数</div>'; return; }
+  if(score>660||score<403){ box.innerHTML='<div class="empty">分数应在 403–660 之间（2026 上海高考总分区间）</div>'; return; }
+  const {r,high}=findFSNear(score);
+  if(!r){ box.innerHTML='<div class="empty">未找到该分数记录</div>'; return; }
+  const total=51853;
+  const pct=(r.cum/total*100).toFixed(2);
+  const over=(100-pct).toFixed(2);
+  const d本科=score-403, d特控=score-504;
+  const over580=score>=580;
+  /* 高分段(>616)：cum 是位次上限（实际名次 ≤ cum），百分位是下限 */
+  const displayRank = high ? '≤ '+r.cum.toLocaleString() : r.cum.toLocaleString();
+  const displayPct = high ? '≥'+over : over;
+  const displayLab = high ? '位次上限（保守估计，实际名次可能远小于此值）' : '全市位次（累计人数）';
+  const displaySub = high ? score+' 分超过一分一段表公布上限（616 分），取「616 分及以上累计 '+r.cum.toLocaleString()+" 人」作为位次<b>上限</b>。实际名次 ≤ "+r.cum.toLocaleString()+'，供参考。' : '该分数及以上共 '+r.cum.toLocaleString()+' 人';
+  box.innerHTML=`
+    <div class="rank-card">
+      <div class="lab">${displayLab}</div>
+      <div class="big">${displayRank} <span style="font-size:16px;font-weight:600">名</span></div>
+      <div class="lab">${displaySub} · 超过全市 ${displayPct}% 考生</div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><div class="v">${r.s}</div><div class="k">高考总分</div></div>
+      <div class="stat"><div class="v">${r.c}</div><div class="k">本分数人数</div></div>
+      <div class="stat"><div class="v">${pct}%</div><div class="k">位次百分位</div></div>
+      <div class="stat"><div class="v" style="color:${d本科>=0?'var(--ok)':'var(--bad)'}">${d本科>=0?'+':''}${d本科}</div><div class="k">超本科线(403)</div></div>
+      <div class="stat"><div class="v" style="color:${d特控>=0?'var(--ok)':'var(--muted)'}">${d特控>=0?'+':''}${d特控}</div><div class="k">超特控线(504)</div></div>
+    </div>
+    ${over580?`<div class="warn-box" style="margin-top:14px">⚠️ 你已进入 <b>580 分及以上</b> 区间，考试院不公布具体投档分。下方为位次参考，冲稳保生成器将仅基于位次匹配顶尖院校。</div>`:''}
+    ${high?`<div class="warn-box" style="margin-top:14px;background:rgba(59,130,246,0.08);border-color:rgba(59,130,246,0.3)">ℹ️ <b>高分段说明</b>：上海考试院一分一段表仅公布至 <b>616 分</b>（累计 58 人）。617–660 分段未公开具体人数，因此无法给出精确位次。上方显示的 <b>≤ 58 名</b> 是保守上限——例如满分 660 的实际名次可能是个位数。建议以学校公布的<br>「综合评价批次入围线 / 零志愿录取查询」为准。</div>`:''}
+    <div class="note">💡 说明：上海高考总分 660，位次比分数更可靠。志愿匹配请前往「冲稳保」标签，按真实投档线生成清单。</div>
+  `;
+}
+
+/* ============ 投档线库 ============ */
+let skTier='all';
+function buildTierChips(){
+  const box=document.getElementById('skTierChips');
+  const tiers=['all',...new Set(SCHOOLS_GK.map(s=>s[4]))];
+  box.innerHTML=tiers.map(t=>{
+    const label=t==='all'?'全部层次':(TIER_LABEL[t]||t);
+    return `<span class="chip-btn ${t==='all'?'active':''}" data-tier="${t}" onclick="setSkTier('${t}')">${label}</span>`;
+  }).join('');
+}
+function setSkTier(t){ skTier=t; document.querySelectorAll('#skTierChips .chip-btn').forEach(c=>c.classList.toggle('active',c.dataset.tier===t)); renderSchools(); }
+function renderSchools(){
+  const q=(document.getElementById('skSearch').value||'').trim().toLowerCase();
+  const area=document.getElementById('skArea').value;
+  const sort=document.getElementById('skSort').value;
+  // 用全量库；层次筛选通过精选库映射
+  const tierMap={}; SCHOOLS_GK.forEach(s=>{ tierMap[s[0]]=s[4]; });
+  let rows=SCHOOLS_ALL.filter(s=>{
+    if(q && !(s[1].toLowerCase().includes(q))) return false;
+    if(area!=='all'){
+      const a=tierMap[s[1]]?getAreaByName(s[1]):'';
+      if(a && a!==area) return false;
+    }
+    if(skTier!=='all'){ const t=tierMap[s[1]]; if(t!==skTier) return false; }
+    return true;
+  });
+  if(sort==='y26') rows.sort((a,b)=>(numScore(b[3])||0)-(numScore(a[3])||0));
+  else if(sort==='y25') rows.sort((a,b)=>(numScore(b[2])||0)-(numScore(a[2])||0));
+  else if(sort==='diff'){
+    rows.sort((a,b)=>{
+      const da=(numScore(a[3])||0)-(numScore(a[2])||0);
+      const db=(numScore(b[3])||0)-(numScore(b[2])||0);
+      return db-da;
+    });
+  } else rows.sort((a,b)=>a[0].localeCompare(b[0]));
+  const box=document.getElementById('skTable');
+  document.getElementById('skCount').innerHTML=`共匹配 <b style="color:var(--brand)">${rows.length}</b> 个院校专业组`;
+  if(rows.length===0){
+    /* 智能空结果：检测是否搜了零志愿/综评等不在本科普通批表的院校 */
+    const hints=[];
+    if(/清华|北京大学|北大/.test(q)) hints.push('<b>清华大学 / 北京大学</b> 在上海通过<b>零志愿批次</b>录取（先于本科普通批），不进入本表。→ 请切换到「<b>同分对比</b>」标签或「冲稳保」选「<b>精选</b>」模式查看。');
+    if(/复旦|交大|同济|华东师大|华师大|华理|东华|上财|上海财经|上外|上海外大|上海大学|浙大|浙江大学|上海中医/.test(q)) hints.push('部分院校（如复旦/交大/同济等）同时有<b>综合评价批次</b>入围线，可前往「<b>志愿科普</b>」标签页查看参考。');
+    if(hints.length){
+      box.innerHTML='<div class="empty" style="text-align:left;padding:16px 20px">🔍 <b>未在本科普通批投档线库中找到</b><br><br>'+hints.join('<br><br>')+'</div>';
+    } else {
+      box.innerHTML='<div class="empty">未匹配到院校，试试其他关键词</div>';
+    }
+    return;
+  }
+  const show=rows.slice(0,400);
+  let html=`<table><thead><tr><th>代码</th><th>院校专业组</th><th>层次</th><th>2026线</th><th>2025线</th><th>涨跌</th></tr></thead><tbody>`;
+  for(const s of show){
+    const t=tierMap[s[1]]||'';
+    const y26=s[3]?`<span class="tag green">${s[3]}</span>`:(s[3]===''?'<span class="tag gray">不公布</span>':'<span class="tag gray">—</span>');
+    const y25=s[2]?`<span class="tag green">${s[2]}</span>`:(s[2]===''?'<span class="tag gray">不公布</span>':'<span class="tag gray">—</span>');
+    const root=s[1].replace(/[（(]\d+[）)]$/,'');
+    html+=`<tr class="row-click" onclick="openSchool('${root}')"><td>${s[0]}</td><td><b>${s[1]}</b></td><td>${t?`<span class="tag ${tierTag(t)}">${TIER_LABEL[t]||t}</span>`:'<span class="tag gray">—</span>'}</td><td>${y26}</td><td>${y25}</td><td>${diffHTML(s[2],s[3])}</td></tr>`;
+  }
+  html+='</tbody></table>';
+  if(rows.length>400) html+=`<div class="note">… 仅显示前 400 条，缩小检索范围查看全部 ${rows.length} 条</div>`;
+  box.innerHTML=html;
+}
+function getReqByName(n){ const s=SCHOOLS_GK.find(x=>x[0]===n); return s?s[2]:''; }
+function getAreaByName(n){ const s=SCHOOLS_GK.find(x=>x[0]===n); return s?s[3]:''; }
+
+/* 院校元数据映射（由精选库构建，供全量库补全层次/选科/地域） */
+const GMAP={}; SCHOOLS_GK.forEach(s=>{ GMAP[s[0]]={req:s[2],area:s[3],tier:s[4]}; });
+function normItem(s, gk){
+  if(gk) return {code:'',name:s[0],req:s[2],area:s[3],tier:s[4],y25:s[5],y26:s[6]};
+  const g=GMAP[s[1]]||{};
+  return {code:s[0],name:s[1],req:g.req||'',area:g.area||'',tier:g.tier||'',y25:s[2],y26:s[3]};
+}
+
+/* ============ 冲稳保生成 ============ */
+function genPlan(){
+  const score=parseInt(document.getElementById('plScore').value,10);
+  const req=document.getElementById('plReq').value;
+  const area=document.getElementById('plArea').value;
+  const box=document.getElementById('plResult');
+  if(!score||isNaN(score)){ box.innerHTML='<div class="empty">请输入有效的分数</div>'; return; }
+  if(score>660||score<403){ box.innerHTML='<div class="empty">分数应在 403–660 之间</div>'; return; }
+  const myRank=rankFromScore(score);
+  if(!myRank){ box.innerHTML='<div class="empty">位次查询失败</div>'; return; }
+  const gk=(document.getElementById('plMode').value==='precise');
+  let pool=(gk?SCHOOLS_GK:SCHOOLS_ALL).map(s=>normItem(s,gk));
+  if(gk){
+    pool=pool.filter(it=>{
+      if(req!=='all' && it.req!==req) return false;
+      if(area!=='all' && it.area!==area) return false;
+      return true;
+    });
+  }
+  /* 全量模式下，强制注入零志愿院校（清北），让高分用户能看到 */
+  const zeroVip=["北京大学(01)","清华大学(01)","清华大学(02)"];
+  if(!gk){
+    const injected=SCHOOLS_GK.filter(s=>zeroVip.includes(s[0])).map(s=>normItem(s,true));
+    /* 去重（精选集可能已通过GMAP被间接覆盖，但SCHOOLS_ALL里没有这些名） */
+    const existing=new Set(pool.map(it=>it.name));
+    for(const it of injected){ if(!existing.has(it.name)) pool.push(it); }
+  }
+
+  function lineOf(it){
+    const n26=numScore(it.y26), n25=numScore(it.y25);
+    if(n26!=null) return {v:n26,year:2026,exact:true};
+    if(n25!=null) return {v:n25,year:2025,exact:true};
+    return null;
+  }
+  /* 检测"X分及以上"等不公布具体分的格式 */
+  function isUnpublished(it){
+    return /分及以上/.test(String(it.y26))||/分及以上/.test(String(it.y25));
+  }
+
+  const chong=[],wen=[],bao=[];
+  const highZone=score>616; /* 高分段：一分一段表不精确，改用分数差匹配 */
+
+  for(const it of pool){
+    if(isUnpublished(it)){ chong.push(it); continue; } /* 不公布分的统一归冲 */
+    const ln=lineOf(it);
+    if(!ln){ continue; }
+    if(highZone){
+      /* 分数差模式：diff = 用户分数 - 学校线 */
+      const diff=score-ln.v;
+      if(diff<0) chong.push(it);           /* 学校线 > 用户分 → 冲 */
+      else if(diff<=15) wen.push(it);       /* 学校线接近用户分 → 稳 */
+      else bao.push(it);                    /* 学校线远低于用户分 → 保 */
+    } else {
+      /* 正常模式：位次比匹配（原有逻辑） */
+      const sr=rankFromScore(ln.v);
+      if(!sr){ chong.push(it); continue; }
+      const ratio=sr/myRank;
+      if(ratio<0.85) chong.push(it);
+      else if(ratio<=1.15) wen.push(it);
+      else bao.push(it);
+    }
+  }
+  /* 零志愿院校（清北）优先置顶，确保高分用户在「冲」列表可见（列表至多显示前20条） */
+  const vipSet=new Set(zeroVip);
+  chong.sort((a,b)=>(vipSet.has(a.name)?-1:0)-(vipSet.has(b.name)?-1:0));
+  function block(title,cls,arr){
+    if(arr.length===0) return `<div class="tier ${cls}"><span class="dot"></span>${title}（0 个）</div><div class="empty">该档暂无匹配（可放宽条件或切换数据范围）</div>`;
+    let h=`<div class="tier ${cls}"><span class="dot"></span>${title}（${arr.length} 个）</div><table><thead><tr><th>院校专业组</th><th>层次</th><th>选科</th><th>参考线</th></tr></thead><tbody>`;
+    for(const it of arr.slice(0,20)){
+      const ln=lineOf(it);
+      const ref=ln?`${ln.v}（${ln.year}）`:'580+不公布';
+      const tierHtml=it.tier?`<span class="tag ${tierTag(it.tier)}">${TIER_LABEL[it.tier]||it.tier}</span>`:'<span class="tag gray">—</span>';
+      const reqHtml=it.req?`<span class="tag blue">${it.req}</span>`:'<span class="tag gray">—</span>';
+      h+=`<tr><td><b>${it.code?it.code+' ':''}${it.name}</b></td><td>${tierHtml}</td><td>${reqHtml}</td><td>${ref}</td></tr>`;
+    }
+    h+='</tbody></table>';
+    if(arr.length>20) h+=`<div class="note">… 其余 ${arr.length-20} 个已匹配，放宽条件查看全部</div>`;
+    return h;
+  }
+  __plan={score,myRank,req,area,mode:document.getElementById('plMode').value,chong,wen,bao,highZone};
+  const rankLabel = highZone ? '≤ '+myRank.toLocaleString()+' 名（位次上限，一分一段表仅公布至616分）' : myRank.toLocaleString()+' 名';
+  const methodNote = highZone
+    ? '📐 <b>高分段模式</b>：你的分数超过一分一段表公布范围（616分），位次不精确，已自动切换为<b>分数差匹配</b>（冲=线≥你的分，稳=线接近，保=线远低于）。'
+    : '📐 <b>位次比匹配</b>：基于一分一段表精确位次（冲=位次比<0.85，稳=0.85~1.15，保=>1.15）。';
+  box.innerHTML=`
+    <div class="rank-card">
+      <div class="lab">你的位次基准</div>
+      <div class="big">${rankLabel}</div>
+      <div class="lab">2026 总分 ${score} 分 · 数据「${gk?'精选106所':'全量'+SCHOOLS_ALL.length+'组'}」· 选科「${gk?(req==='all'?'不限':req):'（全量按分数段）'}」· 地域「${area==='all'?'全部':area}」</div>
+    </div>
+    ${highZone?'<div class="warn-box" style="margin-bottom:12px">'+methodNote+'</div>':''}
+    ${block(highZone?'🚀 冲一冲（院校线 ≥ 你的分数）':'🚀 冲一冲（略高于你的位次）','chong',chong)}
+    ${block('✅ 稳一稳'+(highZone?'（院校线接近你的分数）':'（与你的位次相当）'),'wen',wen)}
+    ${block('🛡️ 保一保'+(highZone?'（院校线远低于你的分数）':'（低于你的位次）'),'bao',bao)}
+    <div class="export-row">
+      <button class="btn ghost" onclick="exportPlan()">📥 导出志愿表(.txt)</button>
+      <button class="btn ghost" onclick="copyPlan()">📋 复制全部</button>
+    </div>
+    <div class="warn-box">⚠️ 本结果为<b>${highZone?'分数差匹配（高分段专用）':'真实投档线位次匹配'}</b>，非录取承诺。580+ 院校因官方不公布具体分，统一列入「冲」档仅作参考。${highZone?'清华/北大走零志愿批次，已注入本表供参考，实际填报请关注零志愿/强基计划报名时间。':''}正式填报请以考试院最新公布为准，并务必勾选服从调剂。</div>
+  `;
+}
+
+/* 院校详情弹窗 + 志愿表导出 */
+let __plan=null;
+function openSchool(root){
+  const groups=SCHOOLS_ALL.filter(s=>s[1].replace(/[（(]\d+[）)]$/,'')===root);
+  const g0=groups.map(s=>GMAP[s[1]]||{}).find(x=>x.tier)||{};
+  const box=document.getElementById('smBody');
+  let h=`<div class="sm-head"><div><div class="sm-name">${root}</div><div class="sm-meta">`;
+  if(g0.tier) h+=`<span class="tag ${tierTag(g0.tier)}">${TIER_LABEL[g0.tier]||g0.tier}</span> `;
+  if(g0.req) h+=`<span class="tag blue">${g0.req}</span> `;
+  if(g0.area) h+=`<span class="tag green">${g0.area}</span> `;
+  h+=`共 ${groups.length} 个专业组</div></div></div>`;
+  if(groups.length){
+    h+=`<table><thead><tr><th>代码</th><th>专业组</th><th>层次</th><th>2026线</th><th>2025线</th><th>涨跌</th></tr></thead><tbody>`;
+    groups.forEach(s=>{
+      const t=(GMAP[s[1]]||{}).tier||'';
+      h+=`<tr><td>${s[0]}</td><td><b>${s[1]}</b></td><td>${t?`<span class="tag ${tierTag(t)}">${TIER_LABEL[t]||t}</span>`:'<span class="tag gray">—</span>'}</td><td>${s[3]||'—'}</td><td>${s[2]||'—'}</td><td>${diffHTML(s[2],s[3])}</td></tr>`;
+    });
+    h+='</tbody></table>';
+  } else { h+='<div class="note">该院校未匹配到专业组详情。</div>'; }
+  box.innerHTML=h;
+  document.getElementById('schoolModal').classList.remove('hidden');
+}
+function closeSchool(){ document.getElementById('schoolModal').classList.add('hidden'); }
+function lineOfItem(it){
+  if(/分及以上/.test(String(it.y26))||/分及以上/.test(String(it.y25))) return null;
+  const n26=numScore(it.y26), n25=numScore(it.y25);
+  if(n26!=null) return {v:n26,year:2026};
+  if(n25!=null) return {v:n25,year:2025};
+  return null;
+}
+function planText(){
+  if(!__plan) return '';
+  const L=[];
+  L.push('上海高考志愿通 2026 — 我的志愿表');
+  L.push('========================================');
+  L.push('高考总分：'+__plan.score+' 分　全市位次：'+__plan.myRank+' 名　数据范围：'+(__plan.mode==='precise'?'精选106所':'全量'+SCHOOLS_ALL.length+'组'));
+  L.push('（参考线优先采用 2026 真实投档线，缺则回退 2025；580+ 官方不公布具体分）');
+  L.push('');
+  [['冲一冲',__plan.chong],['稳一稳',__plan.wen],['保一保',__plan.bao]].forEach(function(pair){
+    const t=pair[0], arr=pair[1];
+    L.push('【'+t+'】 '+arr.length+' 个');
+    arr.forEach(function(it,i){
+      const ln=lineOfItem(it); const ref=ln?ln.v+'('+ln.year+')':'580+不公布';
+      L.push('  '+(i+1)+'. '+(it.code?it.code+' ':'')+it.name+'　'+(it.tier||'')+'　参考线'+ref);
+    });
+    L.push('');
+  });
+  L.push('⚠️ 本表由真实投档线位次匹配生成，非录取承诺。正式填报以考试院公布为准，务必勾选服从调剂。');
+  return L.join('\n');
+}
+function exportPlan(){
+  if(!__plan){ alert('请先生成志愿表'); return; }
+  const blob=new Blob([planText()],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='上海高考志愿表_'+__plan.score+'分.txt'; a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+function copyPlan(){
+  if(!__plan){ alert('请先生成志愿表'); return; }
+  const t=planText();
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){alert('已复制到剪贴板');}); }
+  else { const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); alert('已复制到剪贴板'); }
+}
+
+/* ============ 同分对比 ============ */
+function initCompare(){
+  if(document.getElementById('cmpA').options.length) return;
+  const opts=SCHOOLS_GK.map((s,i)=>`<option value="${i}">${s[0]}（${s[4]}）</option>`).join('');
+  document.getElementById('cmpA').innerHTML=opts;
+  document.getElementById('cmpB').innerHTML=opts;
+  document.getElementById('cmpB').selectedIndex=1;
+}
+function renderCompare(){
+  const a=SCHOOLS_GK[+document.getElementById('cmpA').value];
+  const b=SCHOOLS_GK[+document.getElementById('cmpB').value];
+  const box=document.getElementById('cmpResult');
+  if(!a||!b){ box.innerHTML=''; return; }
+  function card(s){
+    return `<div class="cmp-card"><div class="cn">${s[0]}</div>
+      <div class="meta">层次：${TIER_LABEL[s[4]]||s[4]} · 选科：${s[2]} · ${s[3]}</div>
+      <div class="cmp-row"><span>专业组</span><span>${s[1]}</span></div>
+      <div class="cmp-row"><span>2026 投档线</span><span>${s[6]||'不公布'}</span></div>
+      <div class="cmp-row"><span>2025 投档线</span><span>${s[5]||'不公布'}</span></div>
+      <div class="cmp-row"><span>两年涨跌</span><span>${diffHTML(s[5],s[6])}</span></div>
+    </div>`;
+  }
+  box.innerHTML=`<div class="cmp-wrap">${card(a)}${card(b)}</div>`;
+}
+function renderCmpRank(){
+  const arr=SCHOOLS_GK.filter(s=>numScore(s[5])!=null && numScore(s[6])!=null)
+    .map(s=>({n:s[0],t:s[4],d:numScore(s[6])-numScore(s[5]),y26:numScore(s[6]),y25:numScore(s[5])}));
+  const up=[...arr].sort((a,b)=>b.d-a.d).slice(0,10);
+  const down=[...arr].sort((a,b)=>a.d-b.d).slice(0,10);
+  function row(x){ return `<tr><td><b>${x.n}</b> <span class="tag ${tierTag(x.t)}">${TIER_LABEL[x.t]||x.t}</span></td><td>${x.y25}</td><td>${x.y26}</td><td>${x.d>0?`<span class="up">▲${x.d}</span>`:`<span class="down">▼${Math.abs(x.d)}</span>`}</td></tr>`; }
+  document.getElementById('cmpRank').innerHTML=`
+    <div class="cmp-wrap">
+      <div><div class="tier chong"><span class="dot"></span>📈 涨得最多的 10 个</div>
+        <table><thead><tr><th>院校专业组</th><th>25线</th><th>26线</th><th>涨跌</th></tr></thead><tbody>${up.map(row).join('')}</tbody></table></div>
+      <div><div class="tier bao"><span class="dot"></span>📉 跌得最多的 10 个</div>
+        <table><thead><tr><th>院校专业组</th><th>25线</th><th>26线</th><th>涨跌</th></tr></thead><tbody>${down.map(row).join('')}</tbody></table></div>
+    </div>`;
+}
+
+/* 初始化 */
+function initPlannerReqs(){
+  const sel=document.getElementById('plReq');
+  if(!sel) return;
+  const reqs=[...new Set(SCHOOLS_GK.map(s=>s[2]))]; /* 真实存在选科：不限/物理/物理化学/生物化学 */
+  sel.innerHTML='<option value="all">不限（全部）</option>'+reqs.map(r=>`<option value="${r}">${r}</option>`).join('');
+}
+buildTierChips();
+initPlannerReqs();
+renderSchools();
+
+(function(){try{var t=localStorage.getItem('gk-theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+// 补充官方数据（独立于冲稳保主引擎，仅供查询参考）
+const ZX1_2026=[["103Q5", "同济大学(Q5)", "558"], ["11501", "上海海大(01)", "504"], ["12304", "上海师大(04)", "562"], ["13303", "上外贤达(03)", "408"], ["13503", "健康医学(03)", "464"], ["16202", "中侨大学(02)", "422"], ["16203", "中侨大学(03)", "405"], ["16501", "立达学院(01)", "403"], ["16502", "立达学院(02)", "406"], ["16503", "立达学院(03)", "403"], ["23501", "二外中瑞(01)", "406"], ["26703", "天津理工(03)", "483"], ["28802", "衡水学院(02)", "425"], ["29401", "保定理工(01)", "407"], ["31205", "中北大学(05)", "444"], ["31601", "大同大学(01)", "419"], ["31902", "山西中医(02)", "415"], ["31904", "山西中医(04)", "423"], ["32506", "内蒙农大(06)", "405"], ["32603", "内蒙医大(03)", "407"], ["32604", "内蒙医大(04)", "418"], ["33701", "沈阳工大(01)", "427"], ["33702", "沈阳工大(02)", "427"], ["34605", "沈阳建筑(05)", "412"], ["35304", "辽宁师大(04)", "422"], ["35501", "辽宁外贸(01)", "404"], ["36601", "辽宁传媒(01)", "405"], ["40601", "黑外国语(01)", "407"], ["47705", "南审金审(05)", "408"], ["51601", "浙大医学(01)", "576"], ["54601", "安医临床(01)", "426"], ["57402", "福州外贸(02)", "403"], ["57403", "福州外贸(03)", "405"], ["59903", "赣南医大(03)", "423"], ["62002", "赣农商院(02)", "415"], ["65301", "山东二医(01)", "427"], ["66801", "青岛恒星(01)", "406"], ["66904", "烟台大学(04)", "450"], ["68901", "河南中医(01)", "425"], ["75603", "南华大学(03)", "437"], ["79701", "广州商院(01)", "416"], ["79702", "广州商院(02)", "403"], ["79901", "华南珠江(01)", "408"], ["81401", "桂林医大(01)", "416"], ["83402", "三亚学院(02)", "411"], ["83504", "海南比科(04)", "411"], ["83601", "海南洛桑(01)", "447"], ["84604", "重庆师大(04)", "440"], ["87002", "民航飞院(02)", "433"], ["88405", "四川传媒(05)", "409"], ["90101", "丽江文旅(01)", "406"], ["90102", "丽江文旅(02)", "404"], ["90103", "丽江文旅(03)", "414"], ["90301", "昆理津桥(01)", "415"], ["91101", "贵州大学(01)", "456"], ["94001", "西安培华(01)", "405"], ["94301", "西安思源(01)", "405"], ["98502", "喀什大学(02)", "403"], ["98504", "喀什大学(04)", "407"], ["98603", "伊犁师大(03)", "403"], ["98802", "新疆工程(02)", "404"], ["99002", "新疆理工(02)", "422"], ["99101", "新疆科技(01)", "403"], ["99102", "新疆科技(02)", "403"], ["99103", "新疆科技(03)", "415"]];
+const ZX2_2026=[["16203", "中侨大学(03)", "392"], ["16501", "立达学院(01)", "398"], ["16502", "立达学院(02)", "398"], ["16503", "立达学院(03)", "399"], ["17401", "兴伟学院(01)", "388"], ["23501", "二外中瑞(01)", "392"], ["23502", "二外中瑞(02)", "390"], ["24201", "首师科德(01)", "389"], ["24202", "首师科德(02)", "395"], ["24401", "京工耿丹(01)", "394"], ["24402", "京工耿丹(02)", "397"], ["29101", "冀外国语(01)", "397"], ["29401", "保定理工(01)", "398"], ["32603", "内蒙医大(03)", "409"], ["35501", "辽宁外贸(01)", "396"], ["36001", "辽宁何氏(01)", "397"], ["36401", "辽理职大(01)", "396"], ["36501", "辽师海华(01)", "397"], ["36502", "辽师海华(02)", "399"], ["36601", "辽宁传媒(01)", "398"], ["38101", "长春建筑(01)", "397"], ["40601", "黑外国语(01)", "393"], ["57402", "福州外贸(02)", "397"], ["57403", "福州外贸(03)", "399"], ["66802", "青岛恒星(02)", "400"], ["66803", "青岛恒星(03)", "394"], ["72902", "武昌理工(02)", "398"], ["79701", "广州商院(01)", "405"], ["79702", "广州商院(02)", "402"], ["79901", "华南珠江(01)", "402"], ["82101", "北海艺术(01)", "388"], ["83401", "三亚学院(01)", "397"], ["83402", "三亚学院(02)", "398"], ["83403", "三亚学院(03)", "395"], ["83404", "三亚学院(04)", "392"], ["88406", "四川传媒(06)", "390"], ["90001", "滇池学院(01)", "396"], ["90002", "滇池学院(02)", "400"], ["90003", "滇池学院(03)", "397"], ["90101", "丽江文旅(01)", "388"], ["90102", "丽江文旅(02)", "392"], ["90103", "丽江文旅(03)", "388"], ["90401", "昆明传媒(01)", "403"], ["94001", "西安培华(01)", "408"], ["94003", "西安培华(03)", "402"], ["94301", "西安思源(01)", "400"], ["98506", "喀什大学(06)", "419"], ["98603", "伊犁师大(03)", "406"], ["99101", "新疆科技(01)", "402"], ["99102", "新疆科技(02)", "399"], ["99103", "新疆科技(03)", "402"], ["99104", "新疆科技(04)", "402"]];
+const QGROUP_2026=[["101Q3", "复旦大学(Q3)", "580分及以上"], ["102Q3", "上海交大(Q3)", "580分及以上"], ["102Q4", "上海交大(Q4)", "580分及以上"], ["103Q4", "同济大学(Q4)", "572"], ["103Q5", "同济大学(Q5)", "559"], ["103Q6", "同济大学(Q6)", "543"], ["104Q3", "华东师大(Q3)", "570"], ["104Q4", "华东师大(Q4)", "568"], ["107Q5", "上海财大(Q5)", "566"], ["114Q2", "复旦医学(Q2)", "580分及以上"], ["114Q3", "复旦医学(Q3)", "574"], ["115Q9", "上海海大(Q9)", "501"], ["119Q6", "上海大学(Q6)", "541"], ["119Q7", "上海大学(Q7)", "540"], ["120Q2", "交大医学(Q2)", "572"], ["120Q3", "交大医学(Q3)", "565"], ["123Q1", "上海师大(Q1)", "506"], ["129Q7", "上海商院(Q7)", "452"], ["131Q7", "上海政法(Q7)", "494"], ["222Q2", "北京理工(Q2)", "576"], ["421Q2", "南京大学(Q2)", "573"], ["421Q3", "南京大学(Q3)", "568"], ["712Q5", "武汉大学(Q5)", "559"], ["841Q5", "重庆大学(Q5)", "538"], ["923Q4", "西北工大(Q4)", "570"], ["10202", "上海交大(02)", "580分及以上"], ["10303", "同济大学(03)", "579"], ["11005", "上海理工(05)", "530"], ["11306", "上经贸大(06)", "512"], ["11507", "上海海大(07)", "493"], ["11508", "上海海大(08)", "493"], ["11905", "上海大学(05)", "543"], ["12108", "上海中医(08)", "519"], ["12314", "上海师大(14)", "491"], ["12315", "上海师大(15)", "506"], ["12510", "上海体大(10)", "484"], ["13006", "上海电机(06)", "466"], ["13007", "上海电机(07)", "457"], ["13509", "健康医学(09)", "446"], ["16203", "中侨大学(03)", "403"], ["17208", "上师天华(08)", "437"], ["20103", "中央民族(03)", "542"], ["20305", "北京交大(05)", "558"], ["20306", "北京交大(06)", "553"], ["20307", "北京交大(07)", "561"], ["20603", "北京邮电(03)", "569"], ["20604", "北京邮电(04)", "559"], ["20703", "中国农大(03)", "560"], ["20704", "中国农大(04)", "547"], ["20705", "中国农大(05)", "537"], ["20805", "北京林大(05)", "522"], ["21103", "北外大(03)", "546"], ["21207", "中国传媒(07)", "543"], ["21208", "中国传媒(08)", "539"], ["21209", "中国传媒(09)", "534"], ["21305", "中央财大(05)", "559"], ["21405", "外经贸大(05)", "554"], ["21702", "石油北京(02)", "535"], ["21803", "地大北京(03)", "517"], ["21804", "地大北京(04)", "519"], ["22103", "北京航大(03)", "574"], ["22104", "北京航大(04)", "575"], ["22902", "北京物资(02)", "450"], ["24005", "北京语言(05)", "483"], ["24006", "北京语言(06)", "486"], ["24007", "北京语言(07)", "461"], ["24103", "中央美院(03)", "513"], ["24802", "北京工业(02)", "529"], ["25202", "天津大学(02)", "555"], ["25203", "天津大学(03)", "565"], ["25204", "天津大学(04)", "572"], ["25405", "天津科大(05)", "468"], ["25406", "天津科大(06)", "462"], ["25604", "天津中医(04)", "487"], ["28204", "东大秦岛(04)", "551"], ["28205", "东大秦岛(05)", "550"], ["28303", "河北工程(03)", "423"], ["32506", "内蒙农大(06)", "403"], ["33203", "大连海事(03)", "531"], ["33204", "大连海事(04)", "530"], ["33302", "大连理工(02)", "557"], ["33502", "理工盘锦(02)", "557"], ["33503", "理工盘锦(03)", "544"], ["33602", "辽宁大学(02)", "503"], ["33603", "辽宁大学(03)", "505"], ["33604", "辽宁大学(04)", "511"], ["34002", "辽宁科大(02)", "427"], ["34003", "辽宁科大(03)", "429"], ["34004", "辽宁科大(04)", "429"], ["34202", "辽宁石化(02)", "429"], ["34902", "中国医大(02)", "484"], ["35004", "锦州医大(04)", "439"], ["35302", "辽宁师大(02)", "428"], ["35303", "辽宁师大(03)", "427"], ["35304", "辽宁师大(04)", "408"], ["35402", "东北财大(02)", "523"], ["35403", "东北财大(03)", "514"], ["35702", "沈阳工程(02)", "474"], ["37203", "东北师大(03)", "514"], ["39103", "东北林大(03)", "509"], ["39104", "东北林大(04)", "492"], ["39105", "东北林大(05)", "518"], ["39202", "哈工大(02)", "571"], ["39203", "哈工大(03)", "569"], ["39204", "哈工大(04)", "563"], ["39205", "哈工大(05)", "564"], ["39206", "哈工大(06)", "565"], ["39306", "哈工程(06)", "520"], ["39307", "哈工程(07)", "544"], ["39308", "哈工程(08)", "533"], ["42202", "东南大学(02)", "566"], ["42404", "河海大学(04)", "532"], ["42512", "江南大学(12)", "535"], ["42513", "江南大学(13)", "540"], ["42514", "江南大学(14)", "541"], ["42604", "南京农大(04)", "533"], ["42702", "中国药大(02)", "550"], ["42703", "中国药大(03)", "545"], ["42802", "人大苏州(02)", "572"], ["42803", "人大苏州(03)", "569"], ["42903", "南京航大(03)", "560"], ["43004", "南京理工(04)", "554"], ["43105", "苏州大学(05)", "547"], ["43203", "江苏科大(03)", "475"], ["43204", "江苏科大(04)", "491"], ["43205", "江苏科大(05)", "481"], ["43304", "南京工大(04)", "523"], ["43305", "南京工大(05)", "519"], ["43802", "南京信息(02)", "528"], ["43903", "南通大学(03)", "472"], ["44603", "南京财大(03)", "493"], ["44604", "南京财大(04)", "503"], ["44804", "苏州科大(04)", "473"], ["44805", "苏州科大(05)", "464"], ["44806", "苏州科大(06)", "460"], ["45404", "南京工程(04)", "468"], ["45405", "南京工程(05)", "513"], ["45503", "南京审计(03)", "530"], ["45504", "南京审计(04)", "492"], ["45603", "江苏理工(03)", "439"], ["45703", "江苏海大(03)", "441"], ["45804", "南京特师(04)", "432"], ["46402", "南京传媒(02)", "424"], ["46403", "南京传媒(03)", "413"], ["46904", "无锡学院(04)", "444"], ["47704", "南审金审(04)", "413"], ["47705", "南审金审(05)", "420"], ["49204", "杭州电子(04)", "540"], ["49304", "浙江工大(04)", "532"], ["49305", "浙江工大(05)", "528"], ["49703", "温州医大(03)", "537"], ["49807", "浙江师大(07)", "475"], ["50203", "嘉兴大学(03)", "447"], ["50304", "中国计量(04)", "496"], ["50405", "浙江财大(05)", "497"], ["50406", "浙江财大(06)", "512"], ["50605", "浙江传媒(05)", "503"], ["51708", "浙江中医(08)", "492"], ["51805", "温州大学(05)", "471"], ["51806", "温州大学(06)", "468"], ["53104", "合肥工大(04)", "526"], ["53105", "合肥工大(05)", "533"], ["53303", "安徽大学(03)", "531"], ["56103", "厦门大学(03)(马来西亚分校)", "562"], ["56104", "厦门大学(04)(马来西亚分校)", "560"], ["59103", "南昌大学(03)", "537"], ["59104", "南昌大学(04)", "534"], ["59105", "南昌大学(05)", "536"], ["59303", "东华理工(03)", "429"], ["59505", "江西理工(05)", "443"], ["60011", "江西师大(11)", "431"], ["60102", "上饶师院(02)", "406"], ["60505", "江西财大(05)", "490"], ["60506", "江西财大(06)", "477"], ["60507", "江西财大(07)", "479"], ["60804", "江西水电(04)", "416"], ["64205", "中国海洋(05)", "554"], ["64403", "山大威海(03)", "549"], ["64502", "哈工威海(02)", "567"], ["65003", "山东建筑(03)", "430"], ["65704", "曲阜师大(04)", "421"], ["68403", "郑州轻工(03)", "434"], ["68504", "河南工大(04)", "431"], ["68505", "河南工大(05)", "430"], ["68506", "河南工大(06)", "431"], ["68507", "河南工大(07)", "421"], ["69106", "河南大学(06)", "469"], ["69107", "河南大学(07)", "483"], ["69108", "河南大学(08)", "495"], ["69109", "河南大学(09)", "487"], ["69110", "河南大学(10)", "468"], ["71203", "武汉大学(03)", "569"], ["71204", "武汉大学(04)", "562"], ["71304", "华中科大(04)", "565"], ["71403", "地大武汉(03)", "543"], ["71404", "地大武汉(04)", "538"], ["71405", "地大武汉(05)", "539"], ["71406", "地大武汉(06)", "533"], ["71503", "武汉理工(03)", "548"], ["71504", "武汉理工(04)", "546"], ["71802", "中南财政(02)", "445"], ["71902", "武汉科大(02)", "519"], ["72004", "长江大学(04)", "454"], ["72603", "三峡大学(03)", "511"], ["72902", "武昌理工(02)", "406"], ["74203", "中南大学(03)", "561"], ["74204", "中南大学(04)", "563"], ["74904", "湖南理工(04)", "427"], ["75304", "湖南文理(04)", "426"], ["75305", "湖南文理(05)", "423"], ["75404", "湖南科技(04)", "427"], ["76303", "湖南工大(03)", "435"], ["76304", "湖南工大(04)", "429"], ["76305", "湖南工大(05)", "425"], ["79803", "广东工业(03)", "506"], ["84104", "重庆大学(04)", "564"], ["84405", "重庆医大(05)", "514"], ["84503", "西南大学(03)", "537"], ["84504", "西南大学(04)", "540"], ["84505", "西南大学(05)", "539"], ["84506", "西南大学(06)", "526"], ["84507", "西南大学(07)", "538"], ["84703", "川外国语(03)", "473"], ["84704", "川外国语(04)", "468"], ["84803", "西南政法(03)", "536"], ["85203", "重庆工商(03)", "454"], ["86106", "四川大学(06)", "564"], ["86107", "四川大学(07)", "562"], ["86202", "西南交大(02)", "542"], ["86203", "西南交大(03)", "524"], ["86604", "西南科大(04)", "441"], ["86706", "成都信息(06)", "455"], ["87704", "西南财大(04)", "533"], ["87705", "西南财大(05)", "537"], ["89106", "云南大学(06)", "529"], ["92105", "西北大学(05)", "526"], ["92202", "西安交大(02)", "564"], ["92203", "西安交大(03)", "577"], ["92204", "西安交大(04)", "571"], ["92205", "西安交大(05)", "564"], ["92206", "西安交大(06)", "550"], ["92302", "西北工大(02)", "570"], ["92303", "西北工大(03)", "565"], ["92502", "西电科大(02)", "562"], ["93003", "陕西科大(03)", "483"], ["93004", "陕西科大(04)", "449"], ["93103", "长安大学(03)", "526"], ["93208", "西北农林(08)", "524"], ["93209", "西北农林(09)", "528"], ["95108", "兰州大学(08)", "546"]];
+// 综合评价批入围资格线（2026·11校·32组）— 非投档线/录取线：综评=平行志愿1:1.5投档+校测折算(高考85%+校测15%)，下表为入围资格线，仅作定位参考
+const COMPRE_2026=[["10101","复旦大学(01)","不限","583","2495"],["10102","复旦大学(02)","物化","588","1786"],["10103","复旦大学(03)","物化","","—"],["11401","复旦医学(01)","物化","583","2495"],["10201","上海交大(01)","物化","612","125"],["10202","上海交大(02)","物化","589","1667"],["10203","上海交大(03)","不限","581","2819"],["12001","交大医学(01)","物化","583","2495"],["10301","同济大学(01)","物化","581","2819"],["10302","同济大学(02)","物化","578","3338"],["10303","同济大学(03)","不限","577","3521"],["10304","同济大学(04)","政治","575","3891"],["10401","华东师大(01)","不限","574","4069"],["10402","华东师大(02)","物化","578","3338"],["10403","华东师大(03)","政治","573","4277"],["10501","华东理工(01)","物化","566","5753"],["10502","华东理工(02)","物化","563","6419"],["10503","华东理工(03)","物化","562","6648"],["10504","华东理工(04)","物化","551","9381"],["10505","华东理工(05)","不限","550","9637"],["10601","东华大学(01)","不限","550","9637"],["10602","东华大学(02)","物化","553","8821"],["10603","东华大学(03)","物化","552","9092"],["10701","上海财大(01)","不限","569","5122"],["10702","上海财大(02)","物理","570","4886"],["10703","上海财大(03)","物化","573","4277"],["10801","上海外大(01)","不限","560","7131"],["10802","上海外大(02)","不限","560","7131"],["10803","上海外大(03)","政治","561","6888"],["11901","上海大学(01)","物化","567","5517"],["12101","上海中医(01)","物化","564","6183"],["ZJ01","浙江大学(01)","物化","","—"]];
+function renderSupplement(){
+  function tbl(rows){
+    if(!rows||!rows.length) return '<div class="empty">暂无数据</div>';
+    let h='<table class="st"><thead><tr><th>代码</th><th>院校专业组</th><th>2026投档线</th></tr></thead><tbody>';
+    rows.forEach(function(r){ h+='<tr><td>'+r[0]+'</td><td class="nm">'+r[1]+'</td><td class="sc">'+(r[2]||'—')+'</td></tr>'; });
+    h+='</tbody></table>';
+    return h;
+  }
+  function compreTbl(rows){
+    if(!rows||!rows.length) return '<div class="empty">暂无数据</div>';
+    let h='<table class="st"><thead><tr><th>代码</th><th>院校专业组</th><th>选科</th><th>入围线</th><th>位次</th></tr></thead><tbody>';
+    rows.forEach(function(r){ h+='<tr><td>'+r[0]+'</td><td class="nm">'+r[1]+'</td><td>'+(r[2]||'—')+'</td><td class="sc">'+(r[3]||'—')+'</td><td>'+(r[4]||'—')+'</td></tr>'; });
+    h+='</tbody></table>';
+    return h;
+  }
+  const a=document.getElementById('zx1Table'); if(a) a.innerHTML=tbl(ZX1_2026);
+  const b=document.getElementById('zx2Table'); if(b) b.innerHTML=tbl(ZX2_2026);
+  const c=document.getElementById('qTable'); if(c) c.innerHTML=tbl(QGROUP_2026);
+  const d=document.getElementById('compreTable'); if(d) d.innerHTML=compreTbl(COMPRE_2026);
+}
+renderSupplement();
+</script>
+</body>
+</html>
