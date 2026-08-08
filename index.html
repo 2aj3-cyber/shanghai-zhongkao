@@ -4102,27 +4102,17 @@ function renderCmp(){
   apply(saved);
 })();
 </script>
-<!-- 统计与反馈：不蒜子为第三方访问统计（详见交付说明）；腾讯问卷链接填下方 FEEDBACK_URL 即生效 -->
+<!-- 访问统计：不蒜子为第三方访问统计 -->
 <div class="site-foot">
   <div class="foot-stat">📊 访问统计：<span id="busuanzi_container_site_pv">总访问 <span id="busuanzi_value_site_pv">—</span> 次</span> · <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv">—</span> 人</span></div>
-  <div class="foot-feedback" id="footFeedback"></div>
 </div>
 <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<script>
-(function(){
-  var FEEDBACK_URL=''; /* ← 在此粘贴你的腾讯问卷链接（如 https://www.wjx.cn/...），留空则不显示反馈按钮 */
-  var box=document.getElementById('footFeedback');
-  if(FEEDBACK_URL){ var a=document.createElement('a'); a.href=FEEDBACK_URL; a.target='_blank'; a.rel='noopener'; a.className='foot-fb-btn'; a.textContent='💬 意见反馈（腾讯问卷）'; box.appendChild(a); }
-})();
-</script>
 <style>
 .skip-link{position:absolute;left:-9999px;top:0;background:#0f4c81;color:#fff;padding:8px 14px;border-radius:8px;z-index:999;font-size:14px;text-decoration:none}
 .skip-link:focus{left:8px;top:8px}
 :focus-visible{outline:3px solid #2563eb;outline-offset:2px}
 .site-foot{margin:20px 0 8px;text-align:center;font-size:12px;color:#64748b;line-height:1.8}
 .foot-stat{margin-bottom:6px}
-.foot-fb-btn{display:inline-block;margin-top:4px;padding:7px 16px;border-radius:999px;background:#0f4c81;color:#fff;text-decoration:none;font-size:13px}
-.foot-fb-btn:hover{opacity:.9}
 </style>
 </body>
 </html>
