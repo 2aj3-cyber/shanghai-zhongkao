@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>上海中考升学路径全分析 · 2026版 · 基于市教育考试院官方指南</title>
+<meta name="description" content="上海中考2026升学工具：分数推荐、高中/中本贯通/中高职/艺术/国际高中分数线库、智能择校与规划指南，基于市教育考试院官方数据。">
 <script>
 (function(){try{var t=localStorage.getItem('zk-theme')||'light';var th=t==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',th);}catch(e){}})();
 </script>
@@ -911,27 +912,28 @@
 </style>
 </head>
 <body>
+<a href="#main" class="skip-link">跳到主内容</a>
 
 <div class="header">
   <h1>🎓 上海中考升学路径全分析</h1>
   <p>2026版 · 满分750分 · 基于市教育考试院《2026年中招指南》</p>
   <div class="update-badge">📌 数据截至 <b>2026-07-23</b>（统招线最终版）· 中本&amp;中高职✅已含2026 · 高中统招线✅已采<b>128所</b>(16区聚合) · 剩余62所（官方无统招线）</div>
   <div class="theme-switch">
-    <button class="theme-btn" data-t="light" onclick="setTheme('light')" title="浅色">☀️ 浅色</button>
-    <button class="theme-btn" data-t="dark" onclick="setTheme('dark')" title="深色">🌙 深色</button>
+    <button class="theme-btn" data-t="light" onclick="setTheme('light')" title="浅色" aria-label="切换到浅色主题">☀️ 浅色</button>
+    <button class="theme-btn" data-t="dark" onclick="setTheme('dark')" title="深色" aria-label="切换到深色主题">🌙 深色</button>
   </div>
   <!-- creator badge moved to bottom-right float -->
 </div>
 
 <div class="global-search-bar">
   <span class="global-search-label">🔍 搜学校/专业</span>
-  <input class="global-search-input" id="globalSearch" type="text" placeholder="输入学校或专业名称，搜索全部模块（高中、中本贯通、中高职、艺术、国际高中）..." oninput="globalSearch()" onfocus="globalSearch()" onkeydown="if(event.key==='Escape')closeSearch();if(event.key==='Enter'&&window._searchResults&&window._searchResults.length>0){navigateFromSearch(window._searchResults[0].navTab,0);event.preventDefault();}" autocomplete="off">
+  <input class="global-search-input" id="globalSearch" type="text" aria-label="搜索学校或专业" placeholder="输入学校或专业名称，搜索全部模块（高中、中本贯通、中高职、艺术、国际高中）..." oninput="globalSearch()" onfocus="globalSearch()" onkeydown="if(event.key==='Escape')closeSearch();if(event.key==='Enter'&&window._searchResults&&window._searchResults.length>0){navigateFromSearch(window._searchResults[0].navTab,0);event.preventDefault();}" autocomplete="off">
   <span class="global-search-shortcut">共 <b id="globalTotalSchools">0</b> 所学校/机构</span>
 </div>
 <div class="search-overlay" id="searchOverlay" onclick="closeSearch()"></div>
 <div class="search-dropdown" id="searchDropdown"></div>
 
-<div class="tabs" onkeydown="onTabsKeydown(event)">
+<div class="tabs" role="tablist" aria-label="功能模块切换" onkeydown="onTabsKeydown(event)">
   <div class="tab active" role="tab" tabindex="0" onclick="switchTab('tool')">🔍 分数推荐</div>
   <div class="tab" role="tab" tabindex="0" onclick="switchTab('table')">📊 全路径对比</div>
   <div class="tab" role="tab" tabindex="0" onclick="switchTab('highschool')">🏫 高中分数线库</div>
@@ -943,7 +945,7 @@
   <div class="tab" role="tab" tabindex="0" onclick="switchTab('smart')">🤖 智能择校</div>
 </div>
 
-<div class="main">
+<div class="main" id="main" tabindex="-1">
 
   <!-- ===== TAB 1: 分数推荐工具 ===== -->
   <div id="tab-tool" class="tab-content active">
@@ -2909,9 +2911,10 @@ function analyzeScore() {
 
 // —— Tab 切换 ——
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
   document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  const cur = event && event.currentTarget;
+  if (cur) { cur.classList.add('active'); cur.setAttribute('aria-selected','true'); }
   document.getElementById('tab-' + name).classList.add('active');
 
   // 惰性加载数据
@@ -4099,5 +4102,27 @@ function renderCmp(){
   apply(saved);
 })();
 </script>
+<!-- 统计与反馈：不蒜子为第三方访问统计（详见交付说明）；腾讯问卷链接填下方 FEEDBACK_URL 即生效 -->
+<div class="site-foot">
+  <div class="foot-stat">📊 访问统计：<span id="busuanzi_container_site_pv">总访问 <span id="busuanzi_value_site_pv">—</span> 次</span> · <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv">—</span> 人</span></div>
+  <div class="foot-feedback" id="footFeedback"></div>
+</div>
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script>
+(function(){
+  var FEEDBACK_URL=''; /* ← 在此粘贴你的腾讯问卷链接（如 https://www.wjx.cn/...），留空则不显示反馈按钮 */
+  var box=document.getElementById('footFeedback');
+  if(FEEDBACK_URL){ var a=document.createElement('a'); a.href=FEEDBACK_URL; a.target='_blank'; a.rel='noopener'; a.className='foot-fb-btn'; a.textContent='💬 意见反馈（腾讯问卷）'; box.appendChild(a); }
+})();
+</script>
+<style>
+.skip-link{position:absolute;left:-9999px;top:0;background:#0f4c81;color:#fff;padding:8px 14px;border-radius:8px;z-index:999;font-size:14px;text-decoration:none}
+.skip-link:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+.site-foot{margin:20px 0 8px;text-align:center;font-size:12px;color:#64748b;line-height:1.8}
+.foot-stat{margin-bottom:6px}
+.foot-fb-btn{display:inline-block;margin-top:4px;padding:7px 16px;border-radius:999px;background:#0f4c81;color:#fff;text-decoration:none;font-size:13px}
+.foot-fb-btn:hover{opacity:.9}
+</style>
 </body>
 </html>
