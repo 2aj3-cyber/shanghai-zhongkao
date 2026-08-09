@@ -120,6 +120,27 @@ tbody tr:hover{background:var(--brand-soft)}
 .rule-card p{font-size:13px;color:var(--muted);line-height:1.7}
 .rule-card ol{margin:6px 0 0 18px;font-size:13px;color:var(--muted)}
 .rule-card li{margin-bottom:3px}
+/* Tab 面板标题区 + 徽章 */
+.sec-header-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tab-badge{display:inline-block;font-size:11.5px;padding:3px 10px;border-radius:999px;font-weight:700;letter-spacing:.5px;flex-shrink:0}
+.tab-badge.tool{background:#dbeafe;color:#1d4ed8}
+.tab-badge.read{background:#fef3c7;color:#b45309}
+/* 志愿科普：快速摘要 */
+.guide-summary{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.gs-item{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-align:center;min-width:72px;flex:1}
+.gs-item b{display:block;font-size:20px;font-weight:800;color:var(--brand)}
+.gs-item span{font-size:11px;color:var(--muted)}
+/* 志愿科普：手风琴折叠 */
+.accordion{background:var(--bg);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.accordion:hover{border-color:var(--brand)}
+.acc-head{display:flex;align-items:center;gap:8px;padding:12px 14px;font-size:14.5px;font-weight:700}
+.acc-icon{transition:transform .2s;font-size:10px;color:var(--brand)}
+.accordion.open .acc-icon{transform:rotate(90deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 14px}
+.accordion.open .acc-body{max-height:500px;padding:0 14px 14px}
+.acc-body p,.acc-body ol{font-size:13px;color:var(--muted);line-height:1.7}
+.acc-body ol{margin:6px 0 0 18px}
+.acc-body li{margin-bottom:3px}
 .cmp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px}
 .cmp-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--bg)}
 .cmp-card .cn{font-weight:800;font-size:15px}
@@ -266,12 +287,15 @@ tbody tr:hover{background:var(--brand-soft)}
 
 <!-- 同分对比 -->
 <div class="panel hidden" id="panel-compare">
-  <h2 class="sec">同分位次对比（2025 vs 2026）</h2>
+  <div class="sec-header-row">
+    <h2 class="sec">同分位次对比（2025 vs 2026）</h2>
+    <span class="tab-badge tool">🔧 数据工具</span>
+  </div>
   <div class="sec-desc">选 2 个院校专业组并排对比两年投档线涨跌；下方自动展示今年涨 / 跌最明显的专业组榜。</div>
   <div class="form-row">
-    <div class="field" style="flex:1 1 200px"><label>院校专业组 A</label><select id="cmpA"></select></div>
-    <div class="field" style="flex:1 1 200px"><label>院校专业组 B</label><select id="cmpB"></select></div>
-    <button class="btn" onclick="renderCompare()" style="align-self:flex-end">对比</button>
+    <div class="field" style="flex:1 1 200px"><label>院校专业组 A</label><select id="cmpA" onchange="renderCompare()"></select></div>
+    <div class="field" style="flex:1 1 200px"><label>院校专业组 B</label><select id="cmpB" onchange="renderCompare()"></select></div>
+    <button class="btn" onclick="renderCompare()" style="align-self:flex-end">🔄 刷新对比</button>
   </div>
   <div id="cmpResult"></div>
   <h3 class="sec" style="margin-top:18px">📈 今年投档线涨跌榜（基于已公布具体分的院校专业组）</h3>
@@ -280,15 +304,26 @@ tbody tr:hover{background:var(--brand-soft)}
 
 <!-- 志愿科普 -->
 <div class="panel hidden" id="panel-guide">
-  <h2 class="sec">志愿填报规则科普</h2>
-  <div class="sec-desc">搞懂平行志愿与投档规则，填志愿不踩坑。</div>
-  <div class="rule-card">
-    <h3>🧮 平行志愿核心规则</h3>
-    <p>本科普通批实行<b>「分数优先、遵循志愿、一轮投档」</b>：按考生总分由高到低排序，逐一检索其 24 个院校专业组志愿。一旦被某专业组投档，后续志愿立即作废（只投一次）。</p>
+  <div class="sec-header-row">
+    <h2 class="sec">志愿填报规则科普</h2>
+    <span class="tab-badge read">📖 必读指南</span>
   </div>
-  <div class="rule-card">
-    <h3>⚖️ 同分如何排序（很重要！）</h3>
-    <p>总分相同时依次比较：</p>
+  <div class="sec-desc">搞懂平行志愿与投档规则，填志愿不踩坑。<b>点击卡片可展开/收起</b>。</div>
+  <!-- 快速摘要 -->
+  <div class="guide-summary">
+    <div class="gs-item"><b>24</b><span>个平行志愿</span></div>
+    <div class="gs-item"><b>90%</b><span>前13志愿命中率</span></div>
+    <div class="gs-item"><b>403</b><span>本科控制线</span></div>
+    <div class="gs-item"><b>1:1</b><span>投档比例</span></div>
+    <div class="gs-item"><b>一轮</b><span>只投一次</span></div>
+  </div>
+  <div class="accordion" onclick="this.classList.toggle('open')">
+    <div class="acc-head"><span class="acc-icon">▶</span>🧮 平行志愿核心规则</div>
+    <div class="acc-body"><p>本科普通批实行<b>「分数优先、遵循志愿、一轮投档」</b>：按考生总分由高到低排序，逐一检索其 24 个院校专业组志愿。一旦被某专业组投档，后续志愿立即作废（只投一次）。</p></div>
+  </div>
+  <div class="accordion open" onclick="this.classList.toggle('open')">
+    <div class="acc-head"><span class="acc-icon">▼</span>⚖️ 同分如何排序（<b>很重要！</b>）</div>
+    <div class="acc-body"><p>总分相同时依次比较：</p>
     <ol>
       <li>语文 + 数学两门合计成绩（高者优先）</li>
       <li>语文或数学中单科较高分</li>
@@ -296,15 +331,15 @@ tbody tr:hover{background:var(--brand-soft)}
       <li>选考科目中单科最高分</li>
       <li>选考科目中次高分</li>
       <li>考生志愿顺序</li>
-    </ol>
+    </ol></div>
   </div>
-  <div class="rule-card">
-    <h3>🎯 24 个志愿填报策略</h3>
-    <p>官方数据显示：前 13 个志愿总体投档成功率接近 <b>90%</b>。建议按「冲（略高）8 个 + 稳（相当）8 个 + 保（略低）8 个」梯次填满，避免全部扎堆同层次导致滑档。</p>
+  <div class="accordion" onclick="this.classList.toggle('open')">
+    <div class="acc-head"><span class="acc-icon">▶</span>🎯 24 个志愿填报策略</div>
+    <div class="acc-body"><p>官方数据显示：前 13 个志愿总体投档成功率接近 <b>90%</b>。建议按「冲（略高）8 个 + 稳（相当）8 个 + 保（略低）8 个」梯次填满，避免全部扎堆同层次导致滑档。</p></div>
   </div>
-  <div class="rule-card">
-    <h3>✅ 投档 ≠ 录取</h3>
-    <p>按 1:1 投档后大概率录取，但<b>不服从专业调剂</b>或不符合组内专业的体检 / 单科成绩 / 外语语种等要求，可能<b>退档</b>。退档后只能参加征求志愿。务必勾选「服从调剂」保底。</p>
+  <div class="accordion" onclick="this.classList.toggle('open')">
+    <div class="acc-head"><span class="acc-icon">▶</span>✅ 投档 ≠ 录取（退档风险）</div>
+    <div class="acc-body"><p>按 1:1 投档后大概率录取，但<b>不服从专业调剂</b>或不符合组内专业的体检 / 单科成绩 / 外语语种等要求，可能<b>退档</b>。退档后只能参加征求志愿。务必勾选「服从调剂」保底。</p></div>
   </div>
   <h3 class="sec" style="margin-top:18px">🗓️ 2026 上海高招关键时间轴</h3>
   <div class="timeline">
