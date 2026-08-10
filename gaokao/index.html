@@ -901,11 +901,13 @@ function openSchool(root){
   if(g0.area) h+=`<span class="tag green">${g0.area}</span> `;
   h+=`共 ${groups.length} 个专业组</div></div></div>`;
   const pf=SCHOOL_PROFILE[root];
-  const _lines=groups.map(s=>s[3]).filter(Boolean).map(Number).filter(n=>!isNaN(n));
-  const _lo=_lines.length?Math.min.apply(null,_lines):null, _hi=_lines.length?Math.max.apply(null,_lines):null;
+  const _raw=groups.map(s=>s[3]).filter(Boolean);
+  const _num=_raw.map(numScore).filter(n=>n!=null);
+  const _above=_raw.some(v=>/分及以上/.test(v))?Math.min.apply(null,_raw.map(numScore).filter(n=>n!=null)):null;
+  const _lo=_num.length?Math.min.apply(null,_num):_above, _hi=_num.length?Math.max.apply(null,_num):_above;
   h+='<div class="sm-prof">';
   if(pf&&pf.bao!=null) h+=`<span class="tag blue">保研率约 ${Math.round(pf.bao*100)}%</span>`;
-  if(_lo!=null) h+=`<span class="tag green">2026线 ${_lo}${_hi&&_hi!==_lo?'~'+_hi:''}</span>`;
+  if(_lo!=null){ const _txt=_num.length?(_lo+(_hi!==_lo?'~'+_hi:'')):('≥'+_lo); h+=`<span class="tag green">2026线 ${_txt}</span>`; }
   h+='</div>';
   h+='<div class="sm-note">ⓘ 保研率为<b>公开资料整理的约数</b>（来源：各校推免公示及公开报道），<b>非本工具投档数据</b>。招生章程、选科要求与最终计划在沪投放请以<b>上海市教育考试院《招生专业目录》</b>及该校本科招生网公布为准。</div>';
   if(groups.length){
@@ -1000,32 +1002,43 @@ function exportPlanDoc(){
 }
 
 /* ============ 同分对比 ============ */
+// 全量对比数据集：覆盖投档线库全部1647组 + 零志愿清华/北大，不限于精选106所
+const CMP_DATA=(function(){
+  const list=SCHOOLS_ALL.map(function(s){return {code:s[0],name:s[1],y25:(s[2]||'').trim(),y26:(s[3]||'').trim(),tier:metaOf(s[1]).tier};});
+  SCHOOLS_GK.filter(function(s){return /^清华|^北京大学/.test(s[0]);}).forEach(function(s){
+    list.push({code:'零志愿',name:s[0],y25:(s[5]||'').trim(),y26:(s[6]||s[5]||'').trim(),tier:'985'});
+  });
+  list.sort(function(a,b){return a.name.localeCompare(b.name,'zh');});
+  return list;
+})();
 function initCompare(){
-  if(document.getElementById('cmpA').options.length) return;
-  const opts=SCHOOLS_GK.map((s,i)=>`<option value="${i}">${s[0]}（${s[4]}）</option>`).join('');
-  document.getElementById('cmpA').innerHTML=opts;
-  document.getElementById('cmpB').innerHTML=opts;
-  document.getElementById('cmpB').selectedIndex=1;
+  const sel=document.getElementById('cmpA');
+  if(sel && sel.options && sel.options.length) return;
+  const opts=CMP_DATA.map(function(s,i){return `<option value="${i}">${s.name} · ${TIER_LABEL[s.tier]||s.tier}</option>`;}).join('');
+  if(sel) sel.innerHTML=opts;
+  const selB=document.getElementById('cmpB');
+  if(selB) selB.innerHTML=opts;
+  if(selB) selB.selectedIndex=1;
 }
 function renderCompare(){
-  const a=SCHOOLS_GK[+document.getElementById('cmpA').value];
-  const b=SCHOOLS_GK[+document.getElementById('cmpB').value];
+  const a=CMP_DATA[+document.getElementById('cmpA').value];
+  const b=CMP_DATA[+document.getElementById('cmpB').value];
   const box=document.getElementById('cmpResult');
   if(!a||!b){ box.innerHTML=''; return; }
   function card(s){
-    return `<div class="cmp-card"><div class="cn">${s[0]}</div>
-      <div class="meta">层次：${TIER_LABEL[s[4]]||s[4]} · 选科：${s[2]} · ${s[3]}</div>
-      <div class="cmp-row"><span>专业组</span><span>${s[1]}</span></div>
-      <div class="cmp-row"><span>2026 投档线</span><span>${s[6]||'不公布'}</span></div>
-      <div class="cmp-row"><span>2025 投档线</span><span>${s[5]||'不公布'}</span></div>
-      <div class="cmp-row"><span>两年涨跌</span><span>${diffHTML(s[5],s[6])}</span></div>
+    return `<div class="cmp-card"><div class="cn">${s.name}</div>
+      <div class="meta">层次：${TIER_LABEL[s.tier]||s.tier}</div>
+      <div class="cmp-row"><span>专业组</span><span>${s.code}</span></div>
+      <div class="cmp-row"><span>2026 投档线</span><span>${s.y26||'不公布'}</span></div>
+      <div class="cmp-row"><span>2025 投档线</span><span>${s.y25||'不公布'}</span></div>
+      <div class="cmp-row"><span>两年涨跌</span><span>${diffHTML(s.y25,s.y26)}</span></div>
     </div>`;
   }
   box.innerHTML=`<div class="cmp-wrap">${card(a)}${card(b)}</div>`;
 }
 function renderCmpRank(){
-  const arr=SCHOOLS_GK.filter(s=>numScore(s[5])!=null && numScore(s[6])!=null)
-    .map(s=>({n:s[0],t:s[4],d:numScore(s[6])-numScore(s[5]),y26:numScore(s[6]),y25:numScore(s[5])}));
+  const arr=CMP_DATA.filter(function(s){return numScore(s.y25)!=null && numScore(s.y26)!=null;})
+    .map(function(s){return {n:s.name,t:s.tier,d:numScore(s.y26)-numScore(s.y25),y26:numScore(s.y26),y25:numScore(s.y25)};});
   const up=[...arr].sort((a,b)=>b.d-a.d).slice(0,10);
   const down=[...arr].sort((a,b)=>a.d-b.d).slice(0,10);
   function row(x){ return `<tr><td><b>${x.n}</b> <span class="tag ${tierTag(x.t)}">${TIER_LABEL[x.t]||x.t}</span></td><td>${x.y25}</td><td>${x.y26}</td><td>${x.d>0?`<span class="up">▲${x.d}</span>`:`<span class="down">▼${Math.abs(x.d)}</span>`}</td></tr>`; }
