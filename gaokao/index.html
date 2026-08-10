@@ -907,7 +907,7 @@ function openSchool(root){
   const _lo=_num.length?Math.min.apply(null,_num):_above, _hi=_num.length?Math.max.apply(null,_num):_above;
   h+='<div class="sm-prof">';
   if(pf&&pf.bao!=null) h+=`<span class="tag blue">保研率约 ${Math.round(pf.bao*100)}%</span>`;
-  if(_lo!=null){ const _txt=_num.length?(_lo+(_hi!==_lo?'~'+_hi:'')):('≥'+_lo); h+=`<span class="tag green">2026线 ${_txt}</span>`; }
+  if(_lo!=null){ const _txt=_above!=null?('≥'+_above):(_lo+(_hi!==_lo?'~'+_hi:'')); h+=`<span class="tag green">2026线 ${_txt}</span>`; }
   h+='</div>';
   h+='<div class="sm-note">ⓘ 保研率为<b>公开资料整理的约数</b>（来源：各校推免公示及公开报道），<b>非本工具投档数据</b>。招生章程、选科要求与最终计划在沪投放请以<b>上海市教育考试院《招生专业目录》</b>及该校本科招生网公布为准。</div>';
   if(groups.length){
