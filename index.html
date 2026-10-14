@@ -909,6 +909,15 @@
     .tl-title { font-size: 14px; }
     .tl-desc { font-size: 12.5px; line-height: 1.5; }
   }
+.view-toggle{display:inline-flex;gap:4px;margin-left:4px;}
+.view-btn,.tool-btn{font:inherit;font-size:13px;padding:7px 12px;border-radius:8px;border:1px solid var(--ce2e8f0);background:var(--c-ffffff-bg);color:var(--c64748b);cursor:pointer;transition:.15s;white-space:nowrap}
+.view-btn.active{background:var(--c0f4c81);color:#fff;border-color:var(--c0f4c81)}
+.tool-btn:hover{background:var(--c0f4c81);color:#fff;border-color:var(--c0f4c81)}
+@media(max-width:640px){
+  .filter-row{flex-wrap:wrap}
+  .view-btn,.tool-btn{flex:1 1 auto;font-size:12px;padding:8px 6px}
+  .view-toggle{width:100%;margin:4px 0 0}
+}
 </style>
 </head>
 <body>
@@ -1215,7 +1224,7 @@
   <!-- ===== TAB 3: 高中分数线库 ===== -->
   <div id="tab-highschool" class="tab-content">
     <div class="school-db">
-      <h2>🏫 上海各区高中录取分数线库 <span style="font-size:14px;color:#94a3b8;font-weight:400;">（2026实际线已更新·128所，其余62所示2025线）</span></h2>
+      <h2>🏫 上海各区高中录取分数线库 <span style="font-size:14px;color:#94a3b8;font-weight:400;">（2026实际线已更新·172所学校 / 190条投档记录）</span></h2>
       <div class="filter-row">
         <select class="filter-select" id="districtFilter" onchange="filterSchools()">
           <option value="all">全部区域</option>
@@ -1254,6 +1263,12 @@
           <option value="diffDown">按涨跌（跌最多）</option>
         </select>
         <span style="font-size:13px;color:#94a3b8;">筛选结果：<b id="schoolCount">0</b> 所</span>
+        <span class="view-toggle">
+          <button class="view-btn active" data-v="district" onclick="switchSchoolView('district')">📍 按区</button>
+          <button class="view-btn" data-v="byname" onclick="switchSchoolView('byname')">🏫 按学校</button>
+        </span>
+        <button class="tool-btn" onclick="exportSchoolCSV()">⬇ 导出CSV</button>
+        <button class="tool-btn" onclick="copySchoolTable()">📋 复制</button>
       </div>
       <div style="overflow-x:auto;">
         <table class="school-table" id="schoolTable">
@@ -1271,7 +1286,7 @@
           <tbody id="schoolTableBody"></tbody>
         </table>
       </div>
-      <div style="margin-top:14px;font-size:13px;color:#94a3b8;">💡 数据来源：各区招考机构官网。2025年实际录取分为历史基准；<b style="color:#16a34a;">2026年实际线已采集 128 所（16区统招1-15志愿线，含上海本地宝聚合核对），剩余 62 所主要为开放大学附中系列（无统一统招线）及个别跨区分校校名错位，暂以2025线标注。</b>部分学校为跨区招生，标注在"区域"栏。</div>
+      <div style="margin-top:14px;font-size:13px;color:#94a3b8;">💡 数据来源：各区招考机构官网。2025年实际录取分为历史基准；<b style="color:#16a34a;">2026年实际线已采集并回填（含徐汇四校本部线），按「按学校」视图可合并同一校跨区投档记录（如四校在浦东/杨浦/徐汇/虹口的投放）。</b>部分学校为跨区招生，标注在"区域"栏。官方未单独公布统招线的学校（主要为开放大学附中系列教学点）诚实标注"官方未发布"，不编造。</div>
     </div>
   </div>
 
@@ -1889,10 +1904,10 @@ const SCHOOLS = [
   { district:"杨浦区", name:"上海市久隆模范中学", type:"普高(外区)", score:609, score2026:653, trend:"—" },
 
   // 徐汇区
-  { district:"徐汇区", name:"上海中学", type:"市重点", score:712, trend:"↑" },
-  { district:"徐汇区", name:"复旦大学附属中学", type:"市重点", score:712, trend:"↑" },
-  { district:"徐汇区", name:"上海交通大学附属中学", type:"市重点", score:712, trend:"↑" },
-  { district:"徐汇区", name:"华东师范大学第二附属中学", type:"市重点", score:711.5, trend:"↑" },
+  { district:"徐汇区", name:"上海中学", type:"市重点", score:712, score2026:715.5, trend:"↑" },
+  { district:"徐汇区", name:"复旦大学附属中学", type:"市重点", score:712, score2026:715, trend:"↑" },
+  { district:"徐汇区", name:"上海交通大学附属中学", type:"市重点", score:712, score2026:714, trend:"↑" },
+  { district:"徐汇区", name:"华东师范大学第二附属中学", type:"市重点", score:711.5, score2026:715, trend:"↑" },
   { district:"徐汇区", name:"上海市第二中学(梅陇校区)", type:"市重点", score:690, trend:"—" , score2026:697},
   { district:"徐汇区", name:"上海市南洋模范中学", type:"市重点", score:698, trend:"—" , score2026:705},
   { district:"徐汇区", name:"上海市位育中学", type:"市重点", score:693, trend:"—" , score2026:700},
@@ -2729,8 +2744,10 @@ const SCHOOL_META = {
   },
   // ── 体系: 基于type推导 ──
   getSystem: function(s) {
-    if (s.type.includes('民办') && (s.name.includes('国际') || s.name.includes('世外') || s.name.includes('协和') || s.name.includes('燎原') || s.name.includes('万科'))) return '体制外';
-    if (s.name.includes('上实剑桥') || s.name.includes('世外') || s.name.includes('协和双语')) return '体制外';
+    const nm = s.name || '';
+    const tp = s.type || '';
+    if (tp.includes('民办') && (nm.includes('国际') || nm.includes('世外') || nm.includes('协和') || nm.includes('燎原') || nm.includes('万科'))) return '体制外';
+    if (nm.includes('上实剑桥') || nm.includes('世外') || nm.includes('协和双语')) return '体制外';
     return '体制内';
   },
   getPlan: function(s) {
@@ -2813,22 +2830,31 @@ const SCHOOLS_EXTRA = [
   { district:"静安区", name:"上海开大附中华文教学点", type:"民办普高", score:493, trend:"—" },
   // ── 遗漏大学附属 ──
   { district:"金山区", name:"上海体育大学附属金山亭林中学", type:"区重点", score:560, trend:"—" , score2026:555},
-  { district:"浦东新区", name:"上海立信会计金融学院附属高行中学", type:"区重点", score:590, score2026:637.5, trend:"—" },
-  { district:"浦东新区", name:"上海海洋大学附属大团高级中学", type:"区重点", score:585, score2026:610.5, trend:"—" },
   { district:"浦东新区", name:"上海第二工业大学附属龚路中学", type:"普高", score:555, score2026:590, trend:"—" },
   { district:"松江区", name:"华东政法大学附属松江高级中学", type:"普高", score:610, trend:"—" , score2026:672},
   { district:"松江区", name:"东华大学附属松江高级中学", type:"普高", score:605, trend:"—" },
-  { district:"闵行区", name:"北京外国语大学附属上海闵行田园高级中学", type:"区重点", score:620, trend:"—" , score2026:652},
   { district:"上海市", name:"上海科技大学附属学校", type:"一般高中", score:620, trend:"—" },
   // ── 设计创意/艺术特色遗漏 ──
-  { district:"黄浦区", name:"上海市同济黄浦设计创意中学", type:"普高", score:626, trend:"—" },
   { district:"宝山区", name:"上海创艺高级中学", type:"民办普高", score:510, trend:"—" },
   { district:"虹口区", name:"上海音乐学院虹口区北虹高级中学", type:"区重点", score:600, score2026:640.5, trend:"—" },
-  { district:"杨浦区", name:"上海市体育学院附属中学", type:"区重点", score:535, trend:"—" },
   // ── 其他民办普高 ──
   { district:"青浦区", name:"上海博雅学校", type:"民办普高", score:510, trend:"—" },
 ];
 const SCHOOLS_ALL = SCHOOLS.concat(SCHOOLS_EXTRA).filter((s,i,a)=>a.findIndex(x=>x.district===s.district&&x.name===s.name)===i);
+
+// ══ V2.0：视图状态 + 按学校聚合数据 ══
+let schoolView = 'district';
+const SCHOOLS_BYNAME = (function () {
+  const map = new Map();
+  SCHOOLS_ALL.forEach(s => {
+    if (!map.has(s.name)) map.set(s.name, { name: s.name, type: s.type, campuses: [], has26: false, max26: 0, max25: 0 });
+    const e = map.get(s.name);
+    e.campuses.push({ district: s.district, score: s.score, score2026: s.score2026, trend: s.trend, type: s.type });
+    if (s.score2026 != null) { e.has26 = true; e.max26 = Math.max(e.max26, s.score2026); }
+    e.max25 = Math.max(e.max25, s.score || 0);
+  });
+  return Array.from(map.values()).sort((a, b) => b.max25 - a.max25);
+})();
 
 // ═══════════════════════════════════════════════════════
 // 核心逻辑
@@ -3062,6 +3088,7 @@ function filterSchools() {
   const min = parseInt(document.getElementById('minScore').value) || 0;
   const max = parseInt(document.getElementById('maxScore').value) || 999;
 
+  if (schoolView === 'byname') { renderByName(); return; }
   const filtered = SCHOOLS_ALL.filter(s =>
     (district === 'all' || s.district === district) &&
     (type === 'all' || normalizeType(s.type) === type) &&
@@ -4101,6 +4128,100 @@ function renderCmp(){
   var saved; try{ saved=localStorage.getItem(KEY)||'light'; }catch(e){ saved='light'; }
   apply(saved);
 })();
+
+// ═══════════════════════════════════════════════════════
+// V2.0 功能增强：按学校聚合视图 + 导出/复制
+// ═══════════════════════════════════════════════════════
+
+function renderByName() {
+  const district = document.getElementById('districtFilter').value || 'all';
+  const type = document.getElementById('typeFilter').value || 'all';
+  const min = parseInt(document.getElementById('minScore').value) || 0;
+  const max = parseInt(document.getElementById('maxScore').value) || 999;
+  const list = SCHOOLS_BYNAME.filter(e => {
+    if (district !== 'all' && !e.campuses.some(c => c.district === district)) return false;
+    if (type !== 'all' && normalizeType(e.type) !== type) return false;
+    if (e.max25 < min || e.max25 > max) return false;
+    return true;
+  });
+  const tbody = document.getElementById('schoolTableBody');
+  tbody.innerHTML = list.map(e => {
+    const first = e.campuses[0];
+    const meta = { name: e.name, type: e.type, district: first.district };
+    const sys = SCHOOL_META.getSystem(meta);
+    const plan = SCHOOL_META.getPlan(meta);
+    const affil = SCHOOL_META.affiliations[e.name] || '—';
+    const affilTag = affil !== '—' ? `<span class="affil-tag">${affil}</span>` : '';
+    const campusTxt = e.campuses.map(c => `${c.district}${c.score2026 != null ? ' ' + c.score2026 : ''}`).join(' / ');
+    const line = e.has26
+      ? `<b>${e.max26}</b><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <span style="color:#94a3b8">${e.max25}</span><span class="yr-badge yr25">2025</span>`
+      : `<span style="color:#9a3412">—</span><span class="yr-badge yr26">2026</span> <span style="color:#94a3b8;margin:0 4px;">/</span> <b>${e.max25}</b><span class="yr-badge yr25">2025</span> <span style="color:#6b7280;font-size:12px">官方未发布</span>`;
+    return `<tr>
+      <td>${e.campuses.length}区</td>
+      <td><b>${e.name}</b>${affilTag}</td>
+      <td><span class="badge ${getTypeBadge(e.type)}">${normalizeType(e.type)}</span></td>
+      <td><span class="badge ${sys === '体制内' ? 'b-txnei' : 'b-txwai'}">${sys}</span></td>
+      <td><span class="badge ${plan === '计划内' ? 'b-planin' : 'b-planout'}">${plan}</span></td>
+      <td>${line}</td>
+      <td style="font-size:12px;color:#64748b;line-height:1.5">${campusTxt}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('schoolCount').textContent = list.length;
+  tagTableCells(tbody);
+}
+
+function switchSchoolView(v) {
+  schoolView = v;
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.v === v));
+  if (v === 'byname') renderByName(); else filterSchools();
+}
+
+function getCurrentSchoolRows() {
+  if (schoolView === 'byname') {
+    const district = document.getElementById('districtFilter').value || 'all';
+    const type = document.getElementById('typeFilter').value || 'all';
+    const min = parseInt(document.getElementById('minScore').value) || 0;
+    const max = parseInt(document.getElementById('maxScore').value) || 999;
+    return SCHOOLS_BYNAME.filter(e => {
+      if (district !== 'all' && !e.campuses.some(c => c.district === district)) return false;
+      if (type !== 'all' && normalizeType(e.type) !== type) return false;
+      if (e.max25 < min || e.max25 > max) return false;
+      return true;
+    }).map(e => [e.campuses.length + '区', e.name, normalizeType(e.type), SCHOOL_META.getSystem({ name: e.name, type: e.type, district: e.campuses[0].district }), SCHOOL_META.getPlan({ name: e.name, type: e.type, district: e.campuses[0].district }), e.has26 ? e.max26 : '—', e.max25, '', e.campuses.map(c => c.district).join('/')]);
+  }
+  const district = document.getElementById('districtFilter').value || 'all';
+  const type = document.getElementById('typeFilter').value || 'all';
+  const min = parseInt(document.getElementById('minScore').value) || 0;
+  const max = parseInt(document.getElementById('maxScore').value) || 999;
+  return SCHOOLS_ALL.filter(s => (district === 'all' || s.district === district) && (type === 'all' || normalizeType(s.type) === type) && s.score >= min && s.score <= max).map(s => {
+    const sv = schoolScoreView(s);
+    return [s.district, s.name, normalizeType(s.type), SCHOOL_META.getSystem(s), SCHOOL_META.getPlan(s), sv.has26 ? sv.val : '—', sv.prev, s.trend];
+  });
+}
+
+function exportSchoolCSV() {
+  const header = ['区域', '学校名称', '类型', '体系', '计划', '2026线', '2025线', '趋势', '校区分布'];
+  const rows = getCurrentSchoolRows();
+  const csv = '﻿' + [header.join(',')].concat(rows.map(r => r.map(x => '"' + String(x).replace(/"/g, '""') + '"').join(','))).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '上海高中分数线库_v2.0.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  showCmpMsg('已导出 ' + rows.length + ' 条记录为 CSV');
+}
+
+function copySchoolTable() {
+  const rows = getCurrentSchoolRows();
+  const txt = [['区域', '学校', '类型', '体系', '计划', '2026线', '2025线', '趋势'].join('\t')]
+    .concat(rows.map(r => r.slice(0, 8).join('\t'))).join('\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => showCmpMsg('已复制 ' + rows.length + ' 条到剪贴板'), () => showCmpMsg('复制失败，请手动选择'));
+  } else {
+    showCmpMsg('当前环境不支持剪贴板');
+  }
+}
 </script>
 <!-- 访问统计：不蒜子为第三方访问统计 -->
 <div class="site-foot">
